@@ -4,15 +4,14 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using SteampunkArsenal.Net;
 
+
 namespace SteampunkArsenal.Items {
 	public partial class SteamPoweredRivetLauncherItem : ModItem, ISteamPressureSource {
-		internal static void RunHeldBehavior( Player wielderPlayer, Item launcherItem ) {
-			if( wielderPlayer.whoAmI == Main.myPlayer ) {
-				SteamPoweredRivetLauncherItem.RunHeldBehavior_Local( wielderPlayer, launcherItem );
+		internal static void RunHeldBehavior_Local( Player wielderPlayer, Item launcherItem ) {
+			if( wielderPlayer.whoAmI != Main.myPlayer ) {
+				return;
 			}
-		}
-		
-		private static void RunHeldBehavior_Local( Player wielderPlayer, Item launcherItem ) {
+
 			var myitem = launcherItem.modItem as SteamPoweredRivetLauncherItem;
 
 			if( Main.mouseRight ) {
@@ -22,36 +21,51 @@ namespace SteampunkArsenal.Items {
 
 				myitem.TransferPressureToMeFromSource( wielderPlayer.GetModPlayer<SteamArsePlayer>(), tickAmt );
 			}
+
+			//
+
+			myitem.CheckPressure_Local( wielderPlayer );
 		}
 
 
 
 		////////////////
 		
-		internal void ApplyLaunchedRivetStats_Local_Syncs( int projectileIdx, Projectile projectile ) {
+		internal void ApplyLaunchedRivetStats_NonServer_Syncs( int projectileIdx, Projectile projectile ) {
+			if( Main.netMode == NetmodeID.Server ) {
+				return;
+			}
+
 			float pressure = this.GetPressurePercent();
 
 			projectile.damage = (int)pressure;
 
 			//
 
-			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
-			}
+			ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
 		}
 
 
 		////////////////
 
-		private bool CheckPressure( Player wielderPlayer ) {
+		private bool CheckPressure_Local( Player wielderPlayer ) {
+			if( wielderPlayer.whoAmI != Main.myPlayer ) {
+				return false;
+			}
+
+			//
+
 			bool pressureChanged = false;
 
 			if( this.SteamPressure >= 100f ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
+				float myPressure = this.GetPressurePercent();
 
-				myplayer.ApplySteamBackfire_Syncs( this.SteamPressure );
+				myplayer.ApplySteamDamage_Local_Syncs( myPressure );
 
-				this.SteamPressure = 0f;
+				//
+
+				this.AddPressurePercent( -myPressure );
 
 				pressureChanged = true;
 			}

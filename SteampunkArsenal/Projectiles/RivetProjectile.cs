@@ -17,7 +17,10 @@ namespace SteampunkArsenal.Projectiles {
 				return;
 			}
 
-			if( Main.netMode == NetmodeID.Server || plrOwner.whoAmI != Main.myPlayer ) {
+			if( Main.netMode == NetmodeID.Server ) {
+				return;
+			}
+			if( plrOwner.whoAmI != Main.myPlayer ) {
 				return;
 			}
 
@@ -35,7 +38,7 @@ namespace SteampunkArsenal.Projectiles {
 
 			//
 
-			myriveter.ApplyLaunchedRivetStats_Local_Syncs( projectileIdx, projectile );
+			myriveter.ApplyLaunchedRivetStats_NonServer_Syncs( projectileIdx, projectile );
 		}
 
 
