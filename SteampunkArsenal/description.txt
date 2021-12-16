@@ -1,1 +1,1 @@
-Steam-Driven Rivet Launcher is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+This mod adds a Steam-Driven Rivet Launcher weapon, along with associated steam-related items and accessories.
