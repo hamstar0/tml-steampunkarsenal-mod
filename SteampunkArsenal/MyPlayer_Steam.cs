@@ -5,22 +5,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SteampunkArsenal.Net;
 
+
 namespace SteampunkArsenal {
-	partial class SteamArsePlayer : ModPlayer, ISteamPressureSource {
-		public void AddPressurePercent( float amount ) {
-		}
-
-		public float GetPressurePercent() {
-			return 0f;
-		}
-
-		public float TransferPressureToMeFromSource( ISteamPressureSource source, float amount ) {
-			return amount;
-		}
-
-
-		////////////////
-
+	partial class SteamArsePlayer : ModPlayer {
 		public void ApplySteamDamage_Local_Syncs( float steamAmount ) {
 			if( this.player.whoAmI != Main.myPlayer ) {
 				return;

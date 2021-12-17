@@ -6,7 +6,7 @@ using SteampunkArsenal.Net;
 
 
 namespace SteampunkArsenal.Items {
-	public partial class SteamPoweredRivetLauncherItem : ModItem, ISteamPressureSource {
+	public partial class SteamPoweredRivetLauncherItem : ModItem {
 		internal static void RunHeldBehavior_Local( Player wielderPlayer, Item launcherItem ) {
 			if( wielderPlayer.whoAmI != Main.myPlayer ) {
 				return;
@@ -19,7 +19,10 @@ namespace SteampunkArsenal.Items {
 
 				float tickAmt = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
-				myitem.TransferPressureToMeFromSource( wielderPlayer.GetModPlayer<SteamArsePlayer>(), tickAmt );
+				myitem.Boiler.TransferPressureToMeFromSource(
+					wielderPlayer.GetModPlayer<SteamArsePlayer>().Boiler,
+					tickAmt
+				);
 			}
 
 			//
@@ -36,7 +39,7 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			float pressure = this.GetPressurePercent();
+			float pressure = this.Boiler.SteamPressure;
 
 			projectile.damage = (int)pressure;
 
@@ -57,15 +60,14 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.SteamPressure >= 100f ) {
+			if( this.Boiler.SteamPressure >= 100f ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
-				float myPressure = this.GetPressurePercent();
 
-				myplayer.ApplySteamDamage_Local_Syncs( myPressure );
+				myplayer.ApplySteamDamage_Local_Syncs( this.Boiler.SteamPressure );
 
 				//
 
-				this.AddPressurePercent( -myPressure );
+				this.Boiler.AddBoilerWater( -this.Boiler.BoilerWater, 1f );
 
 				pressureChanged = true;
 			}

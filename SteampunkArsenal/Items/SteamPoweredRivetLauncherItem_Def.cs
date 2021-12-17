@@ -6,13 +6,13 @@ using SteampunkArsenal.Projectiles;
 
 
 namespace SteampunkArsenal.Items {
-	public partial class SteamPoweredRivetLauncherItem : ModItem, ISteamPressureSource {
-		private float SteamPressure = 0f;
+	public partial class SteamPoweredRivetLauncherItem : ModItem {
+		internal SteamPressureSource Boiler { get; private set; } = new SteamPressureSource();
 
 
 
 		////////////////
-
+		
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Steam-Driven Rivet Launcher" );
 			this.Tooltip.SetDefault(
