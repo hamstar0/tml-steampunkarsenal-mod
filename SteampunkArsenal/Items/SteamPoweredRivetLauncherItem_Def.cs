@@ -36,7 +36,8 @@ namespace SteampunkArsenal.Items {
 			this.item.knockBack = 1f;
 
 			this.item.shoot = ModContent.ProjectileType<RivetProjectile>();
-			
+			this.item.shootSpeed = 16f;
+
 			this.item.useTime = 20;
 			this.item.useAnimation = 20;
 			this.item.useStyle = ItemUseStyleID.HoldingOut;
@@ -54,7 +55,14 @@ namespace SteampunkArsenal.Items {
 
 
 		////////////////
-		
+
+		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
+			flat = this.Boiler.SteamPressure;
+		}
+
+
+		////////////////
+
 		public override void AddRecipes() {
 			var recipe = new SteamPoweredRivetLauncherRecipe( this );
 

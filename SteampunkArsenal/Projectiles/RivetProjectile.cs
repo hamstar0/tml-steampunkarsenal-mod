@@ -54,17 +54,23 @@ namespace SteampunkArsenal.Projectiles {
 		public override void SetDefaults() {
 			this.projectile.width = 8;
 			this.projectile.height = 8;
-			this.projectile.aiStyle = 1;
+
 			this.projectile.friendly = true;
 			this.projectile.hostile = false;
 			this.projectile.ranged = true;
-			this.projectile.penetrate = 9;		//How many monsters the projectile can penetrate
-			this.projectile.timeLeft = 600;
-			this.projectile.alpha = 255;
-			this.projectile.light = 0.5f;		//How much light emit around the projectile
+
 			this.projectile.ignoreWater = true;
 			this.projectile.tileCollide = true;
-			this.projectile.extraUpdates = 7;	//Set to above 0 if you want the projectile to update multiple time in a frame
+
+			this.projectile.penetrate = 9;		//How many monsters the projectile can penetrate
+			this.projectile.timeLeft = 600;
+
+			this.projectile.extraUpdates = 4;	//Set to above 0 if you want the projectile to update multiple time in a frame
+
+			this.projectile.alpha = 255;
+			//this.projectile.light = 0.5f;		//How much light emit around the projectile
+
+			this.projectile.aiStyle = 1;
 			this.aiType = ProjectileID.Bullet;
 		}
 
@@ -72,7 +78,8 @@ namespace SteampunkArsenal.Projectiles {
 		////////////////
 
 		public override bool OnTileCollide( Vector2 oldVelocity ) {
-Main.NewText("hit");
+			this.projectile.velocity = default;
+
 			return false;
 		}
 
