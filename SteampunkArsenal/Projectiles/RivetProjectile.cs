@@ -45,6 +45,12 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 
+		private float OldRotation;
+
+
+
+		////////////////
+
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Hot Rivet" );
 			ProjectileID.Sets.TrailCacheLength[ projectile.type ] = 5;
@@ -52,8 +58,8 @@ namespace SteampunkArsenal.Projectiles {
 		}
 
 		public override void SetDefaults() {
-			this.projectile.width = 8;
-			this.projectile.height = 8;
+			this.projectile.width = 4;
+			this.projectile.height = 4;
 
 			this.projectile.friendly = true;
 			this.projectile.hostile = false;
@@ -62,10 +68,10 @@ namespace SteampunkArsenal.Projectiles {
 			this.projectile.ignoreWater = true;
 			this.projectile.tileCollide = true;
 
-			this.projectile.penetrate = 9;		//How many monsters the projectile can penetrate
-			this.projectile.timeLeft = 600;
-
 			this.projectile.extraUpdates = 4;	//Set to above 0 if you want the projectile to update multiple time in a frame
+
+			this.projectile.penetrate = 9;		//How many monsters the projectile can penetrate
+			this.projectile.timeLeft = 600 * this.projectile.extraUpdates;
 
 			this.projectile.alpha = 255;
 			//this.projectile.light = 0.5f;		//How much light emit around the projectile
@@ -77,8 +83,29 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 
+		public override void PostAI() {
+			if( this.projectile.velocity != default ) {
+				this.OldRotation = this.projectile.rotation;
+			} else {
+				this.projectile.rotation = this.OldRotation;
+			}
+		}
+
+
+		////////////////
+
 		public override bool OnTileCollide( Vector2 oldVelocity ) {
-			this.projectile.velocity = default;
+			Vector2 vel;
+
+			if( oldVelocity.LengthSquared() < 0.1f ) {
+				vel = default;
+			} else {
+				this.projectile.position -= oldVelocity;
+
+				vel = oldVelocity * 0.25f;
+			}
+			
+			this.projectile.velocity = vel;
 
 			return false;
 		}
