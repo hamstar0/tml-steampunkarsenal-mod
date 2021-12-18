@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -91,31 +89,6 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 
-		public override void OnHitNPC( NPC target, int damage, float knockback, bool crit ) {
-			this.HitTargets.Add( target );
-		}
-
-		////////////////
-
-		public override bool OnTileCollide( Vector2 oldVelocity ) {
-			Vector2 vel;
-
-			if( oldVelocity.LengthSquared() < 0.1f ) {
-				vel = default;
-			} else {
-				this.projectile.position -= oldVelocity;
-
-				vel = oldVelocity * 0.25f;
-			}
-			
-			this.projectile.velocity = vel;
-
-			return false;
-		}
-
-
-		////////////////
-
 		public override void PostAI() {
 			if( this.projectile.velocity != default ) {
 				this.OldRotation = this.projectile.rotation;
@@ -137,41 +110,6 @@ namespace SteampunkArsenal.Projectiles {
 			);
 
 			Main.PlaySound( SoundID.Item10, projectile.position );
-		}
-
-
-		////////////////
-
-		public override bool PreDraw( SpriteBatch spriteBatch, Color lightColor ) {
-			Texture2D tex = Main.projectileTexture[projectile.type];
-			float oldPosLen = projectile.oldPos.Length;
-
-			Vector2 drawOrigin = new Vector2(tex.Width, projectile.height) * 0.5f;
-
-			for( int k = 0; k < projectile.oldPos.Length; k++ ) {
-				Vector2 drawPos = projectile.oldPos[k]
-					- Main.screenPosition
-					+ drawOrigin
-					+ new Vector2( 0f, projectile.gfxOffY );
-
-				float opacity = (oldPosLen - (float)k) / oldPosLen;
-				Color color = projectile.GetAlpha( lightColor ) * opacity;
-
-				//Redraw the projectile with the color not influenced by light
-				spriteBatch.Draw(
-					tex,
-					drawPos,
-					null,
-					color,
-					projectile.rotation,
-					drawOrigin,
-					projectile.scale,
-					SpriteEffects.None,
-					0f
-				);
-			}
-
-			return true;
 		}
 	}
 }
