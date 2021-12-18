@@ -9,8 +9,11 @@ using ModLibsCore.Libraries.Debug;
 namespace SteampunkArsenal.Projectiles {
 	public partial class RivetProjectile : ModProjectile {
 		public override void OnHitNPC( NPC target, int damage, float knockback, bool crit ) {
-			this.HitTargets.Add( target );
+			if( this.projectile.velocity != default ) {
+				this.HitTargets.Add( target );
+			}
 		}
+
 
 		////////////////
 

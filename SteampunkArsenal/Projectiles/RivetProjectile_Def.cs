@@ -91,9 +91,27 @@ namespace SteampunkArsenal.Projectiles {
 
 		public override void PostAI() {
 			if( this.projectile.velocity != default ) {
-				this.OldRotation = this.projectile.rotation;
+				this.UpdateMoving();
 			} else {
-				this.projectile.rotation = this.OldRotation;
+				this.UpdateStopped();
+			}
+		}
+
+		////
+
+		private void UpdateMoving() {
+			this.OldRotation = this.projectile.rotation;
+		}
+
+		private void UpdateStopped() {
+			this.projectile.rotation = this.OldRotation;
+
+			if( this.HitTargets.Count > 0 ) {
+				foreach( NPC npc in this.HitTargets ) {
+					SteamArseNPC.ApplyRivetToIf( npc, this.projectile );
+				}
+
+				this.HitTargets.Clear();
 			}
 		}
 
