@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -47,6 +48,13 @@ namespace SteampunkArsenal.Projectiles {
 
 		private float OldRotation;
 
+		private ISet<NPC> HitTargets = new HashSet<NPC>();
+
+
+		////////////////
+
+		public override bool CloneNewInstances => false;
+
 
 
 		////////////////
@@ -83,14 +91,9 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 
-		public override void PostAI() {
-			if( this.projectile.velocity != default ) {
-				this.OldRotation = this.projectile.rotation;
-			} else {
-				this.projectile.rotation = this.OldRotation;
-			}
+		public override void OnHitNPC( NPC target, int damage, float knockback, bool crit ) {
+			this.HitTargets.Add( target );
 		}
-
 
 		////////////////
 
@@ -108,6 +111,17 @@ namespace SteampunkArsenal.Projectiles {
 			this.projectile.velocity = vel;
 
 			return false;
+		}
+
+
+		////////////////
+
+		public override void PostAI() {
+			if( this.projectile.velocity != default ) {
+				this.OldRotation = this.projectile.rotation;
+			} else {
+				this.projectile.rotation = this.OldRotation;
+			}
 		}
 
 
