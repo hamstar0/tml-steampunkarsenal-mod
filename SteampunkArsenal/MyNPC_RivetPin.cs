@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using ModLibsCore.Services.Timers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,13 +27,16 @@ namespace SteampunkArsenal {
 		private static void ApplyRivetTo( NPC npc, Projectile rivetProjectile ) {
 			float npcDim = (npc.width + npc.height) * 0.5f;
 
-			Vector2 openPos = SteamArseNPC.FindBestPinPosition( npcDim, npc.Center, rivetProjectile.Center );
-			Vector2 offset = openPos - rivetProjectile.Center;
-
 			var mynpc = npc.GetGlobalNPC<SteamArseNPC>();
 
-			mynpc.RivetedTo = rivetProjectile;
-			mynpc.RivetOffset = offset;
+			if( mynpc.RivetedTo.Count() == 0 ) {
+				Vector2 openPos = SteamArseNPC.FindBestPinPosition( npcDim, npc.Center, rivetProjectile.Center );
+				Vector2 offset = openPos - rivetProjectile.Center;
+
+				mynpc.RivetedTo[rivetProjectile] = offset;
+			} else {
+				mynpc.RivetedTo[rivetProjectile] = npc.Center - rivetProjectile.Center;
+			}
 		}
 
 

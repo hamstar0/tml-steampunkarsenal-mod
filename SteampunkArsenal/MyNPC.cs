@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -12,9 +13,7 @@ namespace SteampunkArsenal {
 
 		////////////////////
 
-		public Projectile RivetedTo { get; private set; } = null;
-
-		public Vector2 RivetOffset { get; private set; }
+		public IDictionary<Projectile, Vector2> RivetedTo { get; private set; } = new Dictionary<Projectile, Vector2>();
 
 
 		////////////////////
@@ -29,7 +28,7 @@ namespace SteampunkArsenal {
 		////////////////////
 
 		public override bool PreAI( NPC npc ) {
-			if( this.RivetedTo == null ) {
+			if( this.RivetedTo.Count == 0 ) {
 				if( this.OldAiStyle != -1 ) {
 					npc.aiStyle = this.OldAiStyle;
 
@@ -42,21 +41,26 @@ namespace SteampunkArsenal {
 
 
 		public override void PostAI( NPC npc ) {
-			if( this.RivetedTo != null ) {
+			if( this.RivetedTo.Count > 0 ) {
+				foreach( Projectile eachRivet in this.RivetedTo.Keys.ToArray() ) {
+					if( !eachRivet.active ) {
+						this.RivetedTo.Remove( eachRivet );
+					}
+				}
+
 				if( this.OldAiStyle == -1 ) {
 					this.OldAiStyle = npc.aiStyle;
 
 					npc.aiStyle = 0;
 				}
 
-				if( this.RivetedTo?.active != true ) {
-					this.RivetedTo = null;
-				} else {
-					npc.Center = this.RivetedTo.Center + this.RivetOffset;
-					npc.velocity = default;
+				Projectile rivet = this.RivetedTo.Keys.First();
+				Vector2 offset = this.RivetedTo[ rivet ];
 
-					this.ApplySquirmingRivetDamageIf( npc );
-				}
+				npc.Center = rivet.Center + offset;
+				npc.velocity = default;
+
+				this.ApplySquirmingRivetDamageIf( npc );
 			}
 		}
 
@@ -67,11 +71,14 @@ namespace SteampunkArsenal {
 			var config = SteampunkArsenalConfig.Instance;
 
 			float squirmScale = config.Get<float>( nameof(config.SquirmPerSecondLifeScale) );
-			float squirmPerSecond = (float)npc.lifeMax / 2;
+			float squirmPerSecond = (float)npc.lifeMax * squirmScale;
+			float squirmPerRivetPerSecond = squirmPerSecond / (float)this.RivetedTo.Count;
 
-			this.RivetedTo.timeLeft -= (int)(squirmPerSecond / 60f);
-			if( this.RivetedTo.timeLeft < 0 ) {
-				this.RivetedTo.timeLeft = 0;
+			foreach( Projectile rivet in this.RivetedTo.Keys ) {
+				rivet.timeLeft -= (int)( squirmPerRivetPerSecond / 60f );
+				if( rivet.timeLeft < 0 ) {
+					rivet.timeLeft = 0;
+				}
 			}
 		}
 	}
