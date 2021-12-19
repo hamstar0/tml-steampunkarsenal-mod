@@ -89,6 +89,17 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 
+		public override bool? CanHitNPC( NPC target ) {
+			return this.projectile.velocity != default;
+		}
+
+		public override bool CanHitPlayer( Player target ) {
+			return this.projectile.velocity != default;
+		}
+
+
+		////////////////
+
 		public override void PostAI() {
 			if( this.projectile.velocity != default ) {
 				this.UpdateMoving();
