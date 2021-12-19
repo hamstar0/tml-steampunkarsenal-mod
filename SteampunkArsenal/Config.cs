@@ -34,5 +34,12 @@ namespace SteampunkArsenal {
 		[DefaultValue( 2f / 3f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float BaseRiveterPressurizationRatePerTick { get; set; } = 2f / 3f;
+
+		////
+
+		[Range( 0f, 100f )]
+		[DefaultValue( 0.5f )]
+		[CustomModConfigItem( typeof(MyFloatInputElement) )]
+		public float SquirmPerSecondLifeScale { get; set; } = 0.5f;
 	}
 }
