@@ -10,10 +10,9 @@ namespace SteampunkArsenal {
 	partial class SteamArseNPC : GlobalNPC {
 		private int OldAiStyle = -1;
 
+		////
 
-		////////////////////
-
-		public IDictionary<Projectile, Vector2> RivetedTo { get; private set; } = new Dictionary<Projectile, Vector2>();
+		private IDictionary<Projectile, Vector2> RivetedTo = new Dictionary<Projectile, Vector2>();
 
 
 		////////////////////

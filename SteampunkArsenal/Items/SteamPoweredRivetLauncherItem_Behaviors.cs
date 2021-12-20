@@ -44,8 +44,10 @@ namespace SteampunkArsenal.Items {
 			projectile.damage = (int)pressure;
 
 			//
-
-			ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
+			
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
+			}
 		}
 
 

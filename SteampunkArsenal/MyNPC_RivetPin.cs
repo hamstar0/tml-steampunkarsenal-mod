@@ -1,14 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using SteampunkArsenal.Net;
 
 
 namespace SteampunkArsenal {
 	partial class SteamArseNPC : GlobalNPC {
-		public static void ApplyRivetToIf( NPC npc, Projectile rivetProjectile ) {
+		public static void ApplyRivetToIf_SyncsFromServer( NPC npc, Projectile rivetProjectile ) {
 			if( npc?.active != true || rivetProjectile?.active != true ) {
 				return;
 			}
@@ -20,22 +24,35 @@ namespace SteampunkArsenal {
 			float distSqr = diff.LengthSquared();
 
 			if( distSqr < (128f * 128f) ) {
-				SteamArseNPC.ApplyRivetTo( npc, rivetProjectile );
+				SteamArseNPC.ApplyRivetTo_SyncsFromServer( npc, rivetProjectile );
 			}
 		}
 
-		private static void ApplyRivetTo( NPC npc, Projectile rivetProjectile ) {
+		private static void ApplyRivetTo_SyncsFromServer( NPC npc, Projectile rivetProjectile ) {
+			Vector2 offset;
 			float npcDim = (npc.width + npc.height) * 0.5f;
 
 			var mynpc = npc.GetGlobalNPC<SteamArseNPC>();
 
 			if( mynpc.RivetedTo.Count() == 0 ) {
 				Vector2 openPos = SteamArseNPC.FindBestPinPosition( npcDim, npc.Center, rivetProjectile.Center );
-				Vector2 offset = openPos - rivetProjectile.Center;
-
-				mynpc.RivetedTo[rivetProjectile] = offset;
+				offset = openPos - rivetProjectile.Center;
 			} else {
-				mynpc.RivetedTo[rivetProjectile] = npc.Center - rivetProjectile.Center;
+				offset = npc.Center - rivetProjectile.Center;
+			}
+
+			mynpc.RivetedTo[rivetProjectile] = offset;
+
+			//
+
+			if( Main.netMode == NetmodeID.Server ) {
+				NPCPinProtocol.SendToClients(
+					npcWho: npc.whoAmI,
+					rivetProjOwner: rivetProjectile.owner,
+					rivetProjId: rivetProjectile.identity,
+					pinStrength: rivetProjectile.timeLeft,
+					offset: offset
+				);
 			}
 		}
 
@@ -158,6 +175,22 @@ namespace SteampunkArsenal {
 //	return true;
 //}, 60, false );
 			return shortestDistPos;
+		}
+
+
+
+		////////////////////
+
+		internal void SyncRivetPinFor( int rivetProjWho, int pinStrength, Vector2 offset ) {
+			Projectile proj = Main.projectile[ rivetProjWho ];
+			if( proj?.active != true ) {
+				LogLibraries.WarnOnce( "Could not sync rivet pin" );
+				return;
+			}
+
+			this.RivetedTo[ proj ] = offset;
+
+			proj.timeLeft = pinStrength;
 		}
 	}
 }

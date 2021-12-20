@@ -117,12 +117,14 @@ namespace SteampunkArsenal.Projectiles {
 		private void UpdateStopped() {
 			this.projectile.rotation = this.OldRotation;
 
-			if( this.HitTargets.Count > 0 ) {
-				foreach( NPC npc in this.HitTargets ) {
-					SteamArseNPC.ApplyRivetToIf( npc, this.projectile );
-				}
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				if( this.HitTargets.Count > 0 ) {
+					foreach( NPC npc in this.HitTargets ) {
+						SteamArseNPC.ApplyRivetToIf_SyncsFromServer( npc, this.projectile );
+					}
 
-				this.HitTargets.Clear();
+					this.HitTargets.Clear();
+				}
 			}
 		}
 
