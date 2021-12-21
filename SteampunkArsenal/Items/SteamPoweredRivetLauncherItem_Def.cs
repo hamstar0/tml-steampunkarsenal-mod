@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,6 +59,36 @@ namespace SteampunkArsenal.Items {
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
 			flat = this.Boiler.SteamPressure;
+		}
+
+
+		////////////////
+
+		public override bool CanUseItem( Player player ) {
+			if( this.Boiler.SteamPressure >= 10f ) {
+				return true;
+			}
+
+			Main.NewText( "Needs steam.", Color.Yellow );
+			return false;
+		}
+
+
+		////////////////
+
+		public override bool Shoot(
+					Player player,
+					ref Vector2 position,
+					ref float speedX,
+					ref float speedY,
+					ref int type,
+					ref int damage,
+					ref float knockBack ) {
+			damage = (int)this.Boiler.SteamPressure;
+
+			this.Boiler.AddWater( -this.Boiler.Water, 0f );
+
+			return base.Shoot( player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack );
 		}
 
 

@@ -99,7 +99,7 @@ namespace SteampunkArsenal.Projectiles {
 
 
 		////////////////
-
+		
 		public override void PostAI() {
 			if( this.projectile.velocity != default ) {
 				this.UpdateMoving();

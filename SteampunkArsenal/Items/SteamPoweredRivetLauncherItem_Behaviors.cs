@@ -69,7 +69,7 @@ namespace SteampunkArsenal.Items {
 
 				//
 
-				this.Boiler.AddBoilerWater( -this.Boiler.BoilerWater, 1f );
+				this.Boiler.AddWater( -this.Boiler.Water, 1f );
 
 				pressureChanged = true;
 			}

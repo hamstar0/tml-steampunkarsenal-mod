@@ -3,50 +3,50 @@ using Terraria;
 
 namespace SteampunkArsenal {
 	public class SteamPressureSource {
-		public float BoilerWater { get; private set; } = 0f;
+		public float Water { get; private set; } = 0f;
 
-		public float BoilerHeat { get; private set; } = 1f;
-
-
-		////////////////
-
-		public float SteamPressure => this.BoilerWater * this.BoilerHeat;
-
+		public float Heat { get; private set; } = 1f;
 
 
 		////////////////
 
-		public void AddBoilerWater( float waterAmount, float heatAmount ) {
+		public float SteamPressure => this.Water * this.Heat;
+
+
+
+		////////////////
+
+		public void AddWater( float waterAmount, float heatAmount ) {
 			if( waterAmount > 0f ) {
-				float percentAdded = waterAmount / ( this.BoilerWater + waterAmount );
-				float percentHeatAdded = heatAmount * percentAdded;
-
-				this.BoilerHeat -= this.BoilerHeat * percentAdded;
-
-				this.BoilerHeat += percentHeatAdded;
+				this.AddHeat( waterAmount, heatAmount );
 			}
 
-			this.BoilerWater += waterAmount;
+			this.Water += waterAmount;
 		}
 
-		public void AddBoilerHeat( float amount ) {
-			this.BoilerHeat += amount;
+		public void AddHeat( float waterAmount, float heatAmount ) {
+			float percentWaterToXferHeatFrom = waterAmount / (this.Water + waterAmount);
+			float percentHeatAdded = heatAmount * percentWaterToXferHeatFrom;
+
+			this.Heat -= this.Heat * percentWaterToXferHeatFrom;
+
+			this.Heat += percentHeatAdded;
 		}
 
 
 		////////////////
 
 		public void TransferPressureToMeFromSource( SteamPressureSource source, float amount ) {
-			float srcWater = source.BoilerWater;
-			float srcHeat = source.BoilerHeat;
+			float srcWater = source.Water;
+			float srcHeat = source.Heat;
 
 			float srcWaterDrawPerc = amount / ( srcWater * srcHeat );
 
-			source.AddBoilerWater( srcWaterDrawPerc * -srcWater, srcHeat );
+			source.AddWater( srcWaterDrawPerc * -srcWater, srcHeat );
 
 			//
 
-			this.AddBoilerWater( srcWaterDrawPerc * srcWater, srcHeat );
+			this.AddWater( srcWaterDrawPerc * srcWater, srcHeat );
 		}
 	}
 }
