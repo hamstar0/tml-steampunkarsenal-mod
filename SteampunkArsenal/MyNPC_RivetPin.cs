@@ -16,7 +16,7 @@ namespace SteampunkArsenal {
 			if( npc?.active != true || rivetProjectile?.active != true ) {
 				return;
 			}
-			if( npc.GetGlobalNPC<SteamArseNPC>().RivetedTo != null ) {
+			if( npc.GetGlobalNPC<SteamArseNPC>().RivetedTo.ContainsKey(rivetProjectile) ) {
 				return;
 			}
 

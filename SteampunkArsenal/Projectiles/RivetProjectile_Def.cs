@@ -90,11 +90,13 @@ namespace SteampunkArsenal.Projectiles {
 		////////////////
 
 		public override bool? CanHitNPC( NPC target ) {
-			return this.projectile.velocity != default;
+			return this.projectile.velocity != default
+				&& !target.townNPC;
 		}
 
 		public override bool CanHitPlayer( Player target ) {
-			return this.projectile.velocity != default;
+			return this.projectile.velocity != default
+				&& target.hostile;
 		}
 
 
@@ -118,13 +120,11 @@ namespace SteampunkArsenal.Projectiles {
 			this.projectile.rotation = this.OldRotation;
 
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
-				if( this.HitTargets.Count > 0 ) {
-					foreach( NPC npc in this.HitTargets ) {
-						SteamArseNPC.ApplyRivetToIf_SyncsFromServer( npc, this.projectile );
-					}
-
-					this.HitTargets.Clear();
+				foreach( NPC npc in this.HitTargets ) {
+					SteamArseNPC.ApplyRivetToIf_SyncsFromServer( npc, this.projectile );
 				}
+
+				this.HitTargets.Clear();
 			}
 		}
 
