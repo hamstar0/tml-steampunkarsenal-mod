@@ -19,8 +19,8 @@ namespace SteampunkArsenal.Items {
 
 				float tickAmt = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
-				myitem.Boiler.TransferPressureToMeFromSource(
-					wielderPlayer.GetModPlayer<SteamArsePlayer>().Boiler,
+				myitem.MyBoiler.TransferPressureToMeFromSource(
+					wielderPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler,
 					tickAmt
 				);
 			}
@@ -39,7 +39,7 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			float pressure = this.Boiler.SteamPressure;
+			float pressure = this.MyBoiler.SteamPressure;
 
 			projectile.damage = (int)pressure;
 
@@ -62,14 +62,14 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.Boiler.SteamPressure >= 100f ) {
+			if( this.MyBoiler.SteamPressure >= 100f ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
-				myplayer.ApplySteamDamage_Local_Syncs( this.Boiler.SteamPressure );
+				myplayer.ApplySteamDamage_Local_Syncs( this.MyBoiler.SteamPressure );
 
 				//
 
-				this.Boiler.AddWater( -this.Boiler.Water, 1f );
+				this.MyBoiler.AddWater( -this.MyBoiler.Water, 1f );
 
 				pressureChanged = true;
 			}

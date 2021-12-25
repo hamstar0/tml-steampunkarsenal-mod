@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace SteampunkArsenal.Items.Accessories {
 	[AutoloadEquip( EquipType.Back )]
 	class BoilerOBurdenItem : ModItem {
-		private Boiler Boiler = new Boiler();
+		public Boiler MyBoiler { get; } = new Boiler();
 
 
 

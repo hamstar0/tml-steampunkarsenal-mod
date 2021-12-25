@@ -8,7 +8,7 @@ using SteampunkArsenal.Projectiles;
 
 namespace SteampunkArsenal.Items {
 	public partial class SteamPoweredRivetLauncherItem : ModItem {
-		internal Boiler Boiler { get; private set; } = new Boiler();
+		internal Boiler MyBoiler { get; private set; } = new Boiler();
 
 
 
@@ -58,14 +58,14 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			flat = this.Boiler.SteamPressure;
+			flat = this.MyBoiler.SteamPressure;
 		}
 
 
 		////////////////
 
 		public override bool CanUseItem( Player player ) {
-			if( this.Boiler.SteamPressure >= 10f ) {
+			if( this.MyBoiler.SteamPressure >= 10f ) {
 				return true;
 			}
 
@@ -84,9 +84,9 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			damage = (int)this.Boiler.SteamPressure;
+			damage = (int)this.MyBoiler.SteamPressure;
 
-			this.Boiler.AddWater( -this.Boiler.Water, 0f );
+			this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f );
 
 			return base.Shoot( player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack );
 		}
