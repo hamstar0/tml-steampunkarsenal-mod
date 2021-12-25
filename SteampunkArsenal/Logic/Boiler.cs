@@ -3,9 +3,9 @@ using Terraria;
 
 namespace SteampunkArsenal {
 	public class Boiler {
-		public virtual float Water { get; protected set; } = 0f;
+		public virtual float Water { get; protected internal set; } = 0f;
 
-		public virtual float Heat { get; protected set; } = 1f;
+		public virtual float Heat { get; protected internal set; } = 1f;
 
 
 		////////////////
