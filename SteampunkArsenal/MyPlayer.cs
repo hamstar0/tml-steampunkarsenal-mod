@@ -7,7 +7,7 @@ using SteampunkArsenal.Items;
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
-		internal SteamPressureSource Boiler { get; private set; } = new SteamPressureSource();
+		internal Boiler Boiler { get; private set; } = new Boiler();
 
 
 

@@ -2,10 +2,10 @@ using Terraria;
 
 
 namespace SteampunkArsenal {
-	public class SteamPressureSource {
-		public float Water { get; private set; } = 0f;
+	public class Boiler {
+		public virtual float Water { get; protected set; } = 0f;
 
-		public float Heat { get; private set; } = 1f;
+		public virtual float Heat { get; protected set; } = 1f;
 
 
 		////////////////
@@ -36,7 +36,7 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		public void TransferPressureToMeFromSource( SteamPressureSource source, float amount ) {
+		public void TransferPressureToMeFromSource( Boiler source, float amount ) {
 			float srcWater = source.Water;
 			float srcHeat = source.Heat;
 
