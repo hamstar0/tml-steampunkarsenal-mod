@@ -25,11 +25,30 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		[DefaultValue( true )]
-		public bool RivetLauncherRecipeEnabled { get; set; } = true;
+		[Range( -4096f, 4096f )]
+		[DefaultValue( -96f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float PressureGaugeHUDPositionX { get; set; } = -96f;
+
+		[Range( -2048, 2048 )]
+		[DefaultValue( -128 )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float PressureGaugeHUDPositionY { get; set; } = -128;
+
 
 		////
 
+		[DefaultValue( true )]
+		public bool RivetLauncherRecipeEnabled { get; set; } = true;
+
+		[DefaultValue( true )]
+		public bool BoilerOBurdenRecipeEnabled { get; set; } = true;
+
+		[DefaultValue( true )]
+		public bool PortABoilerRecipeEnabled { get; set; } = true;
+
+		////
+		
 		[Range( 0f, 100f )]
 		[DefaultValue( 2f / 3f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]

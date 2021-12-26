@@ -57,6 +57,14 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
+		public override void AddRecipes() {
+			var recipe = new SteamPoweredRivetLauncherRecipe( this );
+			recipe.AddRecipe();
+		}
+
+
+		////////////////
+
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
 			flat = this.MyBoiler.SteamPressure;
 		}
@@ -89,15 +97,6 @@ namespace SteampunkArsenal.Items {
 			this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f );
 
 			return base.Shoot( player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack );
-		}
-
-
-		////////////////
-
-		public override void AddRecipes() {
-			var recipe = new SteamPoweredRivetLauncherRecipe( this );
-
-			recipe.AddRecipe();
 		}
 	}
 }

@@ -2,11 +2,12 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SteampunkArsenal.Recipes;
 
 
 namespace SteampunkArsenal.Items.Accessories {
-	[AutoloadEquip( EquipType.Back )]
-	class BoilerOBurdenItem : ModItem {
+	[AutoloadEquip( EquipType.Body )]
+	public class BoilerOBurdenItem : ModItem {
 		public Boiler MyBoiler { get; } = new Boiler();
 
 
@@ -21,12 +22,18 @@ namespace SteampunkArsenal.Items.Accessories {
 		}
 
 		public override void SetDefaults() {
-			sbyte realBackSlot = this.item.backSlot;
-
-			this.item.CloneDefaults( ItemID.HiveBackpack );
+			this.item.width = 22;
+			this.item.height = 22;
+			this.item.rare = ItemRarityID.Orange;
 			this.item.value = Item.sellPrice( 0, 5, 0, 0 );
-			// CloneDefaults will clear out the autoloaded Back slot, so we need to preserve it this way.
-			this.item.backSlot = realBackSlot;
+		}
+
+
+		////////////////
+
+		public override void AddRecipes() {
+			var recipe = new BoilerOBurdenRecipe( this );
+			recipe.AddRecipe();
 		}
 	}
 }
