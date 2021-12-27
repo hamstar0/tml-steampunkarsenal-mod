@@ -28,14 +28,15 @@ namespace SteampunkArsenal.HUD {
 			var posX = config.Get<float>( nameof(config.PressureGaugeHUDPositionX) );
 			var posY = config.Get<float>( nameof(config.PressureGaugeHUDPositionY) );
 
-			Texture2D tex = SteamArseMod.Instance.GetTexture( "PressureGaugeBG" );
+			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG" );
 
 			HUDElementsLibAPI.AddWidget(
 				new PressureGaugeHUD( new Vector2(posX, posY), new Vector2(tex.Width, tex.Height) )
 			);
 		}
 
-		////
+
+		////////////////
 
 		protected override void DrawSelf( SpriteBatch sb ) {
 			var mymod = SteamArseMod.Instance;
@@ -45,8 +46,8 @@ namespace SteampunkArsenal.HUD {
 
 			Vector2 pos = this.GetHUDComputedPosition( true );
 			Vector2 pinOrigin = new Vector2(
-				bg.Width / 2,
-				bg.Width / 2
+				pin.Width / 2,
+				pin.Height / 2
 			);
 
 			//
@@ -59,7 +60,7 @@ namespace SteampunkArsenal.HUD {
 
 			sb.Draw(
 				texture: pin,
-				position: pos,
+				position: pos + new Vector2( bg.Width / 2, bg.Width / 2 ),
 				sourceRectangle: null,
 				color: Color.White,
 				rotation: Main.rand.NextFloat() * (float)Math.PI,
