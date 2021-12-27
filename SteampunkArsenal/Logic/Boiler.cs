@@ -1,6 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
-using SteampunkArsenal.Items.Accessories;
+using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal {

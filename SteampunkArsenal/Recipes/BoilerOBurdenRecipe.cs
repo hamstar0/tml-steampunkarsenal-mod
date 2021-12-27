@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SteampunkArsenal.Items.Accessories;
+using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal.Recipes {

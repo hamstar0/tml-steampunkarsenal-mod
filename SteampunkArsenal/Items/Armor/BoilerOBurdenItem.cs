@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using SteampunkArsenal.Recipes;
 
 
-namespace SteampunkArsenal.Items.Accessories {
+namespace SteampunkArsenal.Items.Armor {
 	[AutoloadEquip( EquipType.Body )]
 	public class BoilerOBurdenItem : ModItem {
 		public Boiler MyBoiler { get; } = new Boiler();
@@ -15,6 +15,8 @@ namespace SteampunkArsenal.Items.Accessories {
 		////////////////
 
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+
 			// We can use vanilla language keys to copy the tooltip from HiveBackpack
 			this.Tooltip.SetDefault(
 				"Generates hot water for steam-powered machinery. Portable."

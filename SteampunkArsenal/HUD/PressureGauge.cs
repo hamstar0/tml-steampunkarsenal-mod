@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,6 +8,17 @@ using HUDElementsLib;
 
 namespace SteampunkArsenal.HUD {
 	class PressureGaugeHUD : HUDElement, ILoadable {
+		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default ) { }
+
+		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(
+					name: "PressureGauge",
+					position: position,
+					dimensions: dimensions ) {
+		}
+
+
+		////
+
 		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnModsUnload() { }
@@ -26,13 +36,6 @@ namespace SteampunkArsenal.HUD {
 		}
 
 		////
-
-		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(
-					name: "PressureGauge",
-					position: position,
-					dimensions: dimensions ) {
-		}
-
 
 		protected override void DrawSelf( SpriteBatch sb ) {
 			var mymod = SteamArseMod.Instance;
