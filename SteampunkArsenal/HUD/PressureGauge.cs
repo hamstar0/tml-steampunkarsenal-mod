@@ -39,9 +39,9 @@ namespace SteampunkArsenal.HUD {
 
 		protected override void DrawSelf( SpriteBatch sb ) {
 			var mymod = SteamArseMod.Instance;
-			Texture2D bg = mymod.GetTexture( "PressureGaugeBG" );
-			Texture2D fg = mymod.GetTexture( "PressureGaugeFG" );
-			Texture2D pin = mymod.GetTexture( "PressureGaugePin" );
+			Texture2D bg = mymod.GetTexture( "HUD/PressureGaugeBG" );
+			Texture2D fg = mymod.GetTexture( "HUD/PressureGaugeFG" );
+			Texture2D pin = mymod.GetTexture( "HUD/PressureGaugePin" );
 
 			Vector2 pos = this.GetHUDComputedPosition( true );
 			Vector2 pinOrigin = new Vector2(
