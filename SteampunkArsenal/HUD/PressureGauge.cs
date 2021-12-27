@@ -50,6 +50,12 @@ namespace SteampunkArsenal.HUD {
 				pin.Height / 2
 			);
 
+			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
+			float pressure = myplayer.MyBoiler.SteamPressure;
+			float gaugePercent = pressure / 100f;
+			float gauge = (float)Math.PI * 0.5f;
+			gauge += gaugePercent * (float)Math.PI * 1.5f;
+
 			//
 
 			sb.Draw(
@@ -63,7 +69,7 @@ namespace SteampunkArsenal.HUD {
 				position: pos + new Vector2( bg.Width / 2, bg.Width / 2 ),
 				sourceRectangle: null,
 				color: Color.White,
-				rotation: Main.rand.NextFloat() * (float)Math.PI,
+				rotation: gauge,
 				origin: pinOrigin,
 				scale: 1f,
 				effects: SpriteEffects.None,
