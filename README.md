@@ -4,4 +4,4 @@ This mod adds a Steam-Driven Rivet Launcher weapon, along with associated steam-
 
 
 Credits:
-  Riveter sprite - koolaidlemonade
+  Sprites - koolaidlemonade

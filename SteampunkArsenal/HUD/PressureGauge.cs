@@ -2,12 +2,39 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 using HUDElementsLib;
 
 
 namespace SteampunkArsenal.HUD {
 	class PressureGaugeHUD : HUDElement, ILoadable {
+		private static void InitializePressureGaugeHUD() {
+			var config = SteampunkArsenalConfig.Instance;
+			var posX = config.Get<float>( nameof( config.PressureGaugeHUDPositionX ) );
+			var posY = config.Get<float>( nameof( config.PressureGaugeHUDPositionY ) );
+
+			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG_A" );
+			var hudElem = new PressureGaugeHUD( new Vector2( posX, posY ), new Vector2( tex.Width, tex.Height ) );
+
+			hudElem.OnClick += ( evt, listeningElement ) => {
+				hudElem.AnimState = 15;
+			};
+
+			HUDElementsLibAPI.AddWidget( hudElem );
+		}
+
+
+
+		////////////////
+
+		private int AnimState = 0;
+
+
+
+		////////////////
+		
 		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default ) { }
 
 		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(
@@ -24,15 +51,20 @@ namespace SteampunkArsenal.HUD {
 		void ILoadable.OnModsUnload() { }
 
 		void ILoadable.OnPostModsLoad() {
-			var config = SteampunkArsenalConfig.Instance;
-			var posX = config.Get<float>( nameof(config.PressureGaugeHUDPositionX) );
-			var posY = config.Get<float>( nameof(config.PressureGaugeHUDPositionY) );
+			if( !Main.dedServ && Main.netMode != NetmodeID.Server ) {
+				PressureGaugeHUD.InitializePressureGaugeHUD();
+			}
+		}
 
-			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG" );
 
-			HUDElementsLibAPI.AddWidget(
-				new PressureGaugeHUD( new Vector2(posX, posY), new Vector2(tex.Width, tex.Height) )
-			);
+		////////////////
+
+		public override void Update( GameTime gameTime ) {
+			if( this.AnimState > 0 ) {
+				this.AnimState--;
+			}
+
+			base.Update( gameTime );
 		}
 
 
@@ -40,7 +72,9 @@ namespace SteampunkArsenal.HUD {
 
 		protected override void DrawSelf( SpriteBatch sb ) {
 			var mymod = SteamArseMod.Instance;
-			Texture2D bg = mymod.GetTexture( "HUD/PressureGaugeBG" );
+			Texture2D bg = this.AnimState == 0
+				? mymod.GetTexture( "HUD/PressureGaugeBG_A" )
+				: mymod.GetTexture( "HUD/PressureGaugeBG_B" );
 			Texture2D fg = mymod.GetTexture( "HUD/PressureGaugeFG" );
 			Texture2D pin = mymod.GetTexture( "HUD/PressureGaugePin" );
 
@@ -66,7 +100,7 @@ namespace SteampunkArsenal.HUD {
 
 			sb.Draw(
 				texture: pin,
-				position: pos + new Vector2( bg.Width / 2, bg.Width / 2 ),
+				position: pos + new Vector2(bg.Width, bg.Height) * 0.5f,
 				sourceRectangle: null,
 				color: Color.White,
 				rotation: gauge,
