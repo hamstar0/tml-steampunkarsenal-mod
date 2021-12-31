@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader;
+using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal {
@@ -29,6 +31,10 @@ namespace SteampunkArsenal {
 
 		////////////////
 
+		public override bool IsActive => this.ConnectedBoilers.Count > 0;
+
+		////
+
 		public ISet<Boiler> ConnectedBoilers { get; private set; } = new HashSet<Boiler>();
 
 
@@ -39,6 +45,50 @@ namespace SteampunkArsenal {
 
 		public ConvergentBoiler( IList<Boiler> boilers ) : base() {
 			this.ConnectedBoilers = new HashSet<Boiler>( boilers );
+		}
+
+
+		////////////////
+
+		protected internal override void Update() {
+			foreach( Boiler boiler in this.ConnectedBoilers ) {
+				boiler.Update();
+			}
+		}
+
+
+		////////////////
+
+		public void RefreshConnectedBoilers( Player player ) {
+			this.ConnectedBoilers.Clear();
+
+			//
+
+			Item bodyArmor = player.armor[1];
+
+			if( bodyArmor?.active == true && bodyArmor.type == ModContent.ItemType<BoilerOBurdenItem>() ) {
+				var myitem = bodyArmor.modItem as BoilerOBurdenItem;
+
+				if( myitem != null ) {
+					this.ConnectedBoilers.Add( myitem.MyBoiler );
+				}
+			}
+
+			//
+
+			/*int beg = PlayerItemLibraries.VanillaAccessorySlotFirst;
+			int max = PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
+			int end = beg + max;
+
+			for( int i = beg; i < end; i++ ) {
+				Item item = player.armor[i];
+				var myitem = item?.modItem as PortABoilerItem;
+				if( myitem == null ) {
+					continue;
+				}
+
+				this.ConnectedBoilers.Add( myitem.Boiler );
+			}*/
 		}
 	}
 }

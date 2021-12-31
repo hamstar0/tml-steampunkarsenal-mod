@@ -7,12 +7,14 @@ using SteampunkArsenal.Net;
 
 namespace SteampunkArsenal.Items {
 	public partial class SteamPoweredRivetLauncherItem : ModItem {
-		internal static void RunHeldBehavior_Local( Player wielderPlayer, Item launcherItem ) {
+		internal static void RunHeldBehavior_Local_If( Player wielderPlayer, Item launcherItem ) {
 			if( wielderPlayer.whoAmI != Main.myPlayer ) {
 				return;
 			}
 
 			var myitem = launcherItem.modItem as SteamPoweredRivetLauncherItem;
+
+			//
 
 			if( Main.mouseRight ) {
 				var config = SteampunkArsenalConfig.Instance;
@@ -20,8 +22,8 @@ namespace SteampunkArsenal.Items {
 				float tickAmt = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
 				myitem.MyBoiler.TransferPressureToMeFromSource(
-					wielderPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler,
-					tickAmt
+					source: wielderPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler,
+					amount: tickAmt
 				);
 			}
 

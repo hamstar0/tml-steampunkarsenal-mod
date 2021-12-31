@@ -1,45 +1,35 @@
 using Terraria;
-using Terraria.ModLoader;
+using SteampunkArsenal.Items;
 using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal {
 	public class Boiler {
-		public static void RefreshConnectedBoilers( Player player, ConvergentBoiler boiler ) {
-			boiler.ConnectedBoilers.Clear();
-
-			//
-
-			Item bodyArmor = player.armor[1];
-
-			if( bodyArmor?.active == true && bodyArmor.type == ModContent.ItemType<BoilerOBurdenItem>() ) {
-				var myitem = bodyArmor.modItem as BoilerOBurdenItem;
-
-				if( myitem != null ) {
-					boiler.ConnectedBoilers.Add( myitem.MyBoiler );
-				}
+		public static Boiler GetBoilerForItem( Item item ) {
+			if( item?.active != true || item.modItem == null ) {
+				return null;
 			}
 
-			//
+			if( item.modItem is SteamPoweredRivetLauncherItem ) {
+				return ((SteamPoweredRivetLauncherItem)item.modItem).MyBoiler;
+			}
 
-			/*int beg = PlayerItemLibraries.VanillaAccessorySlotFirst;
-			int max = PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
-			int end = beg + max;
+			if( item.modItem is BoilerOBurdenItem ) {
+				return ((BoilerOBurdenItem)item.modItem).MyBoiler;
+			}
 
-			for( int i = beg; i < end; i++ ) {
-				Item item = player.armor[i];
-				var myitem = item?.modItem as PortABoilerItem;
-				if( myitem == null ) {
-					continue;
-				}
+			//if( !(item.modItem is PortABoilerItem) ) {
+			//	return ((PortABoilerItem)item.modItem).MyBoiler;
+			//}
 
-				boiler.ConnectedBoilers.Add( myitem.Boiler );
-			}*/
+			return null;
 		}
 
 
 
 		////////////////
+
+		public virtual bool IsActive => true;
 
 		public virtual float Water { get; protected internal set; } = 0f;
 
@@ -55,11 +45,11 @@ namespace SteampunkArsenal {
 		////////////////
 
 		public void AddWater( float waterAmount, float heatAmount ) {
+			this.Water += waterAmount;
+
 			if( waterAmount > 0f ) {
 				this.AddHeat( waterAmount, heatAmount );
 			}
-
-			this.Water += waterAmount;
 		}
 
 		public void AddHeat( float waterAmount, float heatAmount ) {
@@ -72,7 +62,7 @@ namespace SteampunkArsenal {
 		}
 
 
-		////////////////
+		////
 
 		public void TransferPressureToMeFromSource( Boiler source, float amount ) {
 			float srcWater = source.Water;
@@ -86,5 +76,10 @@ namespace SteampunkArsenal {
 
 			this.AddWater( srcWaterDrawPerc * srcWater, srcHeat );
 		}
+
+
+		////////////////
+
+		internal protected virtual void Update() { }
 	}
 }

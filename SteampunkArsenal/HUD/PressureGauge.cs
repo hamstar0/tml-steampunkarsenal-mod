@@ -9,8 +9,14 @@ using HUDElementsLib;
 
 
 namespace SteampunkArsenal.HUD {
-	class PressureGaugeHUD : HUDElement, ILoadable {
-		private static void InitializePressureGaugeHUD() {
+	partial class PressureGaugeHUD : HUDElement, ILoadable {
+		public static PressureGaugeHUD Instance { get; private set; }
+
+
+
+		////////////////
+
+		private static PressureGaugeHUD InitializePressureGaugeHUD() {
 			var config = SteampunkArsenalConfig.Instance;
 			var posX = config.Get<float>( nameof( config.PressureGaugeHUDPositionX ) );
 			var posY = config.Get<float>( nameof( config.PressureGaugeHUDPositionY ) );
@@ -19,16 +25,20 @@ namespace SteampunkArsenal.HUD {
 			var hudElem = new PressureGaugeHUD( new Vector2( posX, posY ), new Vector2( tex.Width, tex.Height ) );
 
 			hudElem.OnClick += ( evt, listeningElement ) => {
-				hudElem.AnimState = 15;
+				if( hudElem.AttemptButtonPress() ) {
+					hudElem.AnimState = 15;
+				}
 			};
 
 			HUDElementsLibAPI.AddWidget( hudElem );
+
+			return hudElem;
 		}
 
 
 
 		////////////////
-
+		
 		private int AnimState = 0;
 
 
@@ -48,29 +58,37 @@ namespace SteampunkArsenal.HUD {
 
 		void ILoadable.OnModsLoad() { }
 
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.OnModsUnload() {
+			PressureGaugeHUD.Instance = null;
+		}
 
 		void ILoadable.OnPostModsLoad() {
 			if( !Main.dedServ && Main.netMode != NetmodeID.Server ) {
-				PressureGaugeHUD.InitializePressureGaugeHUD();
+				PressureGaugeHUD.Instance = PressureGaugeHUD.InitializePressureGaugeHUD();
 			}
 		}
 
 
 		////////////////
 
-		public override void Update( GameTime gameTime ) {
+		public override bool IsEnabled() {
+			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
+			return myplayer.MyBoiler?.IsActive ?? false;
+		}
+
+
+		////////////////
+
+		protected override void PreUpdateWhileActive() {
 			if( this.AnimState > 0 ) {
 				this.AnimState--;
 			}
-
-			base.Update( gameTime );
 		}
 
 
 		////////////////
 
-		protected override void DrawSelf( SpriteBatch sb ) {
+		protected override bool PreDrawSelf( SpriteBatch sb ) {
 			var mymod = SteamArseMod.Instance;
 			Texture2D bg = this.AnimState == 0
 				? mymod.GetTexture( "HUD/PressureGaugeBG_A" )
@@ -83,6 +101,8 @@ namespace SteampunkArsenal.HUD {
 				pin.Width / 2,
 				pin.Height / 2
 			);
+
+			//
 
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
 			float pressure = myplayer.MyBoiler.SteamPressure;
@@ -115,6 +135,10 @@ namespace SteampunkArsenal.HUD {
 				position: pos,
 				color: Color.White
 			);
+
+			//
+
+			return false;
 		}
 	}
 }
