@@ -44,37 +44,45 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		public void AddWater( float waterAmount, float heatAmount ) {
+		public float AddWater( float waterAmount, float heatAmount ) {
 			this.Water += waterAmount;
 
 			if( waterAmount > 0f ) {
 				this.AddHeat( waterAmount, heatAmount );
 			}
+
+			return waterAmount;
 		}
 
-		public void AddHeat( float waterAmount, float heatAmount ) {
-			float percentWaterToXferHeatFrom = waterAmount / (this.Water + waterAmount);
-			float percentHeatAdded = heatAmount * percentWaterToXferHeatFrom;
+		public float AddHeat( float waterAmount, float heatAmount ) {
+			float percWaterAdded = waterAmount / (this.Water + waterAmount);
+			float heatAdded = heatAmount * percWaterAdded;
 
-			this.Heat -= this.Heat * percentWaterToXferHeatFrom;
+			this.Heat += heatAdded;
 
-			this.Heat += percentHeatAdded;
+			return heatAdded;
 		}
 
 
 		////
 
-		public void TransferPressureToMeFromSource( Boiler source, float amount ) {
-			float srcWater = source.Water;
-			float srcHeat = source.Heat;
-
-			float srcWaterDrawPerc = amount / ( srcWater * srcHeat );
-
-			source.AddWater( srcWaterDrawPerc * -srcWater, srcHeat );
+		public float TransferPressureToMeFromSource( Boiler source, float amount ) {
+			if( source.SteamPressure <= 0 ) {
+				return 0f;
+			}
 
 			//
 
-			this.AddWater( srcWaterDrawPerc * srcWater, srcHeat );
+			float srcHeat = source.Heat;
+
+			float srcWaterDrawAmt = amount / srcHeat;
+
+			source.AddWater( -srcWaterDrawAmt, srcHeat );
+			this.AddWater( srcWaterDrawAmt, srcHeat );
+
+			//
+
+			return srcWaterDrawAmt;
 		}
 
 

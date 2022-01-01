@@ -92,11 +92,17 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			damage = (int)this.MyBoiler.SteamPressure;
+			float steam = this.MyBoiler.SteamPressure;
 
-			this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f );
+			if( steam > 0f ) {
+				this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f );
+			}
 
-			return base.Shoot( player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack );
+			//
+
+			damage = (int)steam;
+
+			return steam > 0f;
 		}
 	}
 }

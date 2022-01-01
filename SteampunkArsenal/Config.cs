@@ -50,9 +50,9 @@ namespace SteampunkArsenal {
 		////
 		
 		[Range( 0f, 100f )]
-		[DefaultValue( 2f / 3f )]
+		[DefaultValue( 1f / 60f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float BaseRiveterPressurizationRatePerTick { get; set; } = 2f / 3f;
+		public float BaseRiveterPressurizationRatePerTick { get; set; } = 1f / 60f;
 
 		////
 		

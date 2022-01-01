@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,17 @@ namespace SteampunkArsenal {
 
 		////////////////
 
+		public SoundEffectInstance WaterDraw;
+
+
+
+		////////////////
+
 		public override void PostSetupContent() {
+			this.WaterDraw = Main.soundLiquid[1].CreateInstance();
+
+			//
+
 			ProjectileOwner.AddOwnerSetHook( ( projectileIdx, isManual ) => {
 				if( !isManual ) {
 					Projectile proj = Main.projectile[ projectileIdx ];

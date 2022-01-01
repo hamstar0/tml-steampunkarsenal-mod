@@ -14,6 +14,10 @@ using SteampunkArsenal.Items.Armor;
 namespace SteampunkArsenal.HUD {
 	partial class PressureGaugeHUD : HUDElement, ILoadable {
 		public bool AttemptButtonPress() {
+			Main.LocalPlayer.mouseInterface = true;
+
+			//
+
 			if( this.AnimState > 0 ) {
 				return false;
 			}
