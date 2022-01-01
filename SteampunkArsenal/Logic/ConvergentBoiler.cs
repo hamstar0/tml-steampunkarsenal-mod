@@ -7,13 +7,13 @@ using SteampunkArsenal.Items.Armor;
 
 namespace SteampunkArsenal {
 	public class ConvergentBoiler : Boiler {
-		public override float Heat {
-			get => this.ConnectedBoilers.Sum( b => b.Heat );
+		public override float WaterTemperature {
+			get => this.ConnectedBoilers.Sum( b => b.WaterTemperature );
 			protected internal set {
 				float divVal = value / (float)this.ConnectedBoilers.Count;
 
 				foreach( Boiler boiler in this.ConnectedBoilers ) {
-					boiler.Heat = divVal;
+					boiler.WaterTemperature = divVal;
 				}
 			}
 		}
@@ -46,6 +46,20 @@ namespace SteampunkArsenal {
 		public ConvergentBoiler( IList<Boiler> boilers ) : base() {
 			this.ConnectedBoilers = new HashSet<Boiler>( boilers );
 		}
+
+
+		////////////////
+
+		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
+		}
+
+
+		////
+
+		public override void SetBoilerHeat( float heatAmount ) {
+			f
+		}
+
 
 
 		////////////////

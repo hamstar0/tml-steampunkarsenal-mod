@@ -95,7 +95,7 @@ namespace SteampunkArsenal.Items {
 			float steam = this.MyBoiler.SteamPressure;
 
 			if( steam > 0f ) {
-				this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f );
+				this.MyBoiler.AddWater( -this.MyBoiler.Water, 0f, out _ );
 			}
 
 			//

@@ -32,13 +32,16 @@ namespace SteampunkArsenal {
 			if( this.MyBoiler.IsActive ) {
 				this.UpdateBoiler();
 			}
-DebugLibraries.Print(
-	"boiler",
-	"Water: "+this.MyBoiler.Water.ToString("N2")
-		+", Heat: "+this.MyBoiler.Heat.ToString("N2")
-		+", Steam: "+this.MyBoiler.SteamPressure.ToString("N2")
-		+", Gun: "+Boiler.GetBoilerForItem(this.player.HeldItem)?.SteamPressure.ToString("N2")
-);
+
+			if( SteampunkArsenalConfig.Instance.DebugModeInfo && this.player.whoAmI == Main.myPlayer ) {
+				DebugLibraries.Print(
+					"my boiler",
+					"Water: " + this.MyBoiler.Water.ToString( "N2" )
+						+ ", Heat: " + this.MyBoiler.WaterTemperature.ToString( "N2" )
+						+ ", Steam: " + this.MyBoiler.SteamPressure.ToString( "N2" )
+						+ ", Gun: " + Boiler.GetBoilerForItem( this.player.HeldItem )?.SteamPressure.ToString( "N2" )
+				);
+			}
 		}
 
 

@@ -14,7 +14,7 @@ namespace SteampunkArsenal {
 			bool isInterrupted = false;
 
 			if( isWet ) {
-				float fillAmt = this.MyBoiler.AddWater( 1f, 1f );
+				float fillAmt = this.MyBoiler.AddWater( 1f, 1f, out _ );
 
 				//
 

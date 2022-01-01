@@ -18,13 +18,19 @@ namespace SteampunkArsenal.Items {
 
 			if( Main.mouseRight ) {
 				var config = SteampunkArsenalConfig.Instance;
+				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
 				float tickAmt = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
 				myitem.MyBoiler.TransferPressureToMeFromSource(
-					source: wielderPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler,
-					amount: tickAmt
+					source: myplayer.MyBoiler,
+					pressureAmount: tickAmt,
+					waterOverflow: out float waterOverflow
 				);
+
+				if( waterOverflow > 0f ) {
+					myplayer.MyBoiler.AddWater( waterOverflow, myplayer.MyBoiler.WaterTemperature, out _ );
+				}
 			}
 
 			//
@@ -71,7 +77,7 @@ namespace SteampunkArsenal.Items {
 
 				//
 
-				this.MyBoiler.AddWater( -this.MyBoiler.Water, 1f );
+				this.MyBoiler.AddWater( -this.MyBoiler.Water, 1f, out _ );
 
 				pressureChanged = true;
 			}

@@ -25,6 +25,12 @@ namespace SteampunkArsenal {
 
 		////////////////
 
+		public bool DebugModeInfo { get; set; } = false;
+
+
+
+		////////////////
+
 		[Range( -4096f, 4096f )]
 		[DefaultValue( -96f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
