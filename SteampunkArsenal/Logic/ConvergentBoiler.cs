@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -7,35 +8,21 @@ using SteampunkArsenal.Items.Armor;
 
 namespace SteampunkArsenal {
 	public class ConvergentBoiler : Boiler {
-		public override float WaterTemperature {
-			get => this.ConnectedBoilers.Sum( b => b.WaterTemperature );
-			protected internal set {
-				float divVal = value / (float)this.ConnectedBoilers.Count;
+		public override bool IsActive => this.ConnectedBoilers.Any( b => b.IsActive );
 
-				foreach( Boiler boiler in this.ConnectedBoilers ) {
-					boiler.WaterTemperature = divVal;
-				}
-			}
-		}
+		public override float Water => this.ConnectedBoilers.Sum( b => b.Water );
 
-		public override float Water {
-			get => this.ConnectedBoilers.Sum( b => b.Water );
-			protected internal set {
-				foreach( Boiler boiler in this.ConnectedBoilers ) {
-					boiler.Water = value / (float)this.ConnectedBoilers.Count;
-				}
-			}
-		}
+		public override float WaterTemperature  => this.ConnectedBoilers.Average( b => b.WaterTemperature );
+
+		public override float BoilerTemperature  => this.ConnectedBoilers.Average( b => b.BoilerTemperature );
+
+		public override float Capacity => this.ConnectedBoilers.Sum( b => b.Capacity );
 
 
 
 		////////////////
 
-		public override bool IsActive => this.ConnectedBoilers.Count > 0;
-
-		////
-
-		public ISet<Boiler> ConnectedBoilers { get; private set; } = new HashSet<Boiler>();
+		protected ISet<Boiler> ConnectedBoilers = new HashSet<Boiler>();
 
 
 
@@ -51,13 +38,42 @@ namespace SteampunkArsenal {
 		////////////////
 
 		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
+			float overflow = waterAmount;
+			var availableBoilers = new HashSet<Boiler>( this.ConnectedBoilers );
+
+			do {
+				float divWaterAmt = overflow / (float)availableBoilers.Count;
+
+				//
+
+				overflow = 0f;
+
+				foreach( Boiler boiler in availableBoilers.ToArray() ) {
+					boiler.AddWater( divWaterAmt, heatAmount, out float myOverflow );
+
+					//
+
+					if( myOverflow > 0f ) {
+						overflow += myOverflow;
+
+						availableBoilers.Remove( boiler );
+					}
+				}
+			} while( overflow > 0f && availableBoilers.Count > 0 );
+
+			//
+
+			waterOverflow = overflow;
+			return waterAmount - waterOverflow;
 		}
 
 
 		////
 
 		public override void SetBoilerHeat( float heatAmount ) {
-			f
+			foreach( Boiler boiler in this.ConnectedBoilers ) {
+				boiler.SetBoilerHeat( heatAmount );
+			}
 		}
 
 

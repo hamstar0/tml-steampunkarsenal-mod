@@ -40,27 +40,27 @@ namespace SteampunkArsenal {
 
 		public virtual bool IsActive => this.Capacity > 0f;
 
-		public virtual float Water { get; protected internal set; } = 0f;
+		////
 
-		public virtual float WaterTemperature { get; protected internal set; } = 0f;
+		public virtual float Water { get; private set; } = 0f;
 
-		public virtual float BoilerTemperature { get; protected internal set; } = 0f;
+		public virtual float WaterTemperature { get; private set; } = 0f;
 
-		public virtual float Capacity { get; protected internal set; } = 100f;
+		public virtual float BoilerTemperature { get; private set; } = 0f;
+
+		public virtual float Capacity { get; private set; } = 100f;
 
 
 		////////////////
 
 		public float SteamPressure => this.Water * this.WaterTemperature;
 
-		public float WaterCapacityUsed => Boiler.CapacityUsed( this.Water, this.WaterTemperature );
-
 
 
 		////////////////
 
 		public virtual float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			float currCapacityUse = this.WaterCapacityUsed;
+			float currCapacityUse = Boiler.CapacityUsed( this.Water, this.WaterTemperature );
 			float addedCapacityUse = Boiler.CapacityUsed( waterAmount, heatAmount );
 			
 			// Enforce capacity
