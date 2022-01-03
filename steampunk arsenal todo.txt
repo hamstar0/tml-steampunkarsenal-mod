@@ -6,11 +6,11 @@ v1
 	-	Add steam spout on firing rivet
 	-	Refine steam malfunction burst
 -	Implement 'Steam Ball' ammo item
-	-	Implement automatic recharging (needs a boiler or campfire)
-	-	Implement gun charging + consume charge
 	-	Create sprite
+	-	Implement automatic recharging (needs a boiler or campfire)
 
 
+	-	Implement gun charging + consume charge
 	-	Recipe: 1 Magitech Scrap, 1 Inlet Pump, 5 Iron/Lead Bars, 5 Copper/Tin Bars, 1 Lava Bucket
 	-	Define item
 -	Implement SteamSource and SteamBall logic classes

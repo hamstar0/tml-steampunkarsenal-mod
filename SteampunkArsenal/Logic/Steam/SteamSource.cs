@@ -33,7 +33,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			}
 
 			if( item.modItem is SteamBallItem ) {
-				return ( (SteamBallItem)item.modItem ).MyBoiler;
+				return ( (SteamBallItem)item.modItem ).Storage;
 			}
 
 			return null;
