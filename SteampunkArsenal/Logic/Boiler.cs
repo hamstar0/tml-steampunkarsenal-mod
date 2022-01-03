@@ -5,7 +5,7 @@ using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal {
-	public class Boiler {
+	public abstract class Boiler {
 		public static Boiler GetBoilerForItem( Item item ) {
 			if( item?.active != true || item.modItem == null ) {
 				return null;
@@ -38,17 +38,17 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		public virtual bool IsActive => this.Capacity > 0f;
+		public bool IsActive => this.Capacity > 0f;
 
 		////
 
-		public virtual float Water { get; private set; } = 0f;
+		public abstract float Water { get; }
 
-		public virtual float WaterTemperature { get; private set; } = 0f;
+		public abstract float WaterTemperature { get; }
 
-		public virtual float BoilerTemperature { get; private set; } = 0f;
+		public abstract float BoilerTemperature { get; }
 
-		public virtual float Capacity { get; private set; } = 100f;
+		public abstract float Capacity { get; }
 
 
 		////////////////
@@ -59,41 +59,9 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		public virtual float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			float currCapacityUse = Boiler.CapacityUsed( this.Water, this.WaterTemperature );
-			float addedCapacityUse = Boiler.CapacityUsed( waterAmount, heatAmount );
-			
-			// Enforce capacity
-			if( (addedCapacityUse + currCapacityUse) > this.Capacity ) {
-				float capacityOverflow = (addedCapacityUse + currCapacityUse) - this.Capacity;
-				waterOverflow = capacityOverflow / heatAmount;
+		public abstract float AddWater( float waterAmount, float heatAmount, out float waterOverflow );
 
-				waterAmount = (this.Capacity - currCapacityUse) / heatAmount;
-			} else {
-				waterOverflow = 0;
-			}
-
-			//
-
-			float waterPercentAdded = this.Water > 0f
-				? waterAmount / this.Water
-				: waterAmount;
-
-			this.WaterTemperature += waterPercentAdded * heatAmount;
-
-			//
-
-			this.Water += waterAmount;
-
-			return waterAmount;
-		}
-
-
-		////
-
-		public virtual void SetBoilerHeat( float heatAmount ) {
-			this.BoilerTemperature = heatAmount;
-		}
+		public abstract void SetBoilerHeat( float heatAmount );
 
 
 		////
@@ -121,16 +89,6 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		internal protected virtual void Update() {
-			float addedTemp = this.Water > 0f
-				? this.BoilerTemperature / this.Water	// more water? add more heat!
-				: 0f;
-
-			this.WaterTemperature += addedTemp;
-
-			if( this.WaterTemperature > this.BoilerTemperature ) {
-				this.WaterTemperature = this.BoilerTemperature;
-			}
-		}
+		internal protected abstract void Update( Player owner );
 	}
 }

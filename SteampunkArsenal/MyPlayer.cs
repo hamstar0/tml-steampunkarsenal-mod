@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,14 +14,10 @@ namespace SteampunkArsenal {
 		////////////////
 
 		public override void PreUpdate() {
-			this.MyBoiler.RefreshConnectedBoilers( this.player );
-			
-			//
-
 			foreach( Item item in this.player.inventory ) {
 				Boiler boiler = Boiler.GetBoilerForItem( item );
 				if( boiler?.IsActive ?? false ) {
-					boiler?.Update();
+					boiler?.Update( this.player );
 				}
 			}
 

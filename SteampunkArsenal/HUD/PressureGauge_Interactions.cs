@@ -8,7 +8,6 @@ using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsGeneral.Libraries.Players;
 using HUDElementsLib;
-using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal.HUD {
@@ -22,11 +21,14 @@ namespace SteampunkArsenal.HUD {
 				return false;
 			}
 
-			Item boilerItem = Main.LocalPlayer.armor[1];
-			var myboiler = boilerItem?.modItem as BoilerOBurdenItem;
-			if( boilerItem?.active != true || boilerItem.type != ModContent.ItemType<BoilerOBurdenItem>() || myboiler == null ) {
+			Boiler boiler = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler;
+			if( !boiler.IsActive ) {
+				Main.NewText( "No boiler.", Color.Yellow );
+
 				return false;
 			}
+
+			//
 
 			int fuelType = ItemID.Gel;
 			int fuelAmt = 1;
@@ -49,8 +51,8 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			float newTemp = myboiler.MyBoiler.BoilerTemperature + 1f;
-			myboiler.MyBoiler.SetBoilerHeat( newTemp );
+			float newTemp = boiler.BoilerTemperature + 1f;
+			boiler.SetBoilerHeat( newTemp );
 
 			//
 

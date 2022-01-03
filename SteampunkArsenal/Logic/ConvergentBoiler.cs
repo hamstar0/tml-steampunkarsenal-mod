@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using SteampunkArsenal.Items.Armor;
+using ModLibsGeneral.Libraries.Players;
 
 
 namespace SteampunkArsenal {
 	public class ConvergentBoiler : Boiler {
-		public override bool IsActive => this.ConnectedBoilers.Any( b => b.IsActive );
-
 		public override float Water => this.ConnectedBoilers.Sum( b => b.Water );
 
 		public override float WaterTemperature  => this.ConnectedBoilers.Average( b => b.WaterTemperature );
@@ -72,35 +70,43 @@ namespace SteampunkArsenal {
 
 		public override void SetBoilerHeat( float heatAmount ) {
 			foreach( Boiler boiler in this.ConnectedBoilers ) {
-				boiler.SetBoilerHeat( heatAmount );
+				float currHeat = boiler.WaterTemperature;
+				float addedHeat = heatAmount - currHeat;
+
+				boiler.SetBoilerHeat( currHeat + addedHeat );
 			}
 		}
 
 
-
 		////////////////
 
-		protected internal override void Update() {
+		protected internal override void Update( Player owner ) {
+			this.RefreshConnectedBoilers( owner );
+
 			foreach( Boiler boiler in this.ConnectedBoilers ) {
-				boiler.Update();
+				boiler.Update( owner );
 			}
 		}
 
 
 		////////////////
 
-		public void RefreshConnectedBoilers( Player player ) {
+		private void RefreshConnectedBoilers( Player player ) {
 			this.ConnectedBoilers.Clear();
 
 			//
 
-			Item bodyArmor = player.armor[1];
+			Boiler boiler = Boiler.GetBoilerForItem( player.armor[1] );
+			if( boiler == null ) {
+				this.ConnectedBoilers.Add( boiler );
+			}
 
-			if( bodyArmor?.active == true && bodyArmor.type == ModContent.ItemType<BoilerOBurdenItem>() ) {
-				var myitem = bodyArmor.modItem as BoilerOBurdenItem;
-
-				if( myitem != null ) {
-					this.ConnectedBoilers.Add( myitem.MyBoiler );
+			int minAcc = PlayerItemLibraries.VanillaAccessorySlotFirst;
+			int maxAcc = minAcc + PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
+			for( int i=minAcc; i<maxAcc; i++ ) {
+				boiler = Boiler.GetBoilerForItem( player.armor[i] );
+				if( boiler == null ) {
+					this.ConnectedBoilers.Add( boiler );
 				}
 			}
 

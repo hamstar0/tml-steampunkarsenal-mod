@@ -46,7 +46,7 @@ namespace SteampunkArsenal {
 
 			//
 
-			this.MyBoiler.Update();
+			this.MyBoiler.Update( this.player );
 		}
 	}
 }
