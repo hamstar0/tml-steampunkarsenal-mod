@@ -53,6 +53,9 @@ namespace SteampunkArsenal {
 		[DefaultValue( true )]
 		public bool PortABoilerRecipeEnabled { get; set; } = true;
 
+		[DefaultValue( true )]
+		public bool SteamBallRecipeEnabled { get; set; } = true;
+
 		////
 		
 		[Range( 0f, 100f )]

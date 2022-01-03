@@ -1,0 +1,86 @@
+v1
+-	Implement gun charge sound
+-	Implement boiler temperature decay
+-	Implement steam fx
+	-	Add boiler steam + vibrations
+	-	Add steam spout on firing rivet
+	-	Refine steam malfunction burst
+-	Implement 'Steam Ball' ammo item
+	-	Implement automatic recharging (needs a boiler or campfire)
+	-	Implement gun charging + consume charge
+	-	Create sprite
+
+
+	-	Recipe: 1 Magitech Scrap, 1 Inlet Pump, 5 Iron/Lead Bars, 5 Copper/Tin Bars, 1 Lava Bucket
+	-	Define item
+-	Implement SteamSource and SteamBall logic classes
+-	Implement 'Port-A-Boiler' accessory
+	-	Recipe: 1 Boiler-O-Burden, 1 Inlet Pump, 1 Outlet Pump, 5 Hellstone Bars
+	-	Implement temperature and pressure (also gun charging, by extension)
+	-	Define item
+	-	Create sprite
+-	Create gun sprite
+-	Implement boiler capacity
+-	Change boiler to use 2 separate heat indicators (also for ConvergentBoiler)
+-	Implement boiler water auto-fill
+	-	Add sound fx (Liquid_1)
+	-	Implement auto-fill
+-	Fix gauge
+-	Implement steam gauge widget (via. HUD Elements Lib)
+	-	Implement fuel adding
+		-	Emit sound when fuel added (i:111, 95)
+		-	Consume gels to increase fuel
+	-	Add fuel button (Main.hasFocus = true)
+	-	Define widget
+	-	Create graphics
+-	Implement 'Boiler-O-Burden' chest armor
+	-	Recipe: 10 Iron/Lead Bars, 10 Copper/Tin Bars, 1 Rocket Boots
+	-	Transfer boiler value to equipping player's "boiler"
+	-	Define item
+	-	Create sprite
+	-	@Plan
+		-	Boiler's temperature is controlled by how many gels are fed into the device
+		-	If the temperature becomes too high, the boiler scalds the weilder
+		-	The higher the temperature, the faster the boiler charges things that use it
+-	Change pin effect to direct damage for certain ai styles (e.g. multi-point npcs or bosses)
+-	Fix pin squirm behavior
+-	Fix pin behavior (teleports monsters after pin expires?)
+-	Finish implementing gun charge behavior
+	-	Verify charge behavior
+	-	Implement cheaty player boiler (temporary)
+	-	Show primitive steam gauge (temporary)
+	-	Prevent firing gun without a charge (includes alerts)
+-	Implement projectile
+	-	Ensure pinning is synced
+	-	Implement multiple pinning rivets per NPC
+	-	Implement NPC pinning
+		-	Implement pin 'struggle' behavior
+		-	Implement pin enforcement
+		-	Implement pin placement
+		-	Implement pin assigning
+	-	Create sprite + fx
+	-	Define projectile
+	-	@Plan
+		-	If an NPC is hit and is near the terrain the bolt hits, they become pinned in place
+		-	NPC attempted velocity causes damage, but also damages the rivet
+		-	If rivet runs out of hp, NPC is freed
+-	Implement steam backfire behavior
+	-	Implement fx (steam 11, 61) (smoke 99, 376, 435) (sulfur 220) (big 862)
+	-	Implement pain
+-	Implement gun
+	-	Implement fire behavior
+	-	Define charge behavior
+	-	Define item
+	-	Recipe: 1 Magitech Scrap, 10 Iron/Lead Bars, 10 Copper/Tin Bars, 1 Illegal Gun Parts
+-	Define mod
+-	@B&D steampunk gun name
+	-	Second part
+		-	Plate Pinner
+		-	Hot Bolt Driver
+		-	Bolt Launcher
+		-	Riveter
+	-	First part
+		-	Remote
+		-	Ranged
+		-	Steam-Projected
+		-	Steam-Impelled

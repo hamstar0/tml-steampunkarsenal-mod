@@ -28,32 +28,16 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		////////////////
 
 		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			float currCapacityUse = Boiler.CapacityUsed( this.Water, this.WaterTemperature );
-			float addedCapacityUse = Boiler.CapacityUsed( waterAmount, heatAmount );
-			
-			// Enforce capacity
-			if( (addedCapacityUse + currCapacityUse) > this.Capacity ) {
-				float capacityOverflow = (addedCapacityUse + currCapacityUse) - this.Capacity;
-				waterOverflow = capacityOverflow / heatAmount;
+			(float addedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
+				this,
+				waterAmount,
+				heatAmount,
+				out waterOverflow
+			);
 
-				waterAmount = (this.Capacity - currCapacityUse) / heatAmount;
-			} else {
-				waterOverflow = 0;
-			}
+			this._WaterTemperature += addedHeat;
 
-			//
-
-			float waterPercentAdded = this.Water > 0f
-				? waterAmount / this.Water
-				: waterAmount;
-
-			this._WaterTemperature += waterPercentAdded * heatAmount;
-
-			//
-
-			this._Water += waterAmount;
-
-			return waterAmount;
+			return addedWater;
 		}
 
 

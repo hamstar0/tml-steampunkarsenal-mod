@@ -23,7 +23,6 @@ namespace SteampunkArsenal.Recipes {
 			var config = SteampunkArsenalConfig.Instance;
 
 			return config.Get<bool>( nameof(config.PortABoilerRecipeEnabled ) );
-			return config.Get<bool>( nameof(config.BoilerOBurdenRecipeEnabled) );
 		}
 	}
 }

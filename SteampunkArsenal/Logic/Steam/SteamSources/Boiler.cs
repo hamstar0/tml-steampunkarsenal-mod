@@ -1,29 +1,16 @@
 using System;
 using Terraria;
-using SteampunkArsenal.Items;
-using SteampunkArsenal.Items.Armor;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources {
 	public abstract class Boiler : SteamSource {
 		public static Boiler GetBoilerForItem( Item item ) {
-			if( item?.active != true || item.modItem == null ) {
+			SteamSource src = SteamSource.GetSteamSourceForItem( item );
+			if( src == null || !(src is Boiler) ) {
 				return null;
 			}
 
-			if( item.modItem is SteamPoweredRivetLauncherItem ) {
-				return ((SteamPoweredRivetLauncherItem)item.modItem).MyBoiler;
-			}
-
-			if( item.modItem is BoilerOBurdenItem ) {
-				return ((BoilerOBurdenItem)item.modItem).MyBoiler;
-			}
-
-			//if( !(item.modItem is PortABoilerItem) ) {
-			//	return ((PortABoilerItem)item.modItem).MyBoiler;
-			//}
-
-			return null;
+			return src as Boiler;
 		}
 
 

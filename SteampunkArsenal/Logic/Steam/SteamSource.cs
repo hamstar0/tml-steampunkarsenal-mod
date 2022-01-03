@@ -1,5 +1,8 @@
 using System;
 using Terraria;
+using SteampunkArsenal.Items;
+using SteampunkArsenal.Items.Armor;
+using SteampunkArsenal.Items.Accessories;
 
 
 namespace SteampunkArsenal.Logic.Steam {
@@ -7,6 +10,65 @@ namespace SteampunkArsenal.Logic.Steam {
 		public static float CapacityUsed( float water, float heat ) {
 			float steamPressure = water * heat;
 			return Math.Max( steamPressure, water );
+		}
+
+
+		////////////////
+
+		public static SteamSource GetSteamSourceForItem( Item item ) {
+			if( item?.active != true || item.modItem == null ) {
+				return null;
+			}
+
+			if( item.modItem is SteamPoweredRivetLauncherItem ) {
+				return ( (SteamPoweredRivetLauncherItem)item.modItem ).MyBoiler;
+			}
+
+			if( item.modItem is BoilerOBurdenItem ) {
+				return ( (BoilerOBurdenItem)item.modItem ).MyBoiler;
+			}
+
+			if( item.modItem is PortABoilerItem ) {
+				return ( (PortABoilerItem)item.modItem ).MyBoiler;
+			}
+
+			if( item.modItem is SteamBallItem ) {
+				return ( (SteamBallItem)item.modItem ).MyBoiler;
+			}
+
+			return null;
+		}
+
+
+		////////////////
+
+		public static (float computedAddedWaterAmount, float computedAddedWaterHeatAmount) CalculateWaterAdded(
+					SteamSource source,
+					float addedWaterAmount,
+					float addedWaterHeatAmount,
+					out float waterOverflow ) {
+			float currCapacityUse = SteamSource.CapacityUsed( source.Water, source.WaterTemperature );
+			float addedCapacityUse = SteamSource.CapacityUsed( addedWaterAmount, addedWaterHeatAmount );
+
+			// Enforce capacity
+			if( ( addedCapacityUse + currCapacityUse ) > source.Capacity ) {
+				float capacityOverflow = ( addedCapacityUse + currCapacityUse ) - source.Capacity;
+				waterOverflow = capacityOverflow / addedWaterHeatAmount;
+
+				addedWaterAmount = ( source.Capacity - currCapacityUse ) / addedWaterHeatAmount;
+			} else {
+				waterOverflow = 0;
+			}
+
+			//
+
+			float waterPercentAdded = source.Water > 0f
+				? addedWaterAmount / source.Water
+				: addedWaterAmount;
+
+			float computedAddedWaterHeatAmount = waterPercentAdded * addedWaterHeatAmount;
+
+			return (addedWaterAmount, computedAddedWaterHeatAmount);
 		}
 
 
