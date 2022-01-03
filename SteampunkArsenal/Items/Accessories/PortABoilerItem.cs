@@ -2,11 +2,13 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SteampunkArsenal.Logic;
+using SteampunkArsenal.Recipes;
 
 
 namespace SteampunkArsenal.Items.Accessories {
 	[AutoloadEquip( EquipType.Waist )]
-	class PortABoilerItem : ModItem {
+	public class PortABoilerItem : ModItem {
 		public Boiler MyBoiler { get; } = new TankBoiler();
 
 
@@ -23,8 +25,16 @@ namespace SteampunkArsenal.Items.Accessories {
 			this.item.width = 22;
 			this.item.height = 22;
 			this.item.accessory = true;
-			this.item.rare = ItemRarityID.Orange;
-			this.item.value = Item.sellPrice( 0, 15, 0, 0 );
+			this.item.rare = ItemRarityID.Lime;
+			this.item.value = Item.sellPrice( 0, 7, 0, 0 );
+		}
+
+
+		////////////////
+
+		public override void AddRecipes() {
+			var recipe = new PortABoilerRecipe( this );
+			recipe.AddRecipe();
 		}
 	}
 }

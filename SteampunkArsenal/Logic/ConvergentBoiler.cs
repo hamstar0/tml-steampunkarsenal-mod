@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using ModLibsGeneral.Libraries.Players;
 
 
-namespace SteampunkArsenal {
+namespace SteampunkArsenal.Logic {
 	public class ConvergentBoiler : Boiler {
 		public override float Water => this.ConnectedBoilers.Sum( b => b.Water );
 

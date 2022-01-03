@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SteampunkArsenal.Logic;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
 
