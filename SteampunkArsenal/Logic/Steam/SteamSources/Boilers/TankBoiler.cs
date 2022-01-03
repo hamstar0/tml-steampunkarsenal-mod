@@ -2,7 +2,7 @@ using System;
 using Terraria;
 
 
-namespace SteampunkArsenal.Logic {
+namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public class TankBoiler : Boiler {
 		public override float Water => this._Water;
 

@@ -4,7 +4,7 @@ using SteampunkArsenal.Items;
 using SteampunkArsenal.Items.Armor;
 
 
-namespace SteampunkArsenal.Logic {
+namespace SteampunkArsenal.Logic.Steam.SteamSources {
 	public abstract class Boiler : SteamSource {
 		public static Boiler GetBoilerForItem( Item item ) {
 			if( item?.active != true || item.modItem == null ) {

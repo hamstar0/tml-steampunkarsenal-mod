@@ -8,7 +8,7 @@ using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsGeneral.Libraries.Players;
 using HUDElementsLib;
-using SteampunkArsenal.Logic;
+using SteampunkArsenal.Logic.Steam.SteamSources;
 
 
 namespace SteampunkArsenal.HUD {

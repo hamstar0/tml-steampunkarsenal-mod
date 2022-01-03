@@ -2,7 +2,7 @@ using System;
 using Terraria;
 
 
-namespace SteampunkArsenal.Logic {
+namespace SteampunkArsenal.Logic.Steam {
 	public abstract class SteamSource {
 		public static float CapacityUsed( float water, float heat ) {
 			float steamPressure = water * heat;

@@ -2,7 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using SteampunkArsenal.Logic;
+using SteampunkArsenal.Logic.Steam.SteamSources;
+using SteampunkArsenal.Logic.Steam.SteamSources.Boilers;
 using SteampunkArsenal.Items;
 
 
