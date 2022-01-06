@@ -6,16 +6,28 @@ using ModLibsGeneral.Libraries.Players;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
-	public class ConvergentBoiler : Boiler {
-		public override float Water => this.ConnectedSteamSources.Sum( b => b.Water );
+	public partial class ConvergentBoiler : Boiler {
+		public override float Water => this.ConnectedSteamSources
+			.Sum( b => b.Water );
 
-		public override float WaterTemperature  => this.ConnectedSteamSources.Average( b => b.WaterTemperature );
+		public override float WaterTemperature  => this.ConnectedSteamSources.Count > 0
+			? this.ConnectedSteamSources.Average( b => b.WaterTemperature )
+			: 1f;
 
-		public override float BoilerTemperature  => this.ConnectedSteamSources
-			.Where( b => b is Boiler )
-			.Average( b => ((Boiler)b).BoilerTemperature );
+		public override float BoilerTemperature => this.ConnectedSteamSources
+			.Any( b => b is Boiler )
+				? this.ConnectedSteamSources
+					.Where( b => b is Boiler )
+					.Average( b => ((Boiler)b).BoilerTemperature )
+				: 0f;
 
-		public override float Capacity => this.ConnectedSteamSources.Sum( b => b.Capacity );
+		public override float Capacity => this.ConnectedSteamSources
+			.Sum( b => b.Capacity );
+
+		////
+
+		public override float SteamPressure => this.ConnectedSteamSources
+			.Sum( b => b.SteamPressure );
 
 
 
@@ -86,59 +98,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		protected internal override void Update( Player owner ) {
-			this.RefreshConnectedBoilers( owner );
-
-			//
-
-			var boilers = new List<Boiler>();
-			var containers = new List<SteamContainer>();
-
-			foreach( SteamSource steamSrc in this.ConnectedSteamSources ) {
-				if( steamSrc is Boiler ) {
-					boilers.Add( (Boiler)steamSrc );
-
-					((Boiler)steamSrc).Update( owner );
-				} else if( steamSrc is SteamContainer ) {
-					containers.Add( steamSrc as SteamContainer );
-				}
-			}
-
-			//
-
-			foreach( SteamContainer container in containers ) {
-				container.TransferPressureToMeFromSourcesUntilFull( boilers );
-			}
-		}
-
-
-		////////////////
-
-		private void RefreshConnectedBoilers( Player player ) {
-			this.ConnectedSteamSources.Clear();
-
-			//
-
-			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.armor[1] );
-			if( steamSrc != null ) {
-				this.ConnectedSteamSources.Add( steamSrc );
-			}
-
-			int minAcc = PlayerItemLibraries.VanillaAccessorySlotFirst;
-			int maxAcc = minAcc + PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
-			for( int i=minAcc; i<maxAcc; i++ ) {
-				steamSrc = SteamSource.GetSteamSourceForItem( player.armor[i] );
-				if( steamSrc != null ) {
-					this.ConnectedSteamSources.Add( steamSrc );
-				}
-			}
-
-			for( int i=0; i<player.inventory.Length; i++ ) {
-				steamSrc = SteamSource.GetSteamSourceForItem( player.inventory[i] );
-				if( steamSrc != null && steamSrc is SteamContainer ) {
-					this.ConnectedSteamSources.Add( steamSrc );
-				}
-			}
+		private void NormalizeSteamPressure() {
+			f
 		}
 	}
 }

@@ -3,7 +3,7 @@ using Terraria;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
-	public class TankBoiler : Boiler {
+	public partial class TankBoiler : Boiler {
 		public override float Water => this._Water;
 
 		public override float WaterTemperature => this._WaterTemperature;
@@ -45,21 +45,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		public override void SetBoilerHeat( float heatAmount ) {
 			this._BoilerTemperature = heatAmount;
-		}
-
-
-		////////////////
-
-		internal protected override void Update( Player owner ) {
-			float addedTemp = this.Water > 0f
-				? this.BoilerTemperature / this.Water	// more water? more heat needed!
-				: 0f;
-
-			this._WaterTemperature += addedTemp;
-
-			if( this.WaterTemperature > this.BoilerTemperature ) {
-				this._WaterTemperature = this.BoilerTemperature;
-			}
 		}
 	}
 }

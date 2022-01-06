@@ -9,31 +9,24 @@ using ModLibsCore.Libraries.Debug;
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
 		private void UpdateBoiler() {
+			this.UpdateBoilerRefillState();
+
+			//
+
+			this.MyBoiler.PreUpdate( this.player );
+			this.MyBoiler.PostUpdate( this.player );
+		}
+
+
+		////////////////
+
+		private void UpdateBoilerRefillState() {
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 			bool isWet = this.player.wet && !this.player.honeyWet && !this.player.lavaWet;
 			bool isInterrupted = false;
 
 			if( isWet ) {
-				float fillAmt = this.MyBoiler.AddWater( 1f, 1f, out _ );
-
-				//
-
-				if( fillAmt > 0f ) {
-					switch( waterDrawSnd.State ) {
-					case SoundState.Stopped:
-						waterDrawSnd.Play();
-
-						Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
-						break;
-					case SoundState.Paused:
-						waterDrawSnd.Resume();
-
-						Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
-						break;
-					}
-				} else {
-					isInterrupted = waterDrawSnd.State == SoundState.Playing;
-				}
+				this.ApplyBoilerRefill( ref isInterrupted );
 			} else if( waterDrawSnd.State == SoundState.Playing ) {
 				isInterrupted = true;
 			}
@@ -43,10 +36,34 @@ namespace SteampunkArsenal {
 
 				Main.NewText( "Refilling interrupted.", Color.DarkOrchid );
 			}
+		}
+
+
+		////////////////
+
+		private void ApplyBoilerRefill( ref bool isInterrupted ) {
+			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
+
+			float fillAmt = this.MyBoiler.AddWater( 1f, 1f, out _ );
 
 			//
 
-			this.MyBoiler.Update( this.player );
+			if( fillAmt > 0f ) {
+				switch( waterDrawSnd.State ) {
+				case SoundState.Stopped:
+					waterDrawSnd.Play();
+
+					Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
+					break;
+				case SoundState.Paused:
+					waterDrawSnd.Resume();
+
+					Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
+					break;
+				}
+			} else {
+				isInterrupted = waterDrawSnd.State == SoundState.Playing;
+			}
 		}
 	}
 }

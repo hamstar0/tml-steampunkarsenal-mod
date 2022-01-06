@@ -80,7 +80,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public float SteamPressure => this.Water * this.WaterTemperature;
+		public virtual float SteamPressure => this.Water * this.WaterTemperature;
 
 
 

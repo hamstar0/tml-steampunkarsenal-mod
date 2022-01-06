@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 
@@ -28,6 +29,25 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		internal protected abstract void Update( Player owner );
+		public void EmitSteam( Vector2 position, float steamAmount ) {
+			float waterOverflow = steamAmount / this.WaterTemperature;
+
+			//
+
+			waterOverflow = -this.AddWater( -waterOverflow, this.WaterTemperature, out _ );
+
+			steamAmount = waterOverflow * this.WaterTemperature;
+
+			//
+
+			Fx.CreateSteamEruptionFx( position, steamAmount );
+		}
+
+
+		////////////////
+
+		internal protected abstract void PreUpdate( Player owner );
+
+		internal protected abstract void PostUpdate( Player owner );
 	}
 }

@@ -20,7 +20,8 @@ namespace SteampunkArsenal {
 			foreach( Item item in this.player.inventory ) {
 				Boiler boiler = Boiler.GetBoilerForItem( item );
 				if( boiler?.IsActive ?? false ) {
-					boiler?.Update( this.player );
+					boiler?.PreUpdate( this.player );
+					boiler?.PostUpdate( this.player );
 				}
 			}
 

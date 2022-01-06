@@ -6,6 +6,7 @@ v1
 	-	Add steam spout on firing rivet
 	-	Refine steam malfunction burst
 -	@Test
+-	Implement boiler pressure overflow auto-relief
 
 
 -	Add gauge water reading

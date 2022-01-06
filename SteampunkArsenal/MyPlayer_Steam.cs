@@ -29,51 +29,18 @@ namespace SteampunkArsenal {
 				hitDirection: 0
 			);
 
-			this.CreateSteamFx( steamAmount );
+			this.CreateSteamFx_If( steamAmount );
 		}
 
 
 		////////////////
 
-		public void CreateSteamFx( float steamAmount ) {
+		public void CreateSteamFx_If( float steamAmount ) {
 			if( Main.netMode == NetmodeID.Server ) {
 				return;
 			}
 
-			Vector2 pos, vel;
-
-			//
-
-			void RollPosVel() {
-				pos = this.player.MountedCenter + new Vector2( Main.rand.Next(-16, 16), Main.rand.Next(-24, 24) );
-				vel = new Vector2( Main.rand.Next(-8, 8), Main.rand.Next(-8, 8) );
-			}
-
-			//
-
-			int smallPuffs = (int)steamAmount / 5;
-			for( int i=0; i<smallPuffs; i++ ) {
-				RollPosVel();
-
-				int goreIdx = Gore.NewGore( pos, vel, 11 );
-				Main.gore[goreIdx].alpha = 128;
-			}
-
-			int medPuffs = (int)steamAmount / 20;
-			for( int i=0; i<medPuffs; i++ ) {
-				RollPosVel();
-
-				int goreIdx = Gore.NewGore( pos, vel, 11, 2f );
-				Main.gore[goreIdx].alpha = 128;
-			}
-
-			int bigPuffs = (int)steamAmount / 35;
-			for( int i=0; i<bigPuffs; i++ ) {
-				RollPosVel();
-
-				int goreIdx = Gore.NewGore( pos, vel, 862 );
-				Main.gore[goreIdx].alpha = 128;
-			}
+			Fx.CreateSteamEruptionFx( this.player.MountedCenter, steamAmount );
 		}
 	}
 }
