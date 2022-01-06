@@ -5,11 +5,14 @@ v1
 	-	Add boiler steam + vibrations
 	-	Add steam spout on firing rivet
 	-	Refine steam malfunction burst
+-	@Test
+-	Add gauge water reading
+
+
+-	Set default water temperature to 1f + remove concept of CapacityUsed
 -	Implement 'Steam Ball' ammo item
 	-	Create sprite
-	-	Implement automatic recharging (needs a boiler or campfire)
-
-
+	-	Implement automatic recharging (via. ConvergentBoiler)
 	-	Implement gun charging + consume charge
 	-	Recipe: 1 Magitech Scrap, 1 Inlet Pump, 5 Iron/Lead Bars, 5 Copper/Tin Bars, 1 Lava Bucket
 	-	Define item

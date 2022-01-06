@@ -7,14 +7,6 @@ using SteampunkArsenal.Items.Accessories;
 
 namespace SteampunkArsenal.Logic.Steam {
 	public abstract class SteamSource {
-		public static float CapacityUsed( float water, float heat ) {
-			float steamPressure = water * heat;
-			return Math.Max( steamPressure, water );
-		}
-
-
-		////////////////
-
 		public static SteamSource GetSteamSourceForItem( Item item ) {
 			if( item?.active != true || item.modItem == null ) {
 				return null;
@@ -47,12 +39,12 @@ namespace SteampunkArsenal.Logic.Steam {
 					float addedWaterAmount,
 					float addedWaterHeatAmount,
 					out float waterOverflow ) {
-			float currCapacityUse = SteamSource.CapacityUsed( source.Water, source.WaterTemperature );
-			float addedCapacityUse = SteamSource.CapacityUsed( addedWaterAmount, addedWaterHeatAmount );
+			float currCapacityUse = source.Water * source.WaterTemperature;
+			float addedCapacityUse = addedWaterAmount * addedWaterHeatAmount;
 
 			// Enforce capacity
-			if( ( addedCapacityUse + currCapacityUse ) > source.Capacity ) {
-				float capacityOverflow = ( addedCapacityUse + currCapacityUse ) - source.Capacity;
+			if( (addedCapacityUse + currCapacityUse) > source.Capacity ) {
+				float capacityOverflow = (addedCapacityUse + currCapacityUse) - source.Capacity;
 				waterOverflow = capacityOverflow / addedWaterHeatAmount;
 
 				addedWaterAmount = ( source.Capacity - currCapacityUse ) / addedWaterHeatAmount;

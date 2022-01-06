@@ -70,17 +70,17 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		////
 
 		public override void SetBoilerHeat( float heatAmount ) {
-			foreach( SteamSource steamSrc in this.ConnectedSteamSources ) {
-				Boiler boiler = steamSrc as Boiler;
-				if( boiler == null ) {
-					continue;
-				}
+			List<Boiler> boilers = this.ConnectedSteamSources
+				.Where( ss => ss is Boiler )
+				.Select( ss => ss as Boiler )
+				.ToList();
 
-				float currHeat = boiler.WaterTemperature;
-				float addedHeat = heatAmount - currHeat;
+			float mean = boilers.Average( ss => ss.WaterTemperature );
+			float addAmt = heatAmount - mean;
 
-				boiler.SetBoilerHeat( currHeat + addedHeat );
-			}
+			boilers.ForEach(
+				ss => ss.SetBoilerHeat( ss.WaterTemperature + addAmt )
+			);
 		}
 
 
@@ -119,7 +119,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 
-			SteamSource steamSrc = Boiler.GetBoilerForItem( player.armor[1] );
+			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.armor[1] );
 			if( steamSrc != null ) {
 				this.ConnectedSteamSources.Add( steamSrc );
 			}
@@ -139,22 +139,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					this.ConnectedSteamSources.Add( steamSrc );
 				}
 			}
-
-			//
-
-			/*int beg = PlayerItemLibraries.VanillaAccessorySlotFirst;
-			int max = PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
-			int end = beg + max;
-
-			for( int i = beg; i < end; i++ ) {
-				Item item = player.armor[i];
-				var myitem = item?.modItem as PortABoilerItem;
-				if( myitem == null ) {
-					continue;
-				}
-
-				this.ConnectedBoilers.Add( myitem.Boiler );
-			}*/
 		}
 	}
 }

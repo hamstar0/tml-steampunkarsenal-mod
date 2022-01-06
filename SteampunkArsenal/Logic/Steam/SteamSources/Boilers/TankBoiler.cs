@@ -17,11 +17,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		private float _Water = 0f;
 
-		private float _WaterTemperature = 0f;
+		private float _WaterTemperature = 1f;
 
-		private float _BoilerTemperature = 0f;
+		private float _BoilerTemperature = 1f;
 
-		private float _Capacity = 0f;
+		private float _Capacity = 100f;
 
 
 
@@ -52,7 +52,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		internal protected override void Update( Player owner ) {
 			float addedTemp = this.Water > 0f
-				? this.BoilerTemperature / this.Water	// more water? add more heat!
+				? this.BoilerTemperature / this.Water	// more water? more heat needed!
 				: 0f;
 
 			this._WaterTemperature += addedTemp;

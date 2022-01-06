@@ -16,9 +16,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		private float _Water = 0f;
 
-		private float _WaterTemperature = 0f;
+		private float _WaterTemperature = 1f;
 
-		private float _Capacity = 0f;
+		private float _Capacity = 100f;
 
 
 

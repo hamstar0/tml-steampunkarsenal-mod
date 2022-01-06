@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using SteampunkArsenal.Logic.Steam;
 using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Logic.Steam.SteamSources.Boilers;
 using SteampunkArsenal.Items;
@@ -35,7 +36,7 @@ namespace SteampunkArsenal {
 					"Water: " + this.MyBoiler.Water.ToString( "N2" )
 						+ ", Heat: " + this.MyBoiler.WaterTemperature.ToString( "N2" )
 						+ ", Steam: " + this.MyBoiler.SteamPressure.ToString( "N2" )
-						+ ", Gun: " + Boiler.GetBoilerForItem( this.player.HeldItem )?.SteamPressure.ToString( "N2" )
+						+ ", Gun: " + SteamSource.GetSteamSourceForItem( this.player.HeldItem )?.SteamPressure.ToString( "N2" )
 				);
 			}
 		}
