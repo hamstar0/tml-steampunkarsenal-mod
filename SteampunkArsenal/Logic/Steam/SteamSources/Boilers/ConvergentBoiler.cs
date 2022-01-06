@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using ModLibsGeneral.Libraries.Players;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
@@ -98,8 +97,38 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		private void NormalizeSteamPressure() {
-			f
+		private void NormalizeSteamPressureIncrementally() {
+			float xferWaterRate = 1f / 60f;
+
+			//
+
+			IEnumerable<Boiler> boilers = this.ConnectedSteamSources
+				.Where( ss => ss is Boiler )
+				.Select( ss => ss as Boiler );
+			Boiler prevBoiler = null;
+
+			foreach( Boiler boiler in boilers ) {
+				if( prevBoiler == null ) {
+					prevBoiler = boiler;
+					continue;
+				}
+				if( boiler.SteamPressure <= prevBoiler.SteamPressure ) {
+					continue;
+				}
+				if( (prevBoiler.Water - boiler.Water) < xferWaterRate ) {
+					continue;
+				}
+
+				//
+
+				float xferWater = prevBoiler.AddWater( -xferWaterRate, prevBoiler.WaterTemperature, out _ );
+
+				boiler.AddWater( -xferWater, prevBoiler.WaterTemperature, out float xferBackwash );
+
+				if( xferBackwash > 0f ) {
+					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterTemperature, out _ );
+				}
+			}
 		}
 	}
 }

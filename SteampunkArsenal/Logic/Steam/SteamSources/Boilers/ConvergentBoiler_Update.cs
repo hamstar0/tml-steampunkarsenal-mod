@@ -36,7 +36,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 
-			this.NormalizeSteamPressure();
+			this.NormalizeSteamPressureIncrementally();
 		}
 
 
