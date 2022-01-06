@@ -1,6 +1,6 @@
 v1
 -	Implement gun charge sound
--	Implement boiler temperature decay
+-	Implement boiler temperature decay (no lower than 1f)
 -	Implement steam fx
 	-	Add boiler steam + vibrations
 	-	Add steam spout on firing rivet
