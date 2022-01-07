@@ -59,7 +59,7 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.MyBoiler.SteamPressure >= 100f ) {
+			if( this.MyBoiler.SteamPressure >= this.MyBoiler.Capacity ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
 				myplayer.ApplySteamDamage_Local_Syncs( this.MyBoiler.SteamPressure );
