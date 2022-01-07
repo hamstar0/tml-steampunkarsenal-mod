@@ -59,12 +59,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				overflow = 0f;
 
 				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
-					steamSrc.AddWater( divWaterAmt, heatAmount, out float myOverflow );
+					steamSrc.AddWater( divWaterAmt, heatAmount, out float latestOverflow );
 
 					//
 
-					if( myOverflow > 0f ) {
-						overflow += myOverflow;
+					if( latestOverflow > 0f ) {
+						overflow += latestOverflow;
 
 						availableSteamSources.Remove( steamSrc );
 					}

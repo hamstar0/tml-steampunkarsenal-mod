@@ -9,12 +9,14 @@ using ModLibsCore.Libraries.Debug;
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
 		private void UpdateBoiler() {
-			this.UpdateBoilerRefillState();
+			if( !this.player.dead ) {
+				this.UpdateBoilerRefillState();
+			}
 
 			//
 
-			this.MyBoiler.PreUpdate( this.player );
-			this.MyBoiler.PostUpdate( this.player );
+			this.AllBoilers.PreUpdate( this.player );
+			this.AllBoilers.PostUpdate( this.player );
 		}
 
 
@@ -44,7 +46,7 @@ namespace SteampunkArsenal {
 		private void ApplyBoilerRefill( ref bool isInterrupted ) {
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 
-			float fillAmt = this.MyBoiler.AddWater( 1f, 1f, out _ );
+			float fillAmt = this.AllBoilers.AddWater( 1f, 1f, out _ );
 
 			//
 

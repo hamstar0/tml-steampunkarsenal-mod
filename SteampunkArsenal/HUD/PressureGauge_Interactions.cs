@@ -22,7 +22,7 @@ namespace SteampunkArsenal.HUD {
 				return false;
 			}
 
-			Boiler boiler = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>().MyBoiler;
+			Boiler boiler = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>().AllBoilers;
 			if( !boiler.IsActive ) {
 				Main.NewText( "No boiler.", Color.Yellow );
 

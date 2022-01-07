@@ -17,8 +17,9 @@ namespace SteampunkArsenal.Items.Accessories {
 		////////////////
 
 		public override void SetStaticDefaults() {
+			this.DisplayName.SetDefault( "Port-A-Boiler" );
 			this.Tooltip.SetDefault(
-				"Generates hot water for steam-powered machinery. Fun-sized."
+				"Heats water for steam-powered machinery. Fun-sized."
 			);
 		}
 

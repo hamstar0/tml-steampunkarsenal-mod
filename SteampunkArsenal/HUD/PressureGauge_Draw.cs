@@ -50,7 +50,7 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
-			float waterPerc = myplayer.MyBoiler.Water / myplayer.MyBoiler.Capacity;
+			float waterPerc = myplayer.AllBoilers.Water / myplayer.AllBoilers.Capacity;
 			if( waterPerc <= 0f ) {
 				return;
 			}
@@ -96,7 +96,7 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
-			float pressure = myplayer.MyBoiler.SteamPressure;
+			float pressure = myplayer.AllBoilers.SteamPressure;
 			float gaugePercent = pressure / 100f;
 			float gauge = (float)Math.PI * 0.5f;
 			gauge += gaugePercent * (float)Math.PI * 1.5f;

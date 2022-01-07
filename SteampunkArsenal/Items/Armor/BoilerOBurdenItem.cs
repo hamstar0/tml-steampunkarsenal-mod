@@ -18,10 +18,8 @@ namespace SteampunkArsenal.Items.Armor {
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Boiler-O-Burden" );
-
-			// We can use vanilla language keys to copy the tooltip from HiveBackpack
 			this.Tooltip.SetDefault(
-				"Generates hot water for steam-powered machinery. Travel-sized."
+				"Heats water for steam-powered machinery. Travel-sized."
 			);
 		}
 

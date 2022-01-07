@@ -5,6 +5,13 @@ using Terraria;
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class TankBoiler : Boiler {
 		internal protected override void PreUpdate( Player owner ) {
+			if( owner.dead ) {
+				this._Water = 0f;
+				this._BoilerTemperature = 0f;
+			}
+
+			//
+
 			float addedTemp = this.Water > 0f
 				? this.BoilerTemperature / this.Water   // more water? more heat needed!
 				: 0f;

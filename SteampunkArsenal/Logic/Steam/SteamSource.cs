@@ -6,7 +6,7 @@ using SteampunkArsenal.Items.Accessories;
 
 
 namespace SteampunkArsenal.Logic.Steam {
-	public abstract class SteamSource {
+	public abstract partial class SteamSource {
 		public static SteamSource GetSteamSourceForItem( Item item ) {
 			if( item?.active != true || item.modItem == null ) {
 				return null;
@@ -39,25 +39,32 @@ namespace SteampunkArsenal.Logic.Steam {
 					float addedWaterAmount,
 					float addedWaterHeatAmount,
 					out float waterOverflow ) {
-			float currCapacityUse = source.Water * source.WaterTemperature;
-			float addedCapacityUse = addedWaterAmount * addedWaterHeatAmount;
+			float currSteam = source.Water * source.WaterTemperature;
+			float addedSteam = addedWaterAmount * addedWaterHeatAmount;
+			float predictSteam = currSteam + addedSteam;
 
 			// Enforce capacity
-			if( (addedCapacityUse + currCapacityUse) > source.Capacity ) {
-				float capacityOverflow = (addedCapacityUse + currCapacityUse) - source.Capacity;
+			if( predictSteam > source.Capacity ) {
+				float capacityOverflow = predictSteam - source.Capacity;
+
 				waterOverflow = capacityOverflow / addedWaterHeatAmount;
 
-				addedWaterAmount = ( source.Capacity - currCapacityUse ) / addedWaterHeatAmount;
+				addedWaterAmount = (source.Capacity - currSteam) / addedWaterHeatAmount;
+			} else if( predictSteam < 0f ) {
+				waterOverflow = predictSteam / source.WaterTemperature;
+
+				addedWaterAmount = -source.Water;
 			} else {
 				waterOverflow = 0;
 			}
 
 			//
 
-			float waterPercentAdded = source.Water > 0f
+			float waterPercentAdded = source.Water != 0f
 				? addedWaterAmount / source.Water
-				: addedWaterAmount;
+				: 1f;
 
+			// Heat amount after diffusing into existing temperature
 			float computedAddedWaterHeatAmount = waterPercentAdded * addedWaterHeatAmount;
 
 			return (addedWaterAmount, computedAddedWaterHeatAmount);
@@ -104,6 +111,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			float srcWaterDrawAmt = pressureAmount / srcHeat;
 
 			source.AddWater( -srcWaterDrawAmt, srcHeat, out _ );
+
 			float waterAdded = this.AddWater( srcWaterDrawAmt, srcHeat, out waterOverflow );
 
 			//

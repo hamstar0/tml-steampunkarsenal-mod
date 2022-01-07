@@ -73,7 +73,7 @@ namespace SteampunkArsenal.HUD {
 
 		public override bool IsEnabled() {
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
-			return myplayer.MyBoiler?.IsActive ?? false;
+			return myplayer.AllBoilers?.IsActive ?? false;
 		}
 
 
