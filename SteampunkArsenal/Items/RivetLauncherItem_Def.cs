@@ -9,7 +9,7 @@ using SteampunkArsenal.Projectiles;
 
 
 namespace SteampunkArsenal.Items {
-	public partial class SteamPoweredRivetLauncherItem : ModItem {
+	public partial class RivetLauncherItem : ModItem {
 		internal Boiler MyBoiler { get; private set; } = new TankBoiler();
 
 

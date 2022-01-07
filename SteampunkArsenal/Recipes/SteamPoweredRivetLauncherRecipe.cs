@@ -6,7 +6,7 @@ using SteampunkArsenal.Items;
 
 namespace SteampunkArsenal.Recipes {
 	public class SteamPoweredRivetLauncherRecipe : ModRecipe {
-		public SteamPoweredRivetLauncherRecipe( SteamPoweredRivetLauncherItem resultItem ) : base( SteamArseMod.Instance ) {
+		public SteamPoweredRivetLauncherRecipe( RivetLauncherItem resultItem ) : base( SteamArseMod.Instance ) {
 			var riMod = ModLoader.GetMod( "RuinedItems" );
 			if( riMod != null ) {
 				this.AddIngredient( riMod.GetItem("MagitechScrapItem"), 1 );

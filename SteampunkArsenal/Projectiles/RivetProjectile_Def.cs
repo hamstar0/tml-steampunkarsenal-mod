@@ -24,12 +24,12 @@ namespace SteampunkArsenal.Projectiles {
 			}
 
 			Item riveter = plrOwner.HeldItem;
-			if( riveter?.active != true || riveter.type != ModContent.ItemType<SteamPoweredRivetLauncherItem>() ) {
+			if( riveter?.active != true || riveter.type != ModContent.ItemType<RivetLauncherItem>() ) {
 				LogLibraries.Warn( "Could not get rivet's launcher." );
 				return;
 			}
 
-			var myriveter = riveter.modItem as SteamPoweredRivetLauncherItem;
+			var myriveter = riveter.modItem as RivetLauncherItem;
 			if( myriveter == null ) {
 				LogLibraries.Warn( "Could not get rivet's launcher (ModItem)." );
 				return;

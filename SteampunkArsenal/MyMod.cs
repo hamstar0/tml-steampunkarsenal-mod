@@ -37,7 +37,7 @@ namespace SteampunkArsenal {
 				if( !isManual ) {
 					Projectile proj = Main.projectile[ projectileIdx ];
 
-					if( proj?.active == true && proj.type == ModContent.ItemType<SteamPoweredRivetLauncherItem>() ) {
+					if( proj?.active == true && proj.type == ModContent.ItemType<RivetLauncherItem>() ) {
 						RivetProjectile.ApplyRivetStats_LocalOnly( projectileIdx, proj );
 					}
 				}

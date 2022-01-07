@@ -6,31 +6,20 @@ using SteampunkArsenal.Net;
 
 
 namespace SteampunkArsenal.Items {
-	public partial class SteamPoweredRivetLauncherItem : ModItem {
+	public partial class RivetLauncherItem : ModItem {
 		internal static void RunHeldBehavior_Local_If( Player wielderPlayer, Item launcherItem ) {
 			if( wielderPlayer.whoAmI != Main.myPlayer ) {
 				return;
 			}
 
-			var myitem = launcherItem.modItem as SteamPoweredRivetLauncherItem;
+			//
+
+			var myitem = launcherItem.modItem as RivetLauncherItem;
 
 			//
 
 			if( Main.mouseRight ) {
-				var config = SteampunkArsenalConfig.Instance;
-				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
-
-				float steamAmtPerTick = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
-
-				myitem.MyBoiler.TransferPressureToMeFromSource(
-					source: myplayer.AllBoilers,
-					pressureAmount: steamAmtPerTick,
-					waterOverflow: out float waterOverflow
-				);
-
-				if( waterOverflow > 0f ) {
-					myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterTemperature, out _ );
-				}
+				RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem );
 			}
 
 			//

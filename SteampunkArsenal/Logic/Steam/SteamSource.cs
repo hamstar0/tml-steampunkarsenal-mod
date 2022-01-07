@@ -12,8 +12,8 @@ namespace SteampunkArsenal.Logic.Steam {
 				return null;
 			}
 
-			if( item.modItem is SteamPoweredRivetLauncherItem ) {
-				return ( (SteamPoweredRivetLauncherItem)item.modItem ).MyBoiler;
+			if( item.modItem is RivetLauncherItem ) {
+				return ( (RivetLauncherItem)item.modItem ).MyBoiler;
 			}
 
 			if( item.modItem is BoilerOBurdenItem ) {
