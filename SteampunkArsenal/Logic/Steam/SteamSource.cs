@@ -72,7 +72,9 @@ namespace SteampunkArsenal.Logic.Steam {
 			float srcHeat = source.WaterTemperature;
 			float srcWaterDrawAmt = pressureAmount / srcHeat;
 
-			source.AddWater( -srcWaterDrawAmt, srcHeat, out _ );
+			srcWaterDrawAmt = source.DrainWater( srcWaterDrawAmt, out _ );
+
+			//
 
 			float waterAdded = this.AddWater( srcWaterDrawAmt, srcHeat, out waterOverflow );
 

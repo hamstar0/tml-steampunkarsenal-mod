@@ -27,11 +27,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
+		public override float AddWater( float waterAddAmount, float heatAddAmount, out float waterOverflow ) {
 			(float addedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
 				source: this,
-				addedWaterAmount: waterAmount,
-				addedWaterHeatAmount: heatAmount,
+				addedWaterAmount: waterAddAmount,
+				addedWaterHeatAmount: heatAddAmount,
 				waterOverflow: out waterOverflow
 			);
 
@@ -44,15 +44,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			return addedWater;
 		}
 
-		public override float DrainWater( float waterAmount, out float waterUnderflow ) {
-			(float drainedWater, _) = SteamSource.CalculateWaterAdded(
+		public override float DrainWater( float waterDrainAmount, out float waterUnderflow ) {
+			float drainedWater = SteamSource.CalculateWaterDrained(
 				source: this,
-				addedWaterAmount: -waterAmount,
-				addedWaterHeatAmount: 1f,
-				waterOverflow: out waterUnderflow
+				waterDrainAmount: waterDrainAmount,
+				waterUnderflow: out waterUnderflow
 			);
 
-			this._Water += drainedWater;
+			this._Water -= drainedWater;
 
 			return drainedWater;
 		}

@@ -41,15 +41,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 			return addedWater;
 		}
 
-		public override float DrainWater( float waterAmount, out float waterUnderflow ) {
-			(float drainedWater, _) = SteamSource.CalculateWaterAdded(
+		public override float DrainWater( float waterDrainAmount, out float waterUnderflow ) {
+			float drainedWater = SteamSource.CalculateWaterDrained(
 				source: this,
-				addedWaterAmount: -waterAmount,
-				addedWaterHeatAmount: 1f,
-				waterOverflow: out waterUnderflow
+				waterDrainAmount: waterDrainAmount,
+				waterUnderflow: out waterUnderflow
 			);
 
-			this._Water += drainedWater;
+			this._Water -= drainedWater;
 
 			return drainedWater;
 		}

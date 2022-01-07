@@ -30,13 +30,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		////////////////
 
 		public void EmitSteam( Vector2 position, float steamAmount ) {
-			float waterOverflow = steamAmount / this.WaterTemperature;
+			float waterDrainAmount = steamAmount / this.WaterTemperature;
 
 			//
 
-			waterOverflow = -this.AddWater( -waterOverflow, this.WaterTemperature, out _ );
+			waterDrainAmount = this.DrainWater( waterDrainAmount, out _ );
 
-			steamAmount = waterOverflow * this.WaterTemperature;
+			steamAmount = waterDrainAmount * this.WaterTemperature;
 
 			//
 

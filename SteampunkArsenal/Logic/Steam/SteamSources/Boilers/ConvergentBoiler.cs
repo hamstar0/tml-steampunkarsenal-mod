@@ -121,9 +121,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 				//
 
-				float xferWater = prevBoiler.AddWater( -xferWaterRate, prevBoiler.WaterTemperature, out _ );
+				float xferredWater = prevBoiler.DrainWater( xferWaterRate, out _ );
 
-				boiler.AddWater( -xferWater, prevBoiler.WaterTemperature, out float xferBackwash );
+				boiler.AddWater( xferredWater, prevBoiler.WaterTemperature, out float xferBackwash );
 
 				if( xferBackwash > 0f ) {
 					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterTemperature, out _ );
