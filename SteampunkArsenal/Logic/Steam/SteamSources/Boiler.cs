@@ -17,6 +17,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 
 		////////////////
+		
+		public Boiler( bool canConverge ) : base( canConverge ) { }
+
+
+
+		////////////////
 
 		public abstract float BoilerTemperature { get; }
 

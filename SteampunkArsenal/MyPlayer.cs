@@ -10,7 +10,7 @@ using SteampunkArsenal.Items;
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
-		internal ConvergentBoiler AllBoilers { get; private set; } = new ConvergentBoiler();
+		internal ConvergentBoiler AllBoilers { get; private set; } = new ConvergentBoiler( false );
 
 
 

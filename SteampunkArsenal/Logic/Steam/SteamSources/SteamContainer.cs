@@ -24,6 +24,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
+		public SteamContainer( bool canConverge ) : base( canConverge ) { }
+
+
+
+		////////////////
+
 		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
 			(float addedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,

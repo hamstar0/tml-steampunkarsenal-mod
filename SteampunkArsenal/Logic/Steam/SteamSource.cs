@@ -54,6 +54,20 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
+		protected bool CanConverge;
+
+
+
+		////////////////
+
+		public SteamSource( bool canConverge ) {
+			this.CanConverge = canConverge;
+		}
+
+
+
+		////////////////
+
 		public abstract float AddWater( float waterAmount, float heatAmount, out float waterOverflow );
 
 		public abstract float DrainWater( float waterAmount, out float waterUnderflow );

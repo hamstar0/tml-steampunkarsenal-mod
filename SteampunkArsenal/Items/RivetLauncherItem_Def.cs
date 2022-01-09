@@ -9,7 +9,7 @@ using SteampunkArsenal.Projectiles;
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
-		internal SteamContainer MySteamSupply { get; private set; } = new SteamContainer();
+		internal SteamContainer MySteamSupply { get; private set; } = new SteamContainer( false );
 
 
 

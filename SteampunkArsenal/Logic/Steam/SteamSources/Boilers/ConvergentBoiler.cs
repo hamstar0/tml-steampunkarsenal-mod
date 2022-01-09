@@ -38,9 +38,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public ConvergentBoiler() : base() { }
+		public ConvergentBoiler( bool canConverge ) : base( canConverge ) { }
 
-		public ConvergentBoiler( IList<SteamSource> boilers ) : base() {
+		public ConvergentBoiler( bool canConverge, IList<SteamSource> boilers ) : base( canConverge ) {
 			this.ConnectedSteamSources = new HashSet<SteamSource>( boilers );
 		}
 
