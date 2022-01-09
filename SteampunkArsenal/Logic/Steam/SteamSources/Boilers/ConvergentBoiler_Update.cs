@@ -64,7 +64,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			//
 
 			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.armor[1] );
-			if( steamSrc != null ) {
+			if( steamSrc != null && steamSrc.CanConverge ) {
 				this.ConnectedSteamSources.Add( steamSrc );
 			}
 
@@ -72,14 +72,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			int maxAcc = minAcc + PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
 			for( int i=minAcc; i<maxAcc; i++ ) {
 				steamSrc = SteamSource.GetSteamSourceForItem( player.armor[i] );
-				if( steamSrc != null ) {
+				if( steamSrc != null && steamSrc.CanConverge ) {
 					this.ConnectedSteamSources.Add( steamSrc );
 				}
 			}
 
 			for( int i=0; i<player.inventory.Length; i++ ) {
 				steamSrc = SteamSource.GetSteamSourceForItem( player.inventory[i] );
-				if( steamSrc != null && steamSrc is SteamContainer ) {
+				if( steamSrc != null && steamSrc is SteamContainer && steamSrc.CanConverge ) {
 					this.ConnectedSteamSources.Add( steamSrc );
 				}
 			}

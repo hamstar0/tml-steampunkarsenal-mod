@@ -45,16 +45,14 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		public abstract float Capacity { get; }
 
+		////
+
+		public bool CanConverge { get; protected set; }
+
 
 		////////////////
 
 		public virtual float SteamPressure => this.Water * this.WaterTemperature;
-
-
-
-		////////////////
-
-		protected bool CanConverge;
 
 
 
