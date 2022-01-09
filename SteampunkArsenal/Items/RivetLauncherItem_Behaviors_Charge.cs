@@ -12,9 +12,9 @@ namespace SteampunkArsenal.Items {
 
 			float steamAmtPerTick = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
-			launcherModItem.MyBoiler.TransferPressureToMeFromSource(
+			launcherModItem.MySteamSupply.TransferPressureToMeFromSource(
 				source: myplayer.AllBoilers,
-				pressureAmount: steamAmtPerTick,
+				steamAmount: steamAmtPerTick,
 				waterOverflow: out float waterOverflow
 			);
 

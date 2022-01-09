@@ -1,11 +1,12 @@
 v1
--	Implement gun charge sound
--	Implement boiler temperature decay (no lower than 1f)
 -	Implement steam fx
 	-	Add boiler steam + vibrations
 	-	Add steam spout on firing rivet
 	-	Refine steam malfunction burst
+-	Implement boiler + gun temperature decay (no lower than 1f)
+-	Implement gun charge sound
 -	@Test
+-	Fix ConvergentBoiler attempting to fill Rivet Launcher
 
 
 -	Implement boiler pressure overflow auto-relief

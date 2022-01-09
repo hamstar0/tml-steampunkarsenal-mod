@@ -13,7 +13,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			}
 
 			if( item.modItem is RivetLauncherItem ) {
-				return ( (RivetLauncherItem)item.modItem ).MyBoiler;
+				return ( (RivetLauncherItem)item.modItem ).MySteamSupply;
 			}
 
 			if( item.modItem is BoilerOBurdenItem ) {
@@ -61,7 +61,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////
 
-		public float TransferPressureToMeFromSource( SteamSource source, float pressureAmount, out float waterOverflow ) {
+		public float TransferPressureToMeFromSource( SteamSource source, float steamAmount, out float waterOverflow ) {
 			if( source.SteamPressure <= 0 ) {
 				waterOverflow = 0f;
 				return 0f;
@@ -70,7 +70,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			//
 
 			float srcHeat = source.WaterTemperature;
-			float srcWaterDrawAmt = pressureAmount / srcHeat;
+			float srcWaterDrawAmt = steamAmount / srcHeat;
 
 			srcWaterDrawAmt = source.DrainWater( srcWaterDrawAmt, out _ );
 

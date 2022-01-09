@@ -8,6 +8,12 @@ using ModLibsCore.Libraries.Debug;
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
+		private static bool HasDisplayedRefillingAlert = false;
+
+
+
+		////////////////
+
 		private void UpdateBoiler() {
 			if( !this.player.dead ) {
 				this.UpdateBoilerRefillState();
@@ -27,7 +33,7 @@ namespace SteampunkArsenal {
 			bool isWet = this.player.wet && !this.player.honeyWet && !this.player.lavaWet;
 			bool isInterrupted = false;
 
-			if( isWet ) {
+			if( !this.player.dead && isWet ) {
 				this.ApplyBoilerRefill( ref isInterrupted );
 			} else if( waterDrawSnd.State == SoundState.Playing ) {
 				isInterrupted = true;
@@ -36,7 +42,11 @@ namespace SteampunkArsenal {
 			if( isInterrupted ) {
 				waterDrawSnd.Stop();
 
-				Main.NewText( "Refilling interrupted.", Color.DarkOrchid );
+				if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
+					SteamArsePlayer.HasDisplayedRefillingAlert = true;
+
+					Main.NewText( "Refilling interrupted.", Color.DarkOrchid );
+				}
 			}
 		}
 
@@ -55,12 +65,16 @@ namespace SteampunkArsenal {
 				case SoundState.Stopped:
 					waterDrawSnd.Play();
 
-					Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
+					if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
+						Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
+					}
 					break;
 				case SoundState.Paused:
 					waterDrawSnd.Resume();
 
-					Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
+					if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
+						Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
+					}
 					break;
 				}
 			} else {

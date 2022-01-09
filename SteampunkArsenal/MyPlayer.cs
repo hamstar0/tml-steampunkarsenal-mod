@@ -47,8 +47,11 @@ namespace SteampunkArsenal {
 		
 		public override bool PreItemCheck() {
 			Item item = this.player.HeldItem;
-			if( item?.active == true && item.type == ModContent.ItemType<RivetLauncherItem>() ) {
-				RivetLauncherItem.RunHeldBehavior_Local_If( this.player, item );
+
+			if( item?.active == true ) {
+				if( item.type == ModContent.ItemType<RivetLauncherItem>() ) {
+					RivetLauncherItem.RunHeldBehavior_Local_If( this.player, item );
+				}
 			}
 
 			return base.PreItemCheck();

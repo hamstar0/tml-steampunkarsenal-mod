@@ -1,41 +1,43 @@
 using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 
 namespace SteampunkArsenal.Logic.Steam {
 	public abstract partial class SteamSource {
 		public static (float computedAddedWaterAmount, float computedAddedWaterHeatAmount) CalculateWaterAdded(
-					SteamSource source,
+					SteamSource destination,
 					float addedWaterAmount,
 					float addedWaterHeatAmount,
 					out float waterOverflow ) {
-			float currSteam = source.Water * source.WaterTemperature;
+			float currSteam = destination.Water * destination.WaterTemperature;
 			float addedSteam = addedWaterAmount * addedWaterHeatAmount;
 			float predictSteam = currSteam + addedSteam;
 
 			// Enforce capacity
-			if( predictSteam > source.Capacity ) {
-				float capacityOverflow = predictSteam - source.Capacity;
+			if( predictSteam > destination.Capacity ) {
+				float capacityOverflow = predictSteam - destination.Capacity;
 
 				waterOverflow = capacityOverflow / addedWaterHeatAmount;
 
-				addedWaterAmount = (source.Capacity - currSteam) / addedWaterHeatAmount;
+				addedWaterAmount = (destination.Capacity - currSteam) / addedWaterHeatAmount;
 			} else if( predictSteam < 0f ) {
-				waterOverflow = predictSteam / source.WaterTemperature;
+				waterOverflow = predictSteam / destination.WaterTemperature;
 
-				addedWaterAmount = -source.Water;
+				addedWaterAmount = -destination.Water;
 			} else {
 				waterOverflow = 0;
 			}
 
 			//
 
-			float waterPercentAdded = source.Water != 0f
-				? addedWaterAmount / source.Water
+			float waterPercentAdded = destination.Water != 0f
+				? addedWaterAmount / destination.Water
 				: 1f;
+			float addedWaterHeatPercent = MathHelper.Clamp( waterPercentAdded, -1f, 1f );
 
 			// Heat amount after diffusing into existing temperature
-			float computedAddedWaterHeatAmount = waterPercentAdded * addedWaterHeatAmount;
+			float computedAddedWaterHeatAmount = addedWaterHeatPercent * addedWaterHeatAmount;
 
 			return (addedWaterAmount, computedAddedWaterHeatAmount);
 		}

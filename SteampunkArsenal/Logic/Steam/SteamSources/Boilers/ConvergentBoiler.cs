@@ -54,8 +54,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			do {
 				float divWaterAmt = overflow / (float)availableSteamSources.Count;
 
-				//
-
 				overflow = 0f;
 
 				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
@@ -78,7 +76,36 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		}
 
 
-		////
+		public override float DrainWater( float waterAmount, out float waterUnderflow ) {
+			float underflow = waterAmount;
+			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
+
+			do {
+				float divWaterAmt = underflow / (float)availableSteamSources.Count;
+
+				underflow = 0f;
+
+				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
+					steamSrc.DrainWater( divWaterAmt, out float latestUnderflow );
+
+					//
+
+					if( latestUnderflow > 0f ) {
+						underflow += latestUnderflow;
+
+						availableSteamSources.Remove( steamSrc );
+					}
+				}
+			} while( underflow > 0f && availableSteamSources.Count > 0 );
+
+			//
+
+			waterUnderflow = underflow;
+			return waterAmount - waterUnderflow;
+		}
+
+
+		////////////////
 
 		public override void SetBoilerHeat( float heatAmount ) {
 			List<Boiler> boilers = this.ConnectedSteamSources
@@ -92,43 +119,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			boilers.ForEach(
 				ss => ss.SetBoilerHeat( ss.WaterTemperature + addAmt )
 			);
-		}
-
-
-		////////////////
-
-		private void NormalizeSteamPressureIncrementally() {
-			float xferWaterRate = 1f / 60f;
-
-			//
-
-			IEnumerable<Boiler> boilers = this.ConnectedSteamSources
-				.Where( ss => ss is Boiler )
-				.Select( ss => ss as Boiler );
-			Boiler prevBoiler = null;
-
-			foreach( Boiler boiler in boilers ) {
-				if( prevBoiler == null ) {
-					prevBoiler = boiler;
-					continue;
-				}
-				if( boiler.SteamPressure <= prevBoiler.SteamPressure ) {
-					continue;
-				}
-				if( (prevBoiler.Water - boiler.Water) < xferWaterRate ) {
-					continue;
-				}
-
-				//
-
-				float xferredWater = prevBoiler.DrainWater( xferWaterRate, out _ );
-
-				boiler.AddWater( xferredWater, prevBoiler.WaterTemperature, out float xferBackwash );
-
-				if( xferBackwash > 0f ) {
-					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterTemperature, out _ );
-				}
-			}
 		}
 	}
 }

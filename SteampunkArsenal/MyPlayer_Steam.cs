@@ -8,7 +8,7 @@ using SteampunkArsenal.Net;
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
-		public void ApplySteamDamage_Local_Syncs( float steamAmount ) {
+		internal void ApplySteamDamage_Local_Syncs( float steamAmount ) {
 			if( this.player.whoAmI != Main.myPlayer ) {
 				return;
 			}

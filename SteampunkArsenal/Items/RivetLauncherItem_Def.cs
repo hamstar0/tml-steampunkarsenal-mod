@@ -3,14 +3,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SteampunkArsenal.Logic.Steam.SteamSources;
-using SteampunkArsenal.Logic.Steam.SteamSources.Boilers;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
 
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
-		internal Boiler MyBoiler { get; private set; } = new TankBoiler();
+		internal SteamContainer MySteamSupply { get; private set; } = new SteamContainer();
 
 
 
@@ -68,14 +67,14 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			flat = this.MyBoiler.SteamPressure;
+			flat = this.MySteamSupply.SteamPressure;
 		}
 
 
 		////////////////
 
 		public override bool CanUseItem( Player player ) {
-			if( this.MyBoiler.SteamPressure >= 10f ) {
+			if( this.MySteamSupply.SteamPressure >= 10f ) {
 				return true;
 			}
 
@@ -94,10 +93,10 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float steam = this.MyBoiler.SteamPressure;
+			float steam = this.MySteamSupply.SteamPressure;
 
 			if( steam > 0f ) {
-				this.MyBoiler.DrainWater( this.MyBoiler.Water, out _ );
+				this.MySteamSupply.DrainWater( this.MySteamSupply.Water, out _ );
 			}
 
 			//
