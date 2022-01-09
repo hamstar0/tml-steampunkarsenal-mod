@@ -9,7 +9,7 @@ using SteampunkArsenal.Recipes;
 
 namespace SteampunkArsenal.Items {
 	public class SteamBallItem : ModItem {
-		public SteamSource Storage { get; } = new SteamContainer();
+		public SteamSource Storage { get; } = new SteamContainer( true );
 
 
 
