@@ -66,11 +66,16 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
+			var offset = new Vector2( 0f, texOffsetY );
+			var rect = new Rectangle( 0, (int)texOffsetY, waterTex.Width, texHeight );
+
+			//
+			
 			sb.Draw(
 				texture: waterTex,
-				position: pos + new Vector2(waterTex.Width, texOffsetY),
-				sourceRectangle: new Rectangle( 0, (int)texOffsetY, waterTex.Width, texHeight ),
-				color: Color.White * 0.25f,
+				position: pos + offset,
+				sourceRectangle: rect,
+				color: Color.White * 0.35f,
 				rotation: 0f,
 				origin: default,
 				scale: 1f,
@@ -98,11 +103,11 @@ namespace SteampunkArsenal.HUD {
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
 			float pressure = myplayer.AllBoilers.SteamPressure;
 			float gaugePercent = pressure / 100f;
-			float gauge = (float)Math.PI * 0.5f;
+			float gauge = (float)Math.PI * -0.25f;
 			gauge += gaugePercent * (float)Math.PI * 1.5f;
 
 			//
-
+			
 			sb.Draw(
 				texture: pin,
 				position: pos + pinOffset,

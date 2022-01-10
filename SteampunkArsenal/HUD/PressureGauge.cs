@@ -80,6 +80,10 @@ namespace SteampunkArsenal.HUD {
 		////////////////
 
 		protected override void PreUpdateWhileActive() {
+			if( this.IsMouseHovering ) {
+				Main.LocalPlayer.mouseInterface = true;
+			}
+
 			if( this.AnimState > 0 ) {
 				this.AnimState--;
 			}

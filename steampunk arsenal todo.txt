@@ -3,11 +3,14 @@ v1
 	-	Add boiler steam + vibrations
 	-	Add steam spout on firing rivet
 	-	Refine steam malfunction burst
--	Implement boiler + gun temperature decay (no lower than 1f)
+-	Add steam trail behind rivet
+-	Increase size of rivet
 -	Implement gun charge sound
+-	Implement boiler + gun temperature decay (no lower than 1f)
+-	Change 'Needs steam' alert to use popup text upon gauge
+
+
 -	@Test
-
-
 -	Fix ConvergentBoiler attempting to fill Rivet Launcher
 -	Implement boiler pressure overflow auto-relief
 -	Add gauge water reading
