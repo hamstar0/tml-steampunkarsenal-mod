@@ -7,7 +7,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		internal protected override void PreUpdate( Player owner ) {
 			if( owner.dead ) {
 				this._Water = 0f;
-				this._BoilerTemperature = 0f;
+				this._WaterTemperature = 1f;
+				this._BoilerTemperature = 1f;
 			}
 
 			//

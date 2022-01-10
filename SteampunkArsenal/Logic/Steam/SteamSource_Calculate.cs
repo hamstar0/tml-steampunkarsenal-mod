@@ -1,11 +1,10 @@
 using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 
 
 namespace SteampunkArsenal.Logic.Steam {
 	public abstract partial class SteamSource {
-		public static (float computedAddedWaterAmount, float computedAddedWaterHeatAmount) CalculateWaterAdded(
+		public static (float computedAddedWaterAmount, float computedWaterHeatAmount) CalculateWaterAdded(
 					SteamSource destination,
 					float addedWaterAmount,
 					float addedWaterHeatAmount,
@@ -31,15 +30,19 @@ namespace SteampunkArsenal.Logic.Steam {
 
 			//
 
-			float waterPercentAdded = destination.Water != 0f
-				? addedWaterAmount / destination.Water
-				: 1f;
-			float addedWaterHeatPercent = MathHelper.Clamp( waterPercentAdded, -1f, 1f );
+			if( destination.Water == 0f ) {
+				return (addedWaterAmount, addedWaterHeatAmount);
+			}
 
-			// Heat amount after diffusing into existing temperature
-			float computedAddedWaterHeatAmount = addedWaterHeatPercent * addedWaterHeatAmount;
+			//
 
-			return (addedWaterAmount, computedAddedWaterHeatAmount);
+			float percent = addedWaterAmount / destination.Water;
+			float newTemp = destination.WaterTemperature + (addedWaterHeatAmount * percent);
+			newTemp /= 1f + percent;
+
+			//
+
+			return (addedWaterAmount, newTemp);
 		}
 
 

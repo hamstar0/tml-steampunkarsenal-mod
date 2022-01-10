@@ -31,7 +31,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		////////////////
 
 		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			(float addedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
+			(float addedWater, float newHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,
 				addedWaterAmount: waterAmount,
 				addedWaterHeatAmount: heatAmount,
@@ -41,7 +41,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 			this._Water += addedWater;
 
 			if( addedWater > 0f ) {
-				this._WaterTemperature += addedHeat;
+				this._WaterTemperature = newHeat;
 			}
 
 			return addedWater;
