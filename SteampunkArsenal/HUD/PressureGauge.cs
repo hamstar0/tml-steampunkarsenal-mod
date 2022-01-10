@@ -41,10 +41,16 @@ namespace SteampunkArsenal.HUD {
 		
 		private int AnimState = 0;
 
+		////
+
+		private int PopupTextElapsed = 0;
+		private string PopupText = "";
+		private Color PopupTextColor = default;
+
 
 
 		////////////////
-		
+
 		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default ) { }
 
 		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(

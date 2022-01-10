@@ -20,6 +20,16 @@ namespace SteampunkArsenal.HUD {
 			this.DrawGaugePin( sb, pos );
 
 			//
+			
+			if( this.PopupTextElapsed > 0 ) {
+				if( PressureGaugeHUD.DrawPopupText_If(sb, pos, this.PopupText, this.PopupTextColor, this.PopupTextElapsed) ) {
+					this.PopupTextElapsed++;
+				} else {
+					this.PopupTextElapsed = 0;
+				}
+			}
+
+			//
 
 			return false;
 		}

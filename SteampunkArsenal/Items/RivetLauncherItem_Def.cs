@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SteampunkArsenal.Logic.Steam.SteamSources;
+using SteampunkArsenal.HUD;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
 
@@ -78,7 +79,7 @@ namespace SteampunkArsenal.Items {
 				return true;
 			}
 
-			Main.NewText( "Needs steam.", Color.Yellow );
+			PressureGaugeHUD.DisplayAlertPopup( "Needs steam.", Color.Yellow );
 			return false;
 		}
 
