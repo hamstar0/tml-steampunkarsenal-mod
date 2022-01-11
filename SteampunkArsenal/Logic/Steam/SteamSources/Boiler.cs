@@ -52,8 +52,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		internal protected abstract void PreUpdate( Player owner );
+		internal protected abstract void PreUpdate( Player owner, bool isChild );
 
-		internal protected abstract void PostUpdate( Player owner );
+		internal protected abstract void PostUpdate( Player owner, bool isChild );
 	}
 }

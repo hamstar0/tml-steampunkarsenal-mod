@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework;
 namespace SteampunkArsenal {
 	public partial class Fx {
 		private static void RollPosVel( out Vector2 randPos, out Vector2 randVel ) {
-			randPos = new Vector2( Main.rand.Next( -16, 16 ), Main.rand.Next( -24, 24 ) );
-			randVel = new Vector2( Main.rand.Next( -5, 5 ), Main.rand.Next( -5, 5 ) );
+			randPos = new Vector2( Main.rand.Next(-12, 12), Main.rand.Next(-18, 18) );
+			randVel = new Vector2( Main.rand.Next(-3, 3), Main.rand.Next(-3, 3) );
 		}
 
 

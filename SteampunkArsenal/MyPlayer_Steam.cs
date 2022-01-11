@@ -23,23 +23,17 @@ namespace SteampunkArsenal {
 
 		internal void ApplySteamDamage( float steamAmount ) {
 			this.player.Hurt(
-				damageSource: PlayerDeathReason.ByCustomReason( this.player.name+" cleared their pores" ),
+				damageSource: PlayerDeathReason.ByCustomReason(
+					this.player.name+" cleared "+(this.player.Male?"his":"her")+" pores" ),
 				Damage: (int)steamAmount,
 				hitDirection: 0
 			);
 
-			this.CreateSteamFx_If( steamAmount );
-		}
+			//
 
-
-		////////////////
-
-		public void CreateSteamFx_If( float steamAmount ) {
-			if( Main.netMode == NetmodeID.Server ) {
-				return;
+			if( Main.netMode != NetmodeID.Server ) {
+				Fx.CreateSteamEruptionFx( this.player.MountedCenter, steamAmount );
 			}
-
-			Fx.CreateSteamEruptionFx( this.player.MountedCenter, steamAmount );
 		}
 	}
 }

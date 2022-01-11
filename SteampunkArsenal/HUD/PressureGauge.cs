@@ -24,14 +24,6 @@ namespace SteampunkArsenal.HUD {
 			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG_A" );
 			var hudElem = new PressureGaugeHUD( new Vector2( posX, posY ), new Vector2( tex.Width, tex.Height ) );
 
-			hudElem.OnMouseOver += ( evt, listeningElement ) => {
-				hudElem.IsHoveringSinceLastCheck = true;
-				Main.LocalPlayer.mouseInterface = true;
-			};
-			hudElem.OnMouseOut += ( evt, listeningElement ) => {
-				hudElem.IsHoveringSinceLastCheck = false;
-				Main.LocalPlayer.mouseInterface = false;
-			};
 			hudElem.OnClick += ( evt, listeningElement ) => {
 				if( hudElem.AttemptButtonPress() ) {
 					hudElem.AnimState = 15;
@@ -96,10 +88,12 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			// Failsafe
-			if( !isEnabled && this.IsHoveringSinceLastCheck ) {
-				this.IsHoveringSinceLastCheck = false;
+			if( !isEnabled ) {
+				if( this.IsHoveringSinceLastCheck ) {
+					this.IsHoveringSinceLastCheck = false;
 
-				Main.LocalPlayer.mouseInterface = false;
+					Main.LocalPlayer.mouseInterface = false;
+				}
 			}
 
 			//
@@ -111,6 +105,20 @@ namespace SteampunkArsenal.HUD {
 		////////////////
 
 		protected override void PreUpdateWhileActive() {
+			if( this.IsMouseHovering ) {
+				this.IsHoveringSinceLastCheck = true;
+
+				Main.LocalPlayer.mouseInterface = true;
+			} else {
+				if( this.IsHoveringSinceLastCheck ) {
+					this.IsHoveringSinceLastCheck = false;
+
+					Main.LocalPlayer.mouseInterface = false;
+				}
+			}
+
+			//
+
 			if( this.AnimState > 0 ) {
 				this.AnimState--;
 			}

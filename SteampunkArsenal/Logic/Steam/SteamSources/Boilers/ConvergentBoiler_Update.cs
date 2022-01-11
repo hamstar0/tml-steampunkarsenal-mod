@@ -7,7 +7,7 @@ using ModLibsGeneral.Libraries.Players;
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class ConvergentBoiler : Boiler {
-		protected internal override void PreUpdate( Player owner ) {
+		protected internal override void PreUpdate( Player owner, bool isChild ) {
 			this.RefreshConnectedBoilers( owner );
 
 			//
@@ -26,7 +26,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			//
 
 			foreach( Boiler boiler in boilers ) {
-				boiler.PreUpdate( owner );
+				boiler.PreUpdate( owner, true );
 			}
 
 			//
@@ -41,16 +41,18 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		}
 
 
-		internal protected override void PostUpdate( Player owner ) {
-			if( this.SteamPressure > this.Capacity ) {
-				this.EmitSteam( owner.MountedCenter, this.SteamPressure );
+		internal protected override void PostUpdate( Player owner, bool isChild ) {
+			if( !isChild ) {
+				if( this.SteamPressure > this.Capacity ) {
+					Fx.CreateSteamEruptionFx( owner.MountedCenter, this.SteamPressure - this.Capacity );
+				}
 			}
 
 			//
 
 			foreach( SteamSource steamSrc in this.ConnectedSteamSources ) {
 				if( steamSrc is Boiler ) {
-					((Boiler)steamSrc).PostUpdate( owner );
+					((Boiler)steamSrc).PostUpdate( owner, true );
 				}
 			}
 		}

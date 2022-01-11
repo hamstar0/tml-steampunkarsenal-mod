@@ -20,9 +20,10 @@ namespace SteampunkArsenal {
 			// Update non-convergent boilers in inventory
 			foreach( Item item in this.player.inventory ) {
 				Boiler boiler = Boiler.GetBoilerForItem( item );
+
 				if( boiler?.IsActive ?? false ) {
-					boiler.PreUpdate( this.player );
-					boiler.PostUpdate( this.player );
+					boiler.PreUpdate( this.player, false );
+					boiler.PostUpdate( this.player, false );
 				}
 			}
 

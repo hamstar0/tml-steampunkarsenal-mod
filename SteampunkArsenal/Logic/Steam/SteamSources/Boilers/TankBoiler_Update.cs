@@ -4,7 +4,7 @@ using Terraria;
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class TankBoiler : Boiler {
-		internal protected override void PreUpdate( Player owner ) {
+		internal protected override void PreUpdate( Player owner, bool isChild ) {
 			if( owner.dead ) {
 				this._Water = 0f;
 				this._WaterTemperature = 1f;
@@ -25,9 +25,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		}
 
 
-		internal protected override void PostUpdate( Player owner ) {
-			if( this.SteamPressure > this.Capacity ) {
-				this.EmitSteam( owner.MountedCenter, this.SteamPressure - this.Capacity );
+		internal protected override void PostUpdate( Player owner, bool isChild ) {
+			if( !isChild ) {
+				if( this.SteamPressure > this.Capacity ) {
+					this.EmitSteam( owner.MountedCenter, this.SteamPressure - this.Capacity );
+				}
 			}
 		}
 	}

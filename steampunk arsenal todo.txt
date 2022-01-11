@@ -9,6 +9,7 @@ v1
 -	Implement boiler + gun temperature decay (no lower than 1f)
 
 
+-	@HUDElementsLib - Fix error with hover check
 -	Change 'Needs steam' alert to use popup text upon gauge
 -	@Test
 -	Fix ConvergentBoiler attempting to fill Rivet Launcher
