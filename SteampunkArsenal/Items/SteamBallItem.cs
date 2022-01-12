@@ -9,7 +9,7 @@ using SteampunkArsenal.Recipes;
 
 namespace SteampunkArsenal.Items {
 	public class SteamBallItem : ModItem {
-		public SteamSource Storage { get; } = new SteamContainer( true );
+		public SteamSource SteamSupply { get; private set; }
 
 
 
@@ -20,6 +20,8 @@ namespace SteampunkArsenal.Items {
 		}
 
 		public override void SetDefaults() {
+			this.SteamSupply = new SteamContainer( true, 0f );
+
 			this.item.width = 18;
 			this.item.height = 18;
 			this.item.rare = ItemRarityID.LightPurple;

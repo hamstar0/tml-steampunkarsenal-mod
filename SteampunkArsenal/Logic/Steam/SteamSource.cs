@@ -13,7 +13,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			}
 
 			if( item.modItem is RivetLauncherItem ) {
-				return ( (RivetLauncherItem)item.modItem ).MySteamSupply;
+				return ( (RivetLauncherItem)item.modItem ).SteamSupply;
 			}
 
 			if( item.modItem is BoilerOBurdenItem ) {
@@ -25,7 +25,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			}
 
 			if( item.modItem is SteamBallItem ) {
-				return ( (SteamBallItem)item.modItem ).Storage;
+				return ( (SteamBallItem)item.modItem ).SteamSupply;
 			}
 
 			return null;
@@ -63,7 +63,6 @@ namespace SteampunkArsenal.Logic.Steam {
 		}
 
 
-
 		////////////////
 
 		public abstract float AddWater( float waterAmount, float heatAmount, out float waterOverflow );
@@ -94,5 +93,12 @@ namespace SteampunkArsenal.Logic.Steam {
 
 			return waterAdded;
 		}
+
+
+		////////////////
+
+		internal protected abstract void PreUpdate( Player owner, bool isChild );
+
+		internal protected abstract void PostUpdate( Player owner, bool isChild );
 	}
 }

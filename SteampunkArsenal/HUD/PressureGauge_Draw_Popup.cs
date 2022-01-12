@@ -31,9 +31,16 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			var offset = new Vector2( -32f, -32f * percent );
+			var offset = new Vector2( 0f, -32f * percent );
 
 			color *= 1f - percent;
+
+			//
+
+			Vector2 textDim = Main.fontMouseText.MeasureString( text );
+			if( pos.X + textDim.X > Main.screenWidth ) {
+				pos.X = Main.screenWidth - textDim.X;
+			}
 
 			//
 			

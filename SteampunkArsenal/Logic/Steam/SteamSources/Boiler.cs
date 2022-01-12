@@ -48,12 +48,5 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 			Fx.CreateSteamEruptionFx( position, steamAmount );
 		}
-
-
-		////////////////
-
-		internal protected abstract void PreUpdate( Player owner, bool isChild );
-
-		internal protected abstract void PostUpdate( Player owner, bool isChild );
 	}
 }

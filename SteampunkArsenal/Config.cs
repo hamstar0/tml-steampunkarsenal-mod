@@ -81,5 +81,33 @@ namespace SteampunkArsenal {
 		[DefaultValue( 0f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float SquirmRivetDamagePerSecondBase { get; set; } = 0f;
+
+
+		////
+
+		[Range( 0f, 100f )]
+		[DefaultValue( 1f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float BoilerWaterTempIncreaseRatePerHeatUnitPerSecondPerTank { get; set; } = 100f;
+
+		//[Range( 0f, 100f )]
+		//[DefaultValue( 0.9f )]
+		//[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		//public float BoilerTempXferRateReducedPerSteamPercentPerSecondPerTank { get; set; } = 0.9f;
+
+		[Range( 0f, 100f )]
+		[DefaultValue( 0.15f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float WaterTempDrainRatePerSecondPerTank { get; set; } = 0.15f;
+
+		[Range( 0f, 100f )]
+		[DefaultValue( 0.15f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float BoilerTempDrainRatePerSecondPerTank { get; set; } = 0.15f;
+
+		[Range( 0f, 100f )]
+		[DefaultValue( 0.15f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float RiveterTempDrainRatePerSecondPerTank { get; set; } = 0.15f;
 	}
 }

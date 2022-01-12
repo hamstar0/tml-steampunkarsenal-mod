@@ -10,7 +10,7 @@ using SteampunkArsenal.Projectiles;
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
-		internal SteamContainer MySteamSupply { get; private set; } = new SteamContainer( false );
+		internal SteamContainer SteamSupply { get; private set; }
 
 
 
@@ -29,6 +29,9 @@ namespace SteampunkArsenal.Items {
 		}
 
 		public override void SetDefaults() {
+			var config = SteampunkArsenalConfig.Instance;
+			this.SteamSupply = new SteamContainer( true, config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) ) );
+
 			this.item.ranged = true;
 			this.item.autoReuse = false;
 
@@ -68,14 +71,14 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			flat = this.MySteamSupply.SteamPressure;
+			flat = this.SteamSupply.SteamPressure;
 		}
 
 
 		////////////////
 
 		public override bool CanUseItem( Player player ) {
-			if( this.MySteamSupply.SteamPressure >= 10f ) {
+			if( this.SteamSupply.SteamPressure >= 10f ) {
 				return true;
 			}
 
@@ -94,10 +97,10 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float steam = this.MySteamSupply.SteamPressure;
+			float steam = this.SteamSupply.SteamPressure;
 
 			if( steam > 0f ) {
-				this.MySteamSupply.DrainWater( this.MySteamSupply.Water, out _ );
+				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
 			}
 
 			//

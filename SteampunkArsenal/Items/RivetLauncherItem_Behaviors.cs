@@ -12,7 +12,7 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			float pressure = this.MySteamSupply.SteamPressure;
+			float pressure = this.SteamSupply.SteamPressure;
 
 			projectile.damage = (int)pressure;
 
@@ -59,14 +59,14 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.MySteamSupply.SteamPressure >= this.MySteamSupply.Capacity ) {
+			if( this.SteamSupply.SteamPressure >= this.SteamSupply.Capacity ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
-				myplayer.ApplySteamDamage_Local_Syncs( this.MySteamSupply.SteamPressure );
+				myplayer.ApplySteamDamage_Local_Syncs( this.SteamSupply.SteamPressure );
 
 				//
 
-				this.MySteamSupply.DrainWater( this.MySteamSupply.Water, out _ );
+				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
 
 				pressureChanged = true;
 			}

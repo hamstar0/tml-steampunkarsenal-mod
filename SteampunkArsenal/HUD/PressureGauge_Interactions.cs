@@ -37,7 +37,7 @@ namespace SteampunkArsenal.HUD {
 			);
 
 			if( totalFuel < fuelAmt ) {
-				Main.NewText( "Not enough fuel (gels).", Color.Yellow );
+				PressureGaugeHUD.DisplayAlertPopup( "Not enough fuel (gels).", Color.Yellow );
 
 				return false;
 			}
@@ -52,6 +52,8 @@ namespace SteampunkArsenal.HUD {
 			boiler.SetBoilerHeat( newTemp );
 
 			//
+
+			PressureGaugeHUD.DisplayAlertPopup( "+1 fuel added (-1 gel)", Color.Lime );
 
 			Main.PlaySound( SoundID.Item111, Main.LocalPlayer.MountedCenter );
 
