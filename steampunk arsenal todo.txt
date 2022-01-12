@@ -2,10 +2,11 @@ v1
 -	Add steam hiss sound after rivet fire, gun overcharge, and boiler overflow (low volume)
 -	Add boiler steam + vibrations
 -	Add steam eruption + trail behind fired rivet
+-	Add secondary pressure gauge pin for gun
 -	Increase size of rivet
+
+
 -	Implement gun charge sound
-
-
 -	Implement boiler + gun temperature decay (no lower than 1f)
 -	Implement boiler refuel popup alerts
 -	@HUDElementsLib - Fix error with hover check

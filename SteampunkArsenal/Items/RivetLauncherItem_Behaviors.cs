@@ -42,8 +42,12 @@ namespace SteampunkArsenal.Items {
 			}
 
 			//
-
+			
 			myitem.CheckPressure_Local( wielderPlayer );
+
+			//
+
+			myitem.RunFx_Idle();
 		}
 
 

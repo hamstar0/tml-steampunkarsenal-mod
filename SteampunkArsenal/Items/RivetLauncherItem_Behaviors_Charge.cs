@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,11 +24,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			if( transferredSteam > 0f ) {
-				if( SteamArseMod.Instance.BoilerUp.State != SoundState.Playing ) {
-					SteamArseMod.Instance.BoilerUp.Play();
-				}
-			}
+			launcherModItem.RunFx_Charging_State( transferredSteam > 0f );
 		}
 	}
 }

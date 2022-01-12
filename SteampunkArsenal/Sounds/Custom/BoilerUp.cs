@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace SteampunkArsenal.Sounds.Custom {
 	public class BoilerUp : ModSound {
-		public override SoundEffectInstance PlaySound(
+		/*public override SoundEffectInstance PlaySound(
 					ref SoundEffectInstance soundInstance,
 					float volume,
 					float pan,
@@ -14,10 +14,10 @@ namespace SteampunkArsenal.Sounds.Custom {
 				return null;
 			}
 
-			soundInstance.Volume = volume * .5f;
+			soundInstance.Volume = volume * 0.1f;
 			soundInstance.Pan = pan;
-			soundInstance.Pitch = Main.rand.Next( -5, 6 ) * .05f;
+			//soundInstance.Pitch = Main.rand.Next( -5, 6 ) * .05f;
 			return soundInstance;
-		}
+		}*/
 	}
 }
