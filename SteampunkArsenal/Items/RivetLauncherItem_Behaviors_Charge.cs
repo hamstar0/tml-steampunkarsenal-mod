@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +13,7 @@ namespace SteampunkArsenal.Items {
 
 			float steamAmtPerTick = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
-			launcherModItem.SteamSupply.TransferPressureToMeFromSource(
+			float transferredSteam = launcherModItem.SteamSupply.TransferPressureToMeFromSource(
 				source: myplayer.AllBoilers,
 				steamAmount: steamAmtPerTick,
 				waterOverflow: out float waterOverflow
@@ -20,6 +21,14 @@ namespace SteampunkArsenal.Items {
 
 			if( waterOverflow > 0f ) {
 				myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterTemperature, out _ );
+			}
+
+			//
+
+			if( transferredSteam > 0f ) {
+				if( SteamArseMod.Instance.BoilerUp.State != SoundState.Playing ) {
+					SteamArseMod.Instance.BoilerUp.Play();
+				}
 			}
 		}
 	}

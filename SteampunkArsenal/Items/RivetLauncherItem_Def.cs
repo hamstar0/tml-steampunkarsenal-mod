@@ -30,7 +30,7 @@ namespace SteampunkArsenal.Items {
 
 		public override void SetDefaults() {
 			var config = SteampunkArsenalConfig.Instance;
-			this.SteamSupply = new SteamContainer( true, config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) ) );
+			this.SteamSupply = new SteamContainer( false, config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) ) );
 
 			this.item.ranged = true;
 			this.item.autoReuse = false;
