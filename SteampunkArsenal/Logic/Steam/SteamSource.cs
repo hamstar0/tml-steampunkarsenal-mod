@@ -35,15 +35,15 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public bool IsActive => this.Capacity > 0f;
+		public bool IsActive => this.SteamCapacity > 0f;
 
 		////
 
 		public abstract float Water { get; }
 
-		public abstract float WaterTemperature { get; }
+		public abstract float WaterHeat { get; }
 
-		public abstract float Capacity { get; }
+		public abstract float SteamCapacity { get; }
 
 		////
 
@@ -52,7 +52,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public virtual float SteamPressure => this.Water * this.WaterTemperature;
+		public virtual float SteamPressure => this.Water * this.WaterHeat;
 
 
 
@@ -65,33 +65,47 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public abstract float AddWater( float waterAmount, float heatAmount, out float waterOverflow );
+		public abstract float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow );
 
-		public abstract float DrainWater( float waterAmount, out float waterUnderflow );
+		public abstract float DrainWater( float waterDrained, out float waterUnderflow );
 
 
 		////
 
-		public float TransferPressureToMeFromSource( SteamSource source, float steamAmount, out float waterOverflow ) {
-			if( source.SteamPressure <= 0 ) {
+		public float TransferPressureToMeFromSource(
+					SteamSource source,
+					float steam,
+					out float waterUnderflow,
+					out float waterOverflow ) {
+			if( source.SteamPressure <= 0f ) {
+				waterUnderflow = steam;
 				waterOverflow = 0f;
 				return 0f;
 			}
 
 			//
 
-			float srcHeat = source.WaterTemperature;
-			float srcWaterDrawAmt = steamAmount / srcHeat;
+			float srcHeat = source.WaterHeat;
+			float srcWaterDrawAmt = steam / srcHeat;
 
-			srcWaterDrawAmt = source.DrainWater( srcWaterDrawAmt, out _ );
+			float drawnWater = source.DrainWater( srcWaterDrawAmt, out waterUnderflow );
+			if( drawnWater <= 0f ) {
+				waterOverflow = 0f;
+				return 0f;
+			}
 
 			//
 
-			float waterAdded = this.AddWater( srcWaterDrawAmt, srcHeat, out waterOverflow );
+//float prevHeat = this.WaterHeat;
+			float finalAddedWater = this.AddWater( drawnWater, srcHeat, out waterOverflow );
+//Main.NewText( "Xferred "+((float)srcWaterDrawAmt).ToString()
+//	+" ("+((float)drawnWater).ToString()+")"
+//	+" -> "+((float)finalAddedWater).ToString()
+//	+", temp1 "+((float)prevHeat).ToString()
+//	+" -> temp2 "+((float)this.WaterHeat).ToString()+")"
+//);
 
-			//
-
-			return waterAdded;
+			return finalAddedWater * srcHeat;
 		}
 
 

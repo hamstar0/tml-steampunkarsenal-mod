@@ -60,7 +60,7 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
-			float waterPerc = myplayer.AllBoilers.Water / myplayer.AllBoilers.Capacity;
+			float waterPerc = myplayer.AllBoilers.Water / myplayer.AllBoilers.SteamCapacity;
 			if( waterPerc <= 0f ) {
 				return;
 			}

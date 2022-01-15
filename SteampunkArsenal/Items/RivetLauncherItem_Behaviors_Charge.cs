@@ -14,12 +14,13 @@ namespace SteampunkArsenal.Items {
 
 			float transferredSteam = launcherModItem.SteamSupply.TransferPressureToMeFromSource(
 				source: myplayer.AllBoilers,
-				steamAmount: steamAmtPerTick,
+				steam: steamAmtPerTick,
+				waterUnderflow: out _,
 				waterOverflow: out float waterOverflow
 			);
 
 			if( waterOverflow > 0f ) {
-				myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterTemperature, out _ );
+				myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterHeat, out _ );
 			}
 
 			//

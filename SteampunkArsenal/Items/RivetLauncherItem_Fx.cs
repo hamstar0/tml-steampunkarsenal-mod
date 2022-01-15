@@ -19,7 +19,7 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		private void RunFx_Idle() {
-			float percent = this.SteamSupply.SteamPressure / this.SteamSupply.Capacity;
+			float percent = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
 
 			if( percent > 0f ) {
 				this.RunFx_Idle_State( percent );
@@ -79,7 +79,7 @@ namespace SteampunkArsenal.Items {
 
 				float min = RivetLauncherItem.MinPressureTransferSoundVolume;
 				float max = RivetLauncherItem.MaxPressureTransferSoundVolume;
-				float perc = this.SteamSupply.SteamPressure / this.SteamSupply.Capacity;
+				float perc = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
 				perc = min + ((max - min) * perc);
 
 				SteamArseMod.Instance.BoilerUpInst1.Volume = perc;

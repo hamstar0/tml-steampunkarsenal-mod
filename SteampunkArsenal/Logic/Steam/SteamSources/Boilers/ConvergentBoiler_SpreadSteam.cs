@@ -32,10 +32,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 				float xferredWater = prevBoiler.DrainWater( xferWaterRate, out _ );
 
-				boiler.AddWater( xferredWater, prevBoiler.WaterTemperature, out float xferBackwash );
+				boiler.AddWater( xferredWater, prevBoiler.WaterHeat, out float xferBackwash );
 
 				if( xferBackwash > 0f ) {
-					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterTemperature, out _ );
+					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterHeat, out _ );
 				}
 			}
 		}

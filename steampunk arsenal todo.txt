@@ -1,9 +1,12 @@
 v1
+-	Final calibrations
 -	Add steam hiss sound after rivet fire, gun overcharge, and boiler overflow (low volume)
--	Add boiler steam + vibrations
 -	Add steam eruption + trail behind fired rivet
+-	Add boiler steam + vibrations
 -	Add secondary pressure gauge pin for gun
 -	Increase size of rivet
+-	Fix gun temp decay fail
+-	Fix 0 water riveter charge-up attempts
 
 
 -	Implement gun charge sound

@@ -48,7 +48,7 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			float newTemp = boiler.BoilerTemperature + 1f;
+			float newTemp = boiler.BoilerHeat + 1f;
 			boiler.SetBoilerHeat( newTemp );
 
 			//

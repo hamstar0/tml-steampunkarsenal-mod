@@ -43,8 +43,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		internal protected override void PostUpdate( Player owner, bool isChild ) {
 			if( !isChild ) {
-				if( this.SteamPressure > this.Capacity ) {
-					Fx.CreateSteamEruptionFx( owner.MountedCenter, this.SteamPressure - this.Capacity );
+				if( this.SteamPressure > this.SteamCapacity ) {
+					Fx.CreateSteamEruptionFx( owner.MountedCenter, this.SteamPressure - this.SteamCapacity );
 				}
 			}
 

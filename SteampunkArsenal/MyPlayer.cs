@@ -35,8 +35,8 @@ namespace SteampunkArsenal {
 				DebugLibraries.Print(
 					"boilers",
 					"Water: " + this.AllBoilers.Water.ToString( "N2" )
-						+ ", BTemp: " + this.AllBoilers.BoilerTemperature.ToString( "N2" )
-						+ ", WTemp: " + this.AllBoilers.WaterTemperature.ToString( "N2" )
+						+ ", BTemp: " + this.AllBoilers.BoilerHeat.ToString( "N2" )
+						+ ", WTemp: " + this.AllBoilers.WaterHeat.ToString( "N2" )
 						+ ", Steam: " + this.AllBoilers.SteamPressure.ToString( "N2" )
 						+ ", Gun: " + SteamSource.GetSteamSourceForItem( this.player.HeldItem )?.SteamPressure.ToString( "N2" )
 				);

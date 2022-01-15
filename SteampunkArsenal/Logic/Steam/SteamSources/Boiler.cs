@@ -24,7 +24,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public abstract float BoilerTemperature { get; }
+		public abstract float BoilerHeat { get; }
 
 
 
@@ -36,13 +36,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		////////////////
 
 		public void EmitSteam( Vector2 position, float steamAmount ) {
-			float waterDrainAmount = steamAmount / this.WaterTemperature;
+			float waterDrainAmount = steamAmount / this.WaterHeat;
 
 			//
 
 			waterDrainAmount = this.DrainWater( waterDrainAmount, out _ );
 
-			steamAmount = waterDrainAmount * this.WaterTemperature;
+			steamAmount = waterDrainAmount * this.WaterHeat;
 
 			//
 

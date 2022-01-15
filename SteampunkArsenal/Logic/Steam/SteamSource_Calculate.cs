@@ -1,66 +1,108 @@
 using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace SteampunkArsenal.Logic.Steam {
 	public abstract partial class SteamSource {
-		public static (float computedAddedWaterAmount, float computedWaterHeatAmount) CalculateWaterAdded(
-					SteamSource destination,
-					float addedWaterAmount,
-					float addedWaterHeatAmount,
-					out float waterOverflow ) {
-			float currSteam = destination.Water * destination.WaterTemperature;
-			float addedSteam = addedWaterAmount * addedWaterHeatAmount;
-			float predictSteam = currSteam + addedSteam;
-
-			// Enforce capacity
-			if( predictSteam > destination.Capacity ) {
-				float capacityOverflow = predictSteam - destination.Capacity;
-
-				waterOverflow = capacityOverflow / addedWaterHeatAmount;
-
-				addedWaterAmount = (destination.Capacity - currSteam) / addedWaterHeatAmount;
-			} else if( predictSteam < 0f ) {
-				waterOverflow = predictSteam / destination.WaterTemperature;
-
-				addedWaterAmount = -destination.Water;
-			} else {
-				waterOverflow = 0;
+		public static double CalculateWaterHeatAdded(
+					double addedWater,
+					double heatOfAddedWater,
+					double currentWater,
+					double currentWaterHeat ) {
+			if( currentWater == 0d ) {
+				return heatOfAddedWater - currentWaterHeat;
 			}
 
-			//
+			double addedWaterPercent = addedWater / currentWater;
 
-			if( destination.Water == 0f ) {
-				return (addedWaterAmount, addedWaterHeatAmount);
-			}
+			double computedWaterHeat = currentWaterHeat;
+			computedWaterHeat += heatOfAddedWater * addedWaterPercent;
+			computedWaterHeat /= 1d + addedWaterPercent;
 
-			//
-
-			float percent = addedWaterAmount / destination.Water;
-			float newTemp = destination.WaterTemperature + (addedWaterHeatAmount * percent);
-			newTemp /= 1f + percent;
-
-			//
-
-			return (addedWaterAmount, newTemp);
+			return computedWaterHeat - currentWaterHeat;
 		}
 
 
-		public static float CalculateWaterDrained( SteamSource source, float waterDrainAmount, out float waterUnderflow ) {
-			float currSteam = source.Water * source.WaterTemperature;
-			float drainedSteam = waterDrainAmount * source.WaterTemperature;
+		////
+
+		public static (float computedAddedWater, float computedAddedWaterHeat) CalculateWaterAdded(
+					SteamSource destination,
+					float addedWater,
+					float heatOfAddedWater,
+					out float waterOverflow ) {
+			float currSteam = destination.Water * destination.WaterHeat;
+			float addedSteam = addedWater * heatOfAddedWater;
+			float predictedSteam = currSteam + addedSteam;
+
+			float computedAddedWater, computedAddedWaterHeat;
+
+			// Enforce capacity
+			if( predictedSteam > destination.SteamCapacity ) {
+				float predictedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
+					addedWater: addedWater,
+					heatOfAddedWater: heatOfAddedWater,
+					currentWater: destination.Water,
+					currentWaterHeat: destination.WaterHeat
+				);
+				float predictedNewWaterHeat = predictedAddedWaterHeat + destination.WaterHeat;
+
+				//
+
+				float steamOverflow = predictedSteam - destination.SteamCapacity;
+				waterOverflow = steamOverflow / predictedNewWaterHeat;
+
+				//
+
+				computedAddedWater = (destination.SteamCapacity - currSteam) / predictedNewWaterHeat;
+				computedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
+					addedWater: computedAddedWater,
+					heatOfAddedWater: heatOfAddedWater,
+					currentWater: destination.Water,
+					currentWaterHeat: destination.WaterHeat
+				);
+			} else if( predictedSteam < 0f ) {
+				waterOverflow = predictedSteam / destination.WaterHeat;  // negative value
+
+				//
+
+				computedAddedWater = -destination.Water;
+				computedAddedWaterHeat = 0f;	// removed water does not alter temperature
+			} else {
+				waterOverflow = 0;
+
+				//
+
+				computedAddedWater = addedWater;
+				computedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
+					addedWater: addedWater,
+					heatOfAddedWater: heatOfAddedWater,
+					currentWater: destination.Water,
+					currentWaterHeat: destination.WaterHeat
+				);
+			}
+
+			//
+
+			return (computedAddedWater, computedAddedWaterHeat);
+		}
+
+
+		public static float CalculateWaterDrained( SteamSource source, float waterDrained, out float waterUnderflow ) {
+			float currSteam = source.Water * source.WaterHeat;
+			float drainedSteam = waterDrained * source.WaterHeat;
 			float predictSteam = currSteam - drainedSteam;
 
 			// Enforce capacity
 			if( predictSteam < 0f ) {
-				waterUnderflow = -predictSteam / source.WaterTemperature;
+				waterUnderflow = -predictSteam / source.WaterHeat;
 
-				waterDrainAmount = source.Water;
+				waterDrained = source.Water;
 			} else {
 				waterUnderflow = 0;
 			}
 
-			return waterDrainAmount;
+			return waterDrained;
 		}
 	}
 }

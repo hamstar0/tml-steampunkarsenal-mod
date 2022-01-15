@@ -1,25 +1,26 @@
 using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class TankBoiler : Boiler {
 		public override float Water => this._Water;
 
-		public override float WaterTemperature => this._WaterTemperature;
+		public override float WaterHeat => this._WaterHeat;
 
-		public override float BoilerTemperature => this._BoilerTemperature;
+		public override float BoilerHeat => this._BoilerHeat;
 
-		public override float Capacity => this._Capacity;
+		public override float SteamCapacity => this._Capacity;
 
 
 		////////////////
 
 		private float _Water = 0f;
 
-		private float _WaterTemperature = 1f;
+		private float _WaterHeat = 1f;
 
-		private float _BoilerTemperature = 1f;
+		private float _BoilerHeat = 1f;
 
 		private float _Capacity = 100f;
 
@@ -33,27 +34,28 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public override float AddWater( float waterAddAmount, float heatAddAmount, out float waterOverflow ) {
-			(float addedWater, float newHeat) = SteamSource.CalculateWaterAdded(
+		public override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
+			(float computedAddedWater, float computedAddedWaterHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,
-				addedWaterAmount: waterAddAmount,
-				addedWaterHeatAmount: heatAddAmount,
+				addedWater: addedWater,
+				heatOfAddedWater: heatOfAddedWater,
 				waterOverflow: out waterOverflow
 			);
+			
+//LogLibraries.LogOnce("ADDEDWATER ["+this._Water+", "+this._WaterHeat+"] "
+//	+addedWater+" -> "+computedAddedWater+" | "
+//	+heatOfAddedWater+" + "+computedAddedWaterHeat
+//);
+			this._Water += computedAddedWater;
+			this._WaterHeat += computedAddedWaterHeat;
 
-			this._Water += addedWater;
-
-			if( addedWater > 0f ) {
-				this._WaterTemperature = newHeat;
-			}
-
-			return addedWater;
+			return computedAddedWater;
 		}
 
-		public override float DrainWater( float waterDrainAmount, out float waterUnderflow ) {
+		public override float DrainWater( float waterDrained, out float waterUnderflow ) {
 			float drainedWater = SteamSource.CalculateWaterDrained(
 				source: this,
-				waterDrainAmount: waterDrainAmount,
+				waterDrained: waterDrained,
 				waterUnderflow: out waterUnderflow
 			);
 
@@ -65,8 +67,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////
 
-		public override void SetBoilerHeat( float heatAmount ) {
-			this._BoilerTemperature = heatAmount;
+		public override void SetBoilerHeat( float heat ) {
+			this._BoilerHeat = heat;
 		}
 	}
 }

@@ -7,20 +7,20 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 	public class SteamContainer : SteamSource {
 		public override float Water => this._Water;
 
-		public override float WaterTemperature => this._WaterTemperature;
+		public override float WaterHeat => this._WaterHeat;
 
-		public override float Capacity => this._Capacity;
+		public override float SteamCapacity => this._Capacity;
 
 		////
 
-		public float TemperatureDecayRatePerTick { get; private set; }
+		public float HeatDecayRatePerTick { get; private set; }
 
 
 		////////////////
 
 		private float _Water = 0f;
 
-		private float _WaterTemperature = 1f;
+		private float _WaterHeat = 1f;
 
 		private float _Capacity = 100f;
 
@@ -28,41 +28,38 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public SteamContainer( bool canConverge, float temperatureDecayRatePerTick ) : base( canConverge ) {
-			this.TemperatureDecayRatePerTick = temperatureDecayRatePerTick;
+		public SteamContainer( bool canConverge, float heatDecayRatePerTick ) : base( canConverge ) {
+			this.HeatDecayRatePerTick = heatDecayRatePerTick;
 		}
 
 
 
 		////////////////
 
-		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			(float addedWater, float newHeat) = SteamSource.CalculateWaterAdded(
+		public override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
+			(float computedAddedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,
-				addedWaterAmount: waterAmount,
-				addedWaterHeatAmount: heatAmount,
+				addedWater: addedWater,
+				heatOfAddedWater: heatOfAddedWater,
 				waterOverflow: out waterOverflow
 			);
 
-			this._Water += addedWater;
+			this._Water += computedAddedWater;
+			this._WaterHeat += addedHeat;
 
-			if( addedWater > 0f ) {
-				this._WaterTemperature = newHeat;
-			}
-
-			return addedWater;
+			return computedAddedWater;
 		}
 
-		public override float DrainWater( float waterDrainAmount, out float waterUnderflow ) {
-			float drainedWater = SteamSource.CalculateWaterDrained(
+		public override float DrainWater( float waterDrained, out float waterUnderflow ) {
+			float computedWaterDrained = SteamSource.CalculateWaterDrained(
 				source: this,
-				waterDrainAmount: waterDrainAmount,
+				waterDrained: waterDrained,
 				waterUnderflow: out waterUnderflow
 			);
 
-			this._Water -= drainedWater;
+			this._Water -= computedWaterDrained;
 
-			return drainedWater;
+			return computedWaterDrained;
 		}
 
 
@@ -70,7 +67,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public void TransferPressureToMeFromSourcesUntilFull( IEnumerable<SteamSource> sources ) {
 			foreach( SteamSource steamSrc in sources ) {
-				if( this.SteamPressure >= this.Capacity ) {
+				if( this.SteamPressure >= this.SteamCapacity ) {
 					break;
 				}
 
@@ -82,10 +79,15 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 				//
 
-				this.TransferPressureToMeFromSource( steamSrc, steamSrc.SteamPressure, out float overflow );
+				this.TransferPressureToMeFromSource(
+					source: steamSrc,
+					steam: steamSrc.SteamPressure,
+					waterUnderflow: out _,
+					waterOverflow: out float overflow
+				);
 
 				if( overflow > 0f ) {
-					steamSrc.AddWater( overflow, steamSrc.WaterTemperature, out _ );
+					steamSrc.AddWater( overflow, steamSrc.WaterHeat, out _ );
 				}
 			}
 		}
@@ -94,11 +96,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		////////////////
 
 		protected internal override void PreUpdate( Player owner, bool isChild ) {
-			if( this.WaterTemperature > 1f ) {
-				this._WaterTemperature -= this.TemperatureDecayRatePerTick;
+			if( this.WaterHeat > 1f ) {
+				this._WaterHeat -= this.HeatDecayRatePerTick;
 
-				if( this.WaterTemperature < 1f ) {
-					this._WaterTemperature = 1f;
+				if( this.WaterHeat < 1f ) {
+					this._WaterHeat = 1f;
 				}
 			}
 		}

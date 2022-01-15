@@ -9,19 +9,19 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		public override float Water => this.ConnectedSteamSources
 			.Sum( b => b.Water );
 
-		public override float WaterTemperature  => this.ConnectedSteamSources.Count > 0
-			? this.ConnectedSteamSources.Average( b => b.WaterTemperature )
+		public override float WaterHeat  => this.ConnectedSteamSources.Count > 0
+			? this.ConnectedSteamSources.Average( b => b.WaterHeat )
 			: 1f;
 
-		public override float BoilerTemperature => this.ConnectedSteamSources
+		public override float BoilerHeat => this.ConnectedSteamSources
 			.Any( b => b is Boiler )
 				? this.ConnectedSteamSources
 					.Where( b => b is Boiler )
-					.Average( b => ((Boiler)b).BoilerTemperature )
+					.Average( b => ((Boiler)b).BoilerHeat )
 				: 0f;
 
-		public override float Capacity => this.ConnectedSteamSources
-			.Sum( b => b.Capacity );
+		public override float SteamCapacity => this.ConnectedSteamSources
+			.Sum( b => b.SteamCapacity );
 
 		////
 
@@ -54,8 +54,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			do {
 				float divWaterAmt = overflow / (float)availableSteamSources.Count;
 
-				overflow = 0f;
+				//
 
+				overflow = 0f;
+				
 				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
 					steamSrc.AddWater( divWaterAmt, heatAmount, out float latestOverflow );
 
@@ -82,6 +84,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			do {
 				float divWaterAmt = underflow / (float)availableSteamSources.Count;
+
+				//
 
 				underflow = 0f;
 
@@ -113,11 +117,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				.Select( ss => ss as Boiler )
 				.ToList();
 
-			float mean = boilers.Average( ss => ss.WaterTemperature );
+			float mean = boilers.Average( ss => ss.WaterHeat );
 			float addAmt = heatAmount - mean;
 
 			boilers.ForEach(
-				ss => ss.SetBoilerHeat( ss.WaterTemperature + addAmt )
+				ss => ss.SetBoilerHeat( ss.WaterHeat + addAmt )
 			);
 		}
 	}

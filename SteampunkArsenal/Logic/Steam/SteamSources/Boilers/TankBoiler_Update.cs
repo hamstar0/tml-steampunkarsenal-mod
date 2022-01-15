@@ -1,5 +1,6 @@
 using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
@@ -7,8 +8,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		internal protected override void PreUpdate( Player owner, bool isChild ) {
 			if( owner.dead ) {
 				this._Water = 0f;
-				this._WaterTemperature = 1f;
-				this._BoilerTemperature = 1f;
+				this._WaterHeat = 1f;
+				this._BoilerHeat = 1f;
 
 				return;
 			}
@@ -16,14 +17,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			//
 
 			this.UpdateTemperatures();
-
-			//
-
-			float addedTemp = this.Water > 0f
-				? this.BoilerTemperature / this.Water   // more water? more heat needed!
-				: 0f;
-
-			this._WaterTemperature += addedTemp;
 		}
 
 
@@ -31,8 +24,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		internal protected override void PostUpdate( Player owner, bool isChild ) {
 			if( !isChild ) {
-				if( this.SteamPressure > this.Capacity ) {
-					this.EmitSteam( owner.MountedCenter, this.SteamPressure - this.Capacity );
+				if( this.SteamPressure > this.SteamCapacity ) {
+					this.EmitSteam( owner.MountedCenter, this.SteamPressure - this.SteamCapacity );
 				}
 			}
 		}
@@ -47,31 +40,37 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			float boilerTempDrainRate = config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) );
 
 			// Slow drain temperature from water
-			if( this._WaterTemperature > 1f ) {
-				this._WaterTemperature -= waterTempDrainRate / 60f;
+			if( this._WaterHeat > 1f ) {
+				this._WaterHeat -= waterTempDrainRate / 60f;
+//if( float.IsNaN(this._WaterHeat) ) {
+//	LogLibraries.LogOnce("NAN 1");
+//}
 
-				if( this._WaterTemperature < 1f ) {
-					this._WaterTemperature = 1f;
+				if( this._WaterHeat < 1f ) {
+					this._WaterHeat = 1f;
 				}
 			}
 
 			// Slow transfer boiler temperature to water
-			if( this._WaterTemperature > this._BoilerTemperature ) {
-				float rate = this._BoilerTemperature * (boilerTempXferBaseRate / 60f);
+			if( this._WaterHeat > this._BoilerHeat ) {
+				float rate = this._BoilerHeat * (boilerTempXferBaseRate / 60f);
 
-				this._WaterTemperature += rate;
+				this._WaterHeat += rate;
 
-				if( this._WaterTemperature > this._BoilerTemperature ) {
-					this._WaterTemperature = this._BoilerTemperature;
+				if( this._WaterHeat > this._BoilerHeat ) {
+					this._WaterHeat = this._BoilerHeat;
 				}
+//if( float.IsNaN(this._WaterHeat) ) {
+//	LogLibraries.LogOnce("NAN 2");
+//}
 			}
 
 			// Slow drain temperature from water
-			if( this._BoilerTemperature > 1f ) {
-				this._BoilerTemperature -= boilerTempDrainRate / 60f;
+			if( this._BoilerHeat > 1f ) {
+				this._BoilerHeat -= boilerTempDrainRate / 60f;
 
-				if( this._BoilerTemperature < 1f ) {
-					this._BoilerTemperature = 1f;
+				if( this._BoilerHeat < 1f ) {
+					this._BoilerHeat = 1f;
 				}
 			}
 		}
