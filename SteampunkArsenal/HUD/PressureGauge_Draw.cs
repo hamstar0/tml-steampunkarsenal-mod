@@ -6,6 +6,7 @@ using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using HUDElementsLib;
+using SteampunkArsenal.Logic.Steam.SteamSources;
 
 
 namespace SteampunkArsenal.HUD {
@@ -17,7 +18,7 @@ namespace SteampunkArsenal.HUD {
 
 			this.DrawGaugeBG( sb, pos );
 			this.DrawGaugeWater( sb, pos );
-			this.DrawGaugePin( sb, pos );
+			this.DrawGaugePins( sb, pos );
 
 			//
 			
@@ -32,6 +33,27 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			return false;
+		}
+
+
+		////////////////
+		
+
+		private void DrawGaugePins( SpriteBatch sb, Vector2 pos ) {
+			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
+
+			float boilersGaugePercent = myplayer.AllBoilers.SteamPressure / myplayer.AllBoilers.SteamCapacity;
+
+			this.DrawGaugePin( sb, pos, 1, boilersGaugePercent );
+
+			//
+
+			SteamContainer container = myplayer.GetHeldRivetLauncherSteam();
+			float gunGaugePercent = container != null
+				? container.SteamPressure / container.SteamCapacity
+				: 0f;
+
+			this.DrawGaugePin( sb, pos, 2, gunGaugePercent );
 		}
 
 
@@ -95,10 +117,10 @@ namespace SteampunkArsenal.HUD {
 		}
 
 
-		private void DrawGaugePin( SpriteBatch sb, Vector2 pos ) {
+		private void DrawGaugePin( SpriteBatch sb, Vector2 pos, int pinNum, float percent ) {
 			var mymod = SteamArseMod.Instance;
 			Texture2D fg = mymod.GetTexture( "HUD/PressureGaugeFG" );
-			Texture2D pin = mymod.GetTexture( "HUD/PressureGaugePin" );
+			Texture2D pin = mymod.GetTexture( "HUD/PressureGaugePin"+pinNum );
 
 			//
 
@@ -110,11 +132,8 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
-			float pressure = myplayer.AllBoilers.SteamPressure;
-			float gaugePercent = pressure / 100f;
 			float gauge = (float)Math.PI * -0.25f;
-			gauge += gaugePercent * (float)Math.PI * 1.5f;
+			gauge += percent * (float)Math.PI * 1.5f;
 
 			//
 			
