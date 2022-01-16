@@ -38,5 +38,15 @@ namespace SteampunkArsenal.Items.Armor {
 			var recipe = new BoilerOBurdenRecipe( this );
 			recipe.AddRecipe();
 		}
+
+
+		////////////////
+
+		public override void UpdateEquip( Player player ) {
+			var myplayer = player.GetModPlayer<SteamArsePlayer>();
+
+			float shake = this.MyBoiler.SteamPressure / this.MyBoiler.SteamCapacity;
+			myplayer.CurrentBodyLayerShakeAmount = shake;
+		}
 	}
 }

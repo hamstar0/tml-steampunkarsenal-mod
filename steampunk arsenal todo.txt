@@ -3,10 +3,12 @@ v1
 -	Fix gun temp decay fail
 -	Add steam hiss sound after rivet fire, gun overcharge, and boiler overflow (low volume)
 -	Add steam eruption + trail behind fired rivet
--	Add boiler steam + vibrations + glow
+-	Add boiler steam exhaust
+-	Add boiler glow
+
+
+-	Add boiler vibrations
 -	Add secondary pressure gauge pin for gun
-
-
 -	Increase size of rivet
 -	Fix 0 water riveter charge-up attempts
 -	Implement gun charge sound
