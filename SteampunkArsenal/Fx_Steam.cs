@@ -1,39 +1,70 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
+using SteampunkArsenal.Dusts;
 
 
 namespace SteampunkArsenal {
 	public partial class Fx {
-		private static void RollPosVel( out Vector2 randPos, out Vector2 randVel ) {
-			randPos = new Vector2( Main.rand.Next(-12, 12), Main.rand.Next(-18, 18) );
-			randVel = new Vector2( Main.rand.Next(-3, 3), Main.rand.Next(-3, 3) );
+		private static void RollPosVel( float dispersalScale, out Vector2 randPosOffset, out Vector2 randVelOffset ) {
+			float posOffset = dispersalScale * 12f;
+			float velOffset = dispersalScale * 3f;
+
+			randPosOffset = new Vector2(
+				(Main.rand.NextFloat() * posOffset * 2f) - posOffset,
+				(Main.rand.NextFloat() * posOffset * 2f) - posOffset
+			);
+			randVelOffset = new Vector2(
+				(Main.rand.NextFloat() * velOffset * 2f) - velOffset,
+				(Main.rand.NextFloat() * velOffset * 2f) - velOffset
+			);
 		}
 
 
 		////////////////
 
-		public static void CreateSmallSteamFx( Vector2 pos, int puffs, float scale ) {
-			Vector2 randPos, randVel;
+		public static void CreateSmallSteamFx(
+					Vector2 basePosition,
+					Vector2 baseVelocity,
+					int puffs,
+					float scale,
+					float dispersalScale = 1f,
+					int alpha = 128 ) {
+			Vector2 randPosOffset, randVelOffset;
+			int wid = (int)(dispersalScale * 12f);
+			int hei = (int)(dispersalScale * 12f);
+			int steamDustType = ModContent.DustType<SmallSteamDust>();
 
 			for( int i = 0; i < puffs; i++ ) {
-				Fx.RollPosVel( out randPos, out randVel );
-				randPos += pos;
+				Fx.RollPosVel( dispersalScale, out randPosOffset, out randVelOffset );
+				Vector2 pos = basePosition + randPosOffset;
+				Vector2 vel = baseVelocity + randVelOffset;
+				pos.X -= 16f;
 
-				int goreIdx = Gore.NewGore( randPos, randVel, 11, scale );
-				Main.gore[goreIdx].alpha = 128;
+				int idx = Dust.NewDust( pos, wid, hei, steamDustType, vel.X, vel.Y, alpha, Color.White, scale );
+				//int goreIdx = Gore.NewGore( pos, vel, 11, scale );
+				//Main.gore[goreIdx].alpha = alpha;
 			}
 		}
 
-		public static void CreateLargeSteamFx( Vector2 pos, int puffs, float scale ) {
-			Vector2 randPos, randVel;
+		public static void CreateLargeSteamFx(
+					Vector2 basePosition,
+					Vector2 baseVelocity,
+					int puffs,
+					float scale,
+					float dispersalScale = 1f,
+					int alpha = 128 ) {
+			Vector2 randPosOffset, randVelOffset;
 
 			for( int i = 0; i < puffs; i++ ) {
-				Fx.RollPosVel( out randPos, out randVel );
-				randPos += pos;
+				Fx.RollPosVel( dispersalScale, out randPosOffset, out randVelOffset );
+				Vector2 pos = basePosition + randPosOffset;
+				Vector2 vel = baseVelocity + randVelOffset;
+				pos.X -= 16f;
 
-				int goreIdx = Gore.NewGore( randPos, randVel, 862, scale );
-				Main.gore[goreIdx].alpha = 128;
+				int goreIdx = Gore.NewGore( pos, vel, 862, scale );
+				Main.gore[goreIdx].alpha = alpha;
 			}
 		}
 
@@ -41,9 +72,9 @@ namespace SteampunkArsenal {
 		////
 
 		public static void CreateSteamEruptionFx( Vector2 pos, float steamAmount ) {
-			Fx.CreateSmallSteamFx( pos, (int)steamAmount / 5, 1f );
-			Fx.CreateSmallSteamFx( pos, (int)steamAmount / 20, 2f );
-			Fx.CreateLargeSteamFx( pos, (int)steamAmount / 35, 1f );
+			Fx.CreateSmallSteamFx( pos, default, (int)steamAmount / 5, 1f );
+			Fx.CreateSmallSteamFx( pos, default, (int)steamAmount / 20, 2f );
+			Fx.CreateLargeSteamFx( pos, default, (int)steamAmount / 35, 1f );
 		}
 	}
 }

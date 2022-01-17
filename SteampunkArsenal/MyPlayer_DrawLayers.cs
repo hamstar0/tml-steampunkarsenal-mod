@@ -11,8 +11,8 @@ namespace SteampunkArsenal {
 		public static (OffsetWrapperPlayerLayer wrapBegin, OffsetWrapperPlayerLayer wrapClose) CreateLayers(
 					PlayerLayer baseLayer,
 					Func<float> shakeAmountGetter ) {
-			var wrap1 = new OffsetWrapperPlayerLayer( baseLayer.Name + "1", shakeAmountGetter );
-			var wrap2 = new OffsetWrapperPlayerLayer( baseLayer.Name + "2", shakeAmountGetter, wrap1 );
+			var wrap1 = new OffsetWrapperPlayerLayer( baseLayer.Name+"1", shakeAmountGetter );
+			var wrap2 = new OffsetWrapperPlayerLayer( baseLayer.Name+"2", shakeAmountGetter, wrap1 );
 			return (wrap1, wrap2);
 		}
 

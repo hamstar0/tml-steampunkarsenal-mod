@@ -71,7 +71,7 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			float steam = this.SteamSupply.SteamPressure;
+			float steam = this.SteamSupply?.SteamPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
 				flat = steam;

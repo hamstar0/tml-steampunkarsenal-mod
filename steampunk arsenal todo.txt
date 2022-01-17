@@ -4,7 +4,7 @@ v1
 -	Add steam hiss sound after rivet fire, gun overcharge, and boiler overflow (low volume)
 -	Add steam eruption + trail behind fired rivet
 -	Add boiler steam exhaust
--	Add boiler glow
+	-	Create dust sprite
 
 
 -	Add boiler vibrations
