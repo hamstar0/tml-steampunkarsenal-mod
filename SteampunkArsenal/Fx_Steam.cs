@@ -29,8 +29,7 @@ namespace SteampunkArsenal {
 					Vector2 baseVelocity,
 					int puffs,
 					float scale,
-					float dispersalScale = 1f,
-					int alpha = 128 ) {
+					float dispersalScale = 1f ) {
 			Vector2 randPosOffset, randVelOffset;
 			int wid = (int)(dispersalScale * 12f);
 			int hei = (int)(dispersalScale * 12f);
@@ -42,7 +41,15 @@ namespace SteampunkArsenal {
 				Vector2 vel = baseVelocity + randVelOffset;
 				pos.X -= 16f;
 
-				int idx = Dust.NewDust( pos, wid, hei, steamDustType, vel.X, vel.Y, alpha, Color.White, scale );
+				Dust.NewDust(
+					Position: pos,
+					Width: wid,
+					Height: hei,
+					Type: steamDustType,
+					SpeedX: vel.X,
+					SpeedY: vel.Y,
+					Scale: scale
+				);
 				//int goreIdx = Gore.NewGore( pos, vel, 11, scale );
 				//Main.gore[goreIdx].alpha = alpha;
 			}
@@ -53,8 +60,8 @@ namespace SteampunkArsenal {
 					Vector2 baseVelocity,
 					int puffs,
 					float scale,
-					float dispersalScale = 1f,
-					int alpha = 128 ) {
+					float dispersalScale = 1f ) {
+					//int alpha = 128
 			Vector2 randPosOffset, randVelOffset;
 
 			for( int i = 0; i < puffs; i++ ) {
@@ -64,7 +71,7 @@ namespace SteampunkArsenal {
 				pos.X -= 16f;
 
 				int goreIdx = Gore.NewGore( pos, vel, 862, scale );
-				Main.gore[goreIdx].alpha = alpha;
+				Main.gore[goreIdx].alpha = 128;
 			}
 		}
 

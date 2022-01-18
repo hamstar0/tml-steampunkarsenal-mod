@@ -107,6 +107,12 @@ namespace SteampunkArsenal.Items {
 
 			if( steam > 0f ) {
 				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
+
+				//
+
+				Fx.CreateLargeSteamFx( position, player.velocity, 1, 1f );
+
+				//
 				
 				Main.PlaySound(
 					this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamHiss")

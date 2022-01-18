@@ -91,8 +91,7 @@ namespace SteampunkArsenal.Items.Armor {
 				baseVelocity: vel,
 				puffs: 1,
 				scale: 0.35f,
-				dispersalScale: 0.05f,
-				alpha: 128
+				dispersalScale: 0.05f
 			);
 		}
 	}

@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.ProjectileOwner;
 using SteampunkArsenal.Items;
+using SteampunkArsenal.Dusts;
 
 
 namespace SteampunkArsenal.Projectiles {
@@ -102,11 +103,27 @@ namespace SteampunkArsenal.Projectiles {
 
 		////////////////
 		
+		 private int _DustSkipCount = 0;
+
 		public override void PostAI() {
 			if( this.projectile.velocity != default ) {
 				this.UpdateMoving();
 			} else {
 				this.UpdateStopped();
+			}
+
+			//
+
+			if( this._DustSkipCount++ > 4 ) {
+				this._DustSkipCount = 0;
+
+				Dust.NewDust(
+					Position: this.projectile.Center,
+					Width: 1,
+					Height: 1,
+					Type: ModContent.DustType<SmallSteamDust>(),
+					Scale: 0.35f
+				);
 			}
 		}
 

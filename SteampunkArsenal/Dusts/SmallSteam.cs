@@ -14,21 +14,26 @@ namespace SteampunkArsenal.Dusts {
 		}
 
 
+		////
+
 		public override void OnSpawn( Dust dust ) {
 			dust.noGravity = true;
 			dust.frame = Main.goreTexture[ 11 ].Bounds;
-			dust.color = new Color( 192, 192, 192, 192 );
+			
+			if( dust.color == default ) {
+				dust.color = Color.White * 0.75f;
+			}
 
 			dust.velocity *= 0.1f;
 			dust.velocity.Y -= (Main.rand.NextFloat() * 0.5f) + 0.5f;
-			//dust.rotation = Main.rand.NextFloat() * MathHelper.Pi;
+			dust.rotation = (Main.rand.NextFloat() * MathHelper.Pi) - (MathHelper.Pi * 0.5f);
 		}
+
 
 		public override bool Update( Dust dust ) {
 			int colorStep = 6;
-			byte c = (byte)(dust.color.R - colorStep );
 
-			if( c <= colorStep ) {
+			if( dust.alpha >= (255 - colorStep) ) {
 				dust.active = false;
 
 				return true;
@@ -36,7 +41,13 @@ namespace SteampunkArsenal.Dusts {
 
 			//
 
-			dust.color = new Color( c, c, c, c );
+			float perc = (float)dust.alpha / 255f;
+
+			dust.color *= 1f - perc;
+
+			//
+
+			dust.alpha += colorStep;
 
 			//
 
@@ -45,12 +56,12 @@ namespace SteampunkArsenal.Dusts {
 
 			//
 
-			//float rotDeg = MathHelper.ToDegrees( dust.rotation );
-			//float newRotDeg = ( (int)rotDeg % 2 ) == 0
-			//	? rotDeg + 2f
-			//	: rotDeg - 2f;
+			float rotDeg = MathHelper.ToDegrees( dust.rotation );
+			rotDeg += dust.rotation / MathHelper.Pi;
 
-			//dust.rotation = MathHelper.ToRadians( newRotDeg );
+			dust.rotation = MathHelper.ToRadians( rotDeg );
+
+			//
 
 			return false;
 		}
