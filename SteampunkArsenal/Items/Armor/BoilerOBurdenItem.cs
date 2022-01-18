@@ -79,7 +79,7 @@ namespace SteampunkArsenal.Items.Armor {
 				? -16f
 				: 16f;
 
-			Vector2 vel = player.velocity *= 0.5f;
+			Vector2 vel = player.velocity * 0.5f;
 			vel.X += player.direction >= 0
 				? -1f
 				: 1f;

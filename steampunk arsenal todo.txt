@@ -1,12 +1,13 @@
 v1
 -	Final calibrations
 -	Fix gun temp decay fail
--	Add steam hiss sound after rivet fire, gun overcharge, and boiler overflow (low volume)
 -	Add steam eruption + trail behind fired rivet
+
+
+-	Add steam burst sound after gun overcharge
+-	Add steam hiss sound after rivet fire
 -	Add boiler steam exhaust
 	-	Create dust sprite
-
-
 -	Add boiler vibrations
 -	Add secondary pressure gauge pin for gun
 -	Increase size of rivet
