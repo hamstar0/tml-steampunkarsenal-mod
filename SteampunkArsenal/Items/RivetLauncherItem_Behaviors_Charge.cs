@@ -6,7 +6,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
-		private static void ChargeSteamFromPlayerSteam( Player wielderPlayer, RivetLauncherItem launcherModItem ) {
+		private static bool ChargeSteamFromPlayerSteam( Player wielderPlayer, RivetLauncherItem launcherModItem ) {
 			var config = SteampunkArsenalConfig.Instance;
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
@@ -23,9 +23,7 @@ namespace SteampunkArsenal.Items {
 				myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterHeat, out _ );
 			}
 
-			//
-
-			launcherModItem.RunFx_Charging_State( transferredSteam > 0f );
+			return transferredSteam > 0f;
 		}
 	}
 }

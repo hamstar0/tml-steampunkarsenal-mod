@@ -46,7 +46,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 			//
 
-			Fx.CreateSteamEruptionFx( position, steamAmount );
+			Fx.CreateSteamEruptionFx( position, 12f, steamAmount / 16f, steamAmount );
 		}
 	}
 }

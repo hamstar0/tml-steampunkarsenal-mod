@@ -51,7 +51,7 @@ namespace SteampunkArsenal.Items.Armor {
 
 			//
 
-			myplayer.CurrentBodyLayerShakeAmount = capacityUsePercent;
+			//myplayer.CurrentBodyLayerShakeAmount = capacityUsePercent;
 
 			//
 
@@ -76,8 +76,8 @@ namespace SteampunkArsenal.Items.Armor {
 				? -12f
 				: 12f;
 			pos.Y += player.gravDir >= 0f
-				? -16f
-				: 16f;
+				? -8f
+				: 8f;
 
 			Vector2 vel = player.velocity * 0.5f;
 			vel.X += player.direction >= 0
@@ -87,11 +87,12 @@ namespace SteampunkArsenal.Items.Armor {
 			//
 
 			Fx.CreateSmallSteamFx(
-				basePosition: pos,
-				baseVelocity: vel,
+				position: pos,
+				velocity: vel,
+				dispersalRadius: 0f,
+				velocityNoise: 3f,
 				puffs: 1,
-				scale: 0.35f,
-				dispersalScale: 0.05f
+				scale: 0.3f
 			);
 		}
 	}

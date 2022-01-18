@@ -110,7 +110,12 @@ namespace SteampunkArsenal.Items {
 
 				//
 
-				Fx.CreateLargeSteamFx( position, player.velocity, 1, 1f );
+				Fx.CreateSteamEruptionFx(
+					position: position,
+					dispersalRadius: 0f,
+					velocityNoise: 2f,
+					steamAmount: 35f
+				);
 
 				//
 				

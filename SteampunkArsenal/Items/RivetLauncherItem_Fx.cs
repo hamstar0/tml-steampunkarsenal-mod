@@ -9,7 +9,7 @@ using ModLibsCore.Services.Timers;
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
 		public const float MinPressureTransferSoundVolume = 0.05f;
-		public const float MaxPressureTransferSoundVolume = 0.35f;
+		public const float MaxPressureTransferSoundVolume = 0.25f;
 
 		public const float MinPressureIdleSoundVolume = 0.01f;
 		public const float MaxPressureIdleSoundVolume = 0.1f;
@@ -18,19 +18,36 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		private void RunFx_Idle() {
+		private void RunFx( Player wielderPlayer, bool isCharging ) {
+			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 			float percent = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
 
-			if( percent > 0f ) {
-				this.RunFx_Idle_State( percent );
+			myplayer.CurrentBodyLayerShakeAmount = percent;
+
+			//
+
+			if( !isCharging ) {
+				this.RunFx_Idle( wielderPlayer, percent );
+			}
+			
+			//
+
+			this.RunFx_Charging_State( isCharging );
+		}
+
+		////
+
+		private void RunFx_Idle( Player wielderPlayer, float steamPercent ) {
+			if( steamPercent > 0f ) {
+				this.RunFx_Idle_State( steamPercent );
 			}
 		}
 
-		private void RunFx_Idle_State( float percent ) {
-			if( percent > 0f ) {
+		private void RunFx_Idle_State( float steamPercent ) {
+			if( steamPercent > 0f ) {
 				float min = RivetLauncherItem.MinPressureIdleSoundVolume;
 				float max = RivetLauncherItem.MaxPressureIdleSoundVolume;
-				float volume = min + ((max - min) * percent);
+				float volume = min + ((max - min) * steamPercent);
 
 				SteamArseMod.Instance.BoilerUpInst2.Volume = volume;
 
@@ -79,10 +96,11 @@ namespace SteampunkArsenal.Items {
 
 				float min = RivetLauncherItem.MinPressureTransferSoundVolume;
 				float max = RivetLauncherItem.MaxPressureTransferSoundVolume;
-				float perc = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
-				perc = min + ((max - min) * perc);
 
-				SteamArseMod.Instance.BoilerUpInst1.Volume = perc;
+				float perc = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
+				float volume = min + ((max - min) * perc);
+
+				SteamArseMod.Instance.BoilerUpInst1.Volume = volume;
 
 				if( SteamArseMod.Instance.BoilerUpInst1.State != SoundState.Playing ) {
 					SteamArseMod.Instance.BoilerUpInst1.Play();

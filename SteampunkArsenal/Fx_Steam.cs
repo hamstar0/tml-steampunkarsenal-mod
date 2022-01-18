@@ -7,48 +7,22 @@ using SteampunkArsenal.Dusts;
 
 namespace SteampunkArsenal {
 	public partial class Fx {
-		private static void RollPosVel( float dispersalScale, out Vector2 randPosOffset, out Vector2 randVelOffset ) {
-			float posOffset = dispersalScale * 12f;
-			float velOffset = dispersalScale * 3f;
-
-			randPosOffset = new Vector2(
-				(Main.rand.NextFloat() * posOffset * 2f) - posOffset,
-				(Main.rand.NextFloat() * posOffset * 2f) - posOffset
-			);
-			randVelOffset = new Vector2(
-				(Main.rand.NextFloat() * velOffset * 2f) - velOffset,
-				(Main.rand.NextFloat() * velOffset * 2f) - velOffset
-			);
-		}
-
-
-		////////////////
-
 		public static void CreateSmallSteamFx(
-					Vector2 basePosition,
-					Vector2 baseVelocity,
+					Vector2 position,
+					Vector2 velocity,
+					float dispersalRadius,
+					float velocityNoise,
 					int puffs,
-					float scale,
-					float dispersalScale = 1f ) {
-			Vector2 randPosOffset, randVelOffset;
-			int wid = (int)(dispersalScale * 12f);
-			int hei = (int)(dispersalScale * 12f);
-			int steamDustType = ModContent.DustType<SmallSteamDust>();
+					float scale ) {
+			position.X += 8f;
 
 			for( int i = 0; i < puffs; i++ ) {
-				Fx.RollPosVel( dispersalScale, out randPosOffset, out randVelOffset );
-				Vector2 pos = basePosition + randPosOffset;
-				Vector2 vel = baseVelocity + randVelOffset;
-				pos.X -= 16f;
-
-				Dust.NewDust(
-					Position: pos,
-					Width: wid,
-					Height: hei,
-					Type: steamDustType,
-					SpeedX: vel.X,
-					SpeedY: vel.Y,
-					Scale: scale
+				SmallSteamDust.Create(
+					centerPosition: position,
+					velocity: velocity,
+					dispersalRadius: dispersalRadius,
+					velocityNoise: velocityNoise,
+					scale: scale
 				);
 				//int goreIdx = Gore.NewGore( pos, vel, 11, scale );
 				//Main.gore[goreIdx].alpha = alpha;
@@ -56,32 +30,46 @@ namespace SteampunkArsenal {
 		}
 
 		public static void CreateLargeSteamFx(
-					Vector2 basePosition,
-					Vector2 baseVelocity,
+					Vector2 position,
+					Vector2 velocity,
+					float dispersalRadius,
+					float velocityNoise,
 					int puffs,
-					float scale,
-					float dispersalScale = 1f ) {
+					float scale ) {
 					//int alpha = 128
-			Vector2 randPosOffset, randVelOffset;
-
 			for( int i = 0; i < puffs; i++ ) {
-				Fx.RollPosVel( dispersalScale, out randPosOffset, out randVelOffset );
-				Vector2 pos = basePosition + randPosOffset;
-				Vector2 vel = baseVelocity + randVelOffset;
+				Vector2 posOffset = new Vector2(
+					(Main.rand.NextFloat() * dispersalRadius * 2f) - dispersalRadius,
+					(Main.rand.NextFloat() * dispersalRadius * 2f) - dispersalRadius
+				);
+				Vector2 velOffset = new Vector2(
+					(Main.rand.NextFloat() * velocityNoise * 2f) - velocityNoise,
+					(Main.rand.NextFloat() * velocityNoise * 2f) - velocityNoise
+				);
+				velOffset *= 0.5f;
+
+				Vector2 pos = position + posOffset;
+				Vector2 vel = velocity + velOffset;
 				pos.X -= 16f;
 
+				//
+
 				int goreIdx = Gore.NewGore( pos, vel, 862, scale );
-				Main.gore[goreIdx].alpha = 128;
+				Main.gore[goreIdx].alpha = 96;	//128
 			}
 		}
 
 
 		////
 
-		public static void CreateSteamEruptionFx( Vector2 pos, float steamAmount ) {
-			Fx.CreateSmallSteamFx( pos, default, (int)steamAmount / 5, 1f );
-			Fx.CreateSmallSteamFx( pos, default, (int)steamAmount / 20, 2f );
-			Fx.CreateLargeSteamFx( pos, default, (int)steamAmount / 35, 1f );
+		public static void CreateSteamEruptionFx(
+					Vector2 position,
+					float dispersalRadius,
+					float velocityNoise,
+					float steamAmount ) {
+			Fx.CreateSmallSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 5f), 1f );
+			Fx.CreateSmallSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 20f), 2f );
+			Fx.CreateLargeSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 35f), 1f );
 		}
 	}
 }

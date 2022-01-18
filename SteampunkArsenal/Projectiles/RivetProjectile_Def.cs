@@ -114,15 +114,16 @@ namespace SteampunkArsenal.Projectiles {
 
 			//
 
-			if( this._DustSkipCount++ > 4 ) {
+			if( this._DustSkipCount++ > 3 ) {
 				this._DustSkipCount = 0;
 
-				Dust.NewDust(
-					Position: this.projectile.Center,
-					Width: 1,
-					Height: 1,
-					Type: ModContent.DustType<SmallSteamDust>(),
-					Scale: 0.35f
+				Fx.CreateSmallSteamFx(
+					position: this.projectile.Center,
+					velocity: default,
+					dispersalRadius: 0f,
+					velocityNoise: 0f,
+					puffs: 1,
+					scale: 0.35f
 				);
 			}
 		}

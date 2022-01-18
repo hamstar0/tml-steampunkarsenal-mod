@@ -6,6 +6,30 @@ using Terraria.ModLoader;
 
 namespace SteampunkArsenal.Dusts {
 	public class SmallSteamDust : ModDust {
+		public static void Create(
+					Vector2 centerPosition,
+					Vector2 velocity,
+					float dispersalRadius,
+					float velocityNoise,
+					float scale ) {
+			centerPosition -= new Vector2( dispersalRadius, dispersalRadius );
+			velocityNoise *= 0.5f;
+
+			Dust.NewDust(
+				Position: centerPosition - new Vector2(dispersalRadius, dispersalRadius),
+				Width: (int)(dispersalRadius * 2f),
+				Height: (int)(dispersalRadius * 2f),
+				Type: ModContent.DustType<SmallSteamDust>(),
+				SpeedX: velocity.X + (Main.rand.NextFloat() * velocityNoise * 2f) - velocityNoise,
+				SpeedY: velocity.Y + (Main.rand.NextFloat() * velocityNoise * 2f) - velocityNoise,
+				Scale: scale
+			);
+		}
+
+
+
+		////////////////
+
 		public override bool Autoload( ref string name, ref string texture ) {
 			Main.instance.LoadGore( 11 );
 
@@ -21,9 +45,11 @@ namespace SteampunkArsenal.Dusts {
 			dust.frame = Main.goreTexture[ 11 ].Bounds;
 			
 			if( dust.color == default ) {
-				dust.color = Color.White * 0.75f;
+				dust.color = Color.White;
 			}
 
+			dust.alpha = 128;
+			
 			dust.velocity *= 0.1f;
 			dust.velocity.Y -= (Main.rand.NextFloat() * 0.5f) + 0.5f;
 			dust.rotation = (Main.rand.NextFloat() * MathHelper.Pi) - (MathHelper.Pi * 0.5f);
@@ -31,7 +57,7 @@ namespace SteampunkArsenal.Dusts {
 
 
 		public override bool Update( Dust dust ) {
-			int colorStep = 6;
+			int colorStep = 3;
 
 			if( dust.alpha >= (255 - colorStep) ) {
 				dust.active = false;

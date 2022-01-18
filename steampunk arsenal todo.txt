@@ -1,9 +1,19 @@
 v1
+-	Polish
+	-	Change steam to bubbles when underwater
 -	Final calibrations
--	Fix gun temp decay fail
+	-	Increase gun damage
+	-	Increase gun charge rate
+	-	Fix boiler temp not transferring to water temp
+	-	Fix gun temp decay fail
+-	Halt boiler charging and its noise when full
+
+
+-	Reduce sound volume of gun charge
+-	Increase intensity of gun shot steam puff
+-	Reduce small steam intensity
+-	Set player's boiler to rumble only for gun pressure, but steam for its own capacity
 -	Add steam eruption + trail behind fired rivet
-
-
 -	Add steam burst sound after gun overcharge
 -	Add steam hiss sound after rivet fire
 -	Add boiler steam exhaust
