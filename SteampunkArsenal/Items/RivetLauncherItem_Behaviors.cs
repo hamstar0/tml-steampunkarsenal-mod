@@ -2,30 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using SteampunkArsenal.Net;
 
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
-		internal void ApplyLaunchedRivetStats_NonServer_Syncs( int projectileIdx, Projectile projectile ) {
-			if( Main.netMode == NetmodeID.Server ) {
-				return;
-			}
-
-			float pressure = this.SteamSupply.SteamPressure;
-
-			projectile.damage = (int)pressure;
-
-			//
-			
-			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
-			}
-		}
-
-
-		////////////////
-
 		internal static void RunHeldBehavior_Local_If( Player wielderPlayer, Item launcherItem ) {
 			if( wielderPlayer.whoAmI != Main.myPlayer ) {
 				return;

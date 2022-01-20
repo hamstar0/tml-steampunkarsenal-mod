@@ -13,38 +13,55 @@ using SteampunkArsenal.Logic.Steam.SteamSources;
 
 namespace SteampunkArsenal.HUD {
 	partial class PressureGaugeHUD : HUDElement, ILoadable {
+		public const int FuelItemType = ItemID.Gel;
+		
+
+
+		////////////////
+
+		public static bool CanAddFuel( Player player, Boiler boiler, out string result ) {
+			if( !boiler.IsActive ) {
+				result = "No boiler.";
+				return false;
+			}
+
+			//
+
+			int totalFuel = player.inventory.Sum(
+				i => i?.active == true && i.type == PressureGaugeHUD.FuelItemType
+					? i.stack
+					: 0
+			);
+
+			if( totalFuel < 1 ) {
+				result = "Not enough fuel (gels).";
+				return false;
+			}
+
+			result = "Success.";
+			return true;
+		}
+
+
+		////////////////
+
 		public bool AttemptButtonPress() {
 			if( this.AnimState > 0 ) {
 				return false;
 			}
 
-			Boiler boiler = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>().AllBoilers;
-			if( !boiler.IsActive ) {
-				Main.NewText( "No boiler.", Color.Yellow );
-
-				return false;
-			}
-
-			//
-
-			int fuelType = ItemID.Gel;
-			int fuelAmt = 1;
-
-			int totalFuel = Main.LocalPlayer.inventory.Sum(
-				i => i?.active == true && i.type == fuelType
-					? i.stack
-					: 0
-			);
-
-			if( totalFuel < fuelAmt ) {
-				PressureGaugeHUD.DisplayAlertPopup( "Not enough fuel (gels).", Color.Yellow );
-
-				return false;
-			}
-
-			//
+			Player player = Main.LocalPlayer;
+			Boiler boiler = player.GetModPlayer<SteamArsePlayer>().ImplicitConvergingBoiler;
 			
-			PlayerItemLibraries.RemoveInventoryItemQuantity( Main.LocalPlayer, fuelType, fuelAmt );
+			if( !PressureGaugeHUD.CanAddFuel(player, boiler, out string result) ) {
+				PressureGaugeHUD.DisplayAlertPopup( result, Color.Yellow );
+
+				return false;
+			}
+
+			//
+
+			PlayerItemLibraries.RemoveInventoryItemQuantity( player, PressureGaugeHUD.FuelItemType, 1 );
 
 			//
 
@@ -53,9 +70,9 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			PressureGaugeHUD.DisplayAlertPopup( "+1 fuel added (-1 gel)", Color.Lime );
+			PressureGaugeHUD.DisplayAlertPopup( "Fuel added (-1 gel)", Color.Lime );
 
-			Main.PlaySound( SoundID.Item111, Main.LocalPlayer.MountedCenter );
+			Main.PlaySound( SoundID.Item111, player.MountedCenter );
 
 			return true;
 		}

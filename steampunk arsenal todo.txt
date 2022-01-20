@@ -1,14 +1,13 @@
 v1
--	Polish
-	-	Change steam to bubbles when underwater
--	Final calibrations
-	-	Increase gun damage
-	-	Increase gun charge rate
-	-	Fix boiler temp not transferring to water temp
-	-	Fix gun temp decay fail
+-	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
+-	Change steam to bubbles when underwater
+-	Increase gun damage
+-	Change decay rate to percent
 -	Halt boiler charging and its noise when full
 
 
+-	Fix boiler temp not transferring to water temp
+-	Correct gun pressure decay
 -	Reduce sound volume of gun charge
 -	Increase intensity of gun shot steam puff
 -	Reduce small steam intensity

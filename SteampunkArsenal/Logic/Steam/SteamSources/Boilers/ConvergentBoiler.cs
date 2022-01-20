@@ -116,12 +116,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				.Where( ss => ss is Boiler )
 				.Select( ss => ss as Boiler )
 				.ToList();
-
-			float mean = boilers.Average( ss => ss.WaterHeat );
+			
+			float mean = boilers.Average( ss => ss.BoilerHeat );
 			float addAmt = heatAmount - mean;
 
 			boilers.ForEach(
-				ss => ss.SetBoilerHeat( ss.WaterHeat + addAmt )
+				ss => ss.SetBoilerHeat( ss.BoilerHeat + addAmt )
 			);
 		}
 	}

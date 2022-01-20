@@ -35,9 +35,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		private void UpdateTemperatures() {
 			var config = SteampunkArsenalConfig.Instance;
-			float boilerTempXferBaseRate = config.Get<float>( nameof(config.BoilerWaterTempIncreaseRatePerHeatUnitPerSecondPerTank) );
 			float waterTempDrainRate = config.Get<float>( nameof(config.WaterTempDrainRatePerSecondPerTank) );
-			float boilerTempDrainRate = config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) );
+			float boilerTempDrainRate = config.Get<float>( nameof(config.BoilerTempDecayRatePerSecondPerTank) );
+			float boilerTempXferRate = config.Get<float>( nameof(config.BoilerWaterTempXferRatePerSecondPerTank) );
 
 			// Slow drain temperature from water
 			if( this._WaterHeat > 1f ) {
@@ -51,9 +51,18 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				}
 			}
 
+			// Slow drain temperature from water
+			if( this._BoilerHeat > 1f ) {
+				this._BoilerHeat -= boilerTempDrainRate / 60f;
+
+				if( this._BoilerHeat < 1f ) {
+					this._BoilerHeat = 1f;
+				}
+			}
+
 			// Slow transfer boiler temperature to water
-			if( this._WaterHeat > this._BoilerHeat ) {
-				float rate = this._BoilerHeat * (boilerTempXferBaseRate / 60f);
+			if( this._WaterHeat < this._BoilerHeat ) {
+				float rate = this._BoilerHeat * (boilerTempXferRate / 60f);
 
 				this._WaterHeat += rate;
 
@@ -63,15 +72,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 //if( float.IsNaN(this._WaterHeat) ) {
 //	LogLibraries.LogOnce("NAN 2");
 //}
-			}
-
-			// Slow drain temperature from water
-			if( this._BoilerHeat > 1f ) {
-				this._BoilerHeat -= boilerTempDrainRate / 60f;
-
-				if( this._BoilerHeat < 1f ) {
-					this._BoilerHeat = 1f;
-				}
 			}
 		}
 	}

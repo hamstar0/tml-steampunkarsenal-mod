@@ -16,7 +16,7 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		internal ConvergentBoiler AllBoilers { get; private set; } = new ConvergentBoiler( false );
+		internal ConvergentBoiler ImplicitConvergingBoiler { get; private set; } = new ConvergentBoiler( false );
 
 
 
@@ -40,10 +40,10 @@ namespace SteampunkArsenal {
 			if( SteampunkArsenalConfig.Instance.DebugModeInfo && this.player.whoAmI == Main.myPlayer ) {
 				DebugLibraries.Print(
 					"boilers",
-					"Water: " + this.AllBoilers.Water.ToString( "N2" )
-						+ ", BTemp: " + this.AllBoilers.BoilerHeat.ToString( "N2" )
-						+ ", WTemp: " + this.AllBoilers.WaterHeat.ToString( "N2" )
-						+ ", Steam: " + this.AllBoilers.SteamPressure.ToString( "N2" )
+					"Water: " + this.ImplicitConvergingBoiler.Water.ToString( "N2" )
+						+ ", BTemp: " + this.ImplicitConvergingBoiler.BoilerHeat.ToString( "N2" )
+						+ ", WTemp: " + this.ImplicitConvergingBoiler.WaterHeat.ToString( "N2" )
+						+ ", Steam: " + this.ImplicitConvergingBoiler.SteamPressure.ToString( "N2" )
 						+ ", Gun: " + SteamSource.GetSteamSourceForItem( this.player.HeldItem )?.SteamPressure.ToString( "N2" )
 				);
 			}

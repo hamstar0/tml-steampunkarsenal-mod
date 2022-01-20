@@ -14,7 +14,7 @@ namespace SteampunkArsenal {
 					float velocityNoise,
 					int puffs,
 					float scale ) {
-			position.X += 8f;
+			position.X -= 4f;
 
 			for( int i = 0; i < puffs; i++ ) {
 				SmallSteamDust.Create(

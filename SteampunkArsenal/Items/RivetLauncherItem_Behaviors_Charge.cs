@@ -13,14 +13,14 @@ namespace SteampunkArsenal.Items {
 			float steamAmtPerTick = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
 
 			float transferredSteam = launcherModItem.SteamSupply.TransferPressureToMeFromSource(
-				source: myplayer.AllBoilers,
+				source: myplayer.ImplicitConvergingBoiler,
 				steam: steamAmtPerTick,
 				waterUnderflow: out _,
 				waterOverflow: out float waterOverflow
 			);
 
 			if( waterOverflow > 0f ) {
-				myplayer.AllBoilers.AddWater( waterOverflow, myplayer.AllBoilers.WaterHeat, out _ );
+				myplayer.ImplicitConvergingBoiler.AddWater( waterOverflow, myplayer.ImplicitConvergingBoiler.WaterHeat, out _ );
 			}
 
 			return transferredSteam > 0f;

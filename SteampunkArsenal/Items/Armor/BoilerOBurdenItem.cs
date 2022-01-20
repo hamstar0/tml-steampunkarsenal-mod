@@ -45,12 +45,11 @@ namespace SteampunkArsenal.Items.Armor {
 		////////////////
 
 		public override void UpdateEquip( Player player ) {
-			var myplayer = player.GetModPlayer<SteamArsePlayer>();
-
 			float capacityUsePercent = this.MyBoiler.SteamPressure / this.MyBoiler.SteamCapacity;
 
 			//
 
+			//var myplayer = player.GetModPlayer<SteamArsePlayer>();
 			//myplayer.CurrentBodyLayerShakeAmount = capacityUsePercent;
 
 			//
@@ -61,12 +60,12 @@ namespace SteampunkArsenal.Items.Armor {
 
 		////////////////
 
-		public void EmitSteam_If( Player player, float steamPercent ) {
+		public bool EmitSteam_If( Player player, float steamPercent ) {
 			float rand = Main.rand.NextFloat();
 			rand = 1.05f - (rand * rand * rand);
 
 			if( rand > steamPercent ) {
-				return;
+				return false;
 			}
 
 			//
@@ -76,8 +75,8 @@ namespace SteampunkArsenal.Items.Armor {
 				? -12f
 				: 12f;
 			pos.Y += player.gravDir >= 0f
-				? -8f
-				: 8f;
+				? -12f
+				: 12f;
 
 			Vector2 vel = player.velocity * 0.5f;
 			vel.X += player.direction >= 0
@@ -94,6 +93,8 @@ namespace SteampunkArsenal.Items.Armor {
 				puffs: 1,
 				scale: 0.3f
 			);
+
+			return true;
 		}
 	}
 }

@@ -21,8 +21,8 @@ namespace SteampunkArsenal {
 
 			//
 
-			this.AllBoilers.PreUpdate( this.player, false );
-			this.AllBoilers.PostUpdate( this.player, false );
+			this.ImplicitConvergingBoiler.PreUpdate( this.player, false );
+			this.ImplicitConvergingBoiler.PostUpdate( this.player, false );
 		}
 
 
@@ -56,7 +56,7 @@ namespace SteampunkArsenal {
 		private void ApplyBoilerRefill( ref bool isInterrupted ) {
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 
-			float fillAmt = this.AllBoilers.AddWater( 8f / 60f, 1f, out _ );
+			float fillAmt = this.ImplicitConvergingBoiler.AddWater( 8f / 60f, 1f, out _ );
 
 			//
 

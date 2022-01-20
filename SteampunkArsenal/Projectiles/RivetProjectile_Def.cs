@@ -38,7 +38,7 @@ namespace SteampunkArsenal.Projectiles {
 
 			//
 
-			myriveter.ApplyLaunchedRivetStats_NonServer_Syncs( projectileIdx, projectile );
+			myriveter.UpdateLaunchedRivetProjectileStats_NonServer_Syncs( projectileIdx, projectile );
 		}
 
 

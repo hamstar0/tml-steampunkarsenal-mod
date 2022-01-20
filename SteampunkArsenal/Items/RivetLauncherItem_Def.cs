@@ -3,13 +3,32 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SteampunkArsenal.Logic.Steam.SteamSources;
-using SteampunkArsenal.HUD;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
+using SteampunkArsenal.Net;
 
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
+		internal void UpdateLaunchedRivetProjectileStats_NonServer_Syncs( int projectileIdx, Projectile projectile ) {
+			if( Main.netMode == NetmodeID.Server ) {
+				return;
+			}
+
+			float pressure = this.SteamSupply.SteamPressure;
+
+			projectile.damage = (int)pressure;
+
+			//
+
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
+			}
+		}
+
+
+		////////////////
+
 		internal SteamContainer SteamSupply { get; private set; }
 
 
@@ -30,7 +49,7 @@ namespace SteampunkArsenal.Items {
 
 		public override void SetDefaults() {
 			var config = SteampunkArsenalConfig.Instance;
-			this.SteamSupply = new SteamContainer( false, config.Get<float>( nameof(config.BoilerTempDrainRatePerSecondPerTank) ) );
+			this.SteamSupply = new SteamContainer( false, config.Get<float>( nameof(config.BoilerTempDecayRatePerSecondPerTank) ) );
 
 			this.item.ranged = true;
 			this.item.autoReuse = false;
@@ -61,7 +80,7 @@ namespace SteampunkArsenal.Items {
 
 
 		////////////////
-
+		
 		public override void AddRecipes() {
 			var recipe = new SteamPoweredRivetLauncherRecipe( this );
 			recipe.AddRecipe();
@@ -70,66 +89,9 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			float steam = this.SteamSupply?.SteamPressure ?? 0f;
-
-			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
-				flat = steam;
-			} else {
-				flat = 0f;
-			}
-		}
-
-
-		////////////////
-
-		public override bool CanUseItem( Player player ) {
-			if( this.SteamSupply.SteamPressure >= 10f ) {
-				return true;
-			}
-
-			PressureGaugeHUD.DisplayAlertPopup( "Needs steam.", Color.Yellow );
-			return false;
-		}
-
-
-		////////////////
-
-		public override bool Shoot(
-					Player player,
-					ref Vector2 position,
-					ref float speedX,
-					ref float speedY,
-					ref int type,
-					ref int damage,
-					ref float knockBack ) {
-			float steam = this.SteamSupply.SteamPressure;
-
-			if( steam > 0f ) {
-				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
-
-				//
-
-				Fx.CreateSteamEruptionFx(
-					position: position,
-					dispersalRadius: 0f,
-					velocityNoise: 2f,
-					steamAmount: 35f
-				);
-
-				//
-				
-				Main.PlaySound(
-					this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamHiss")
-						.WithVolume(0.5f)
-				);
-			}
-
-			//
-
-			damage = (int)steam;
-
-			return steam > 0f;
+		public override void UpdateInventory( Player player ) {
+			this.SteamSupply.PreUpdate( player, false );
+			this.SteamSupply.PostUpdate( player, false );
 		}
 	}
 }
