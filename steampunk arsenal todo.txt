@@ -1,11 +1,35 @@
-v1
+v3
+-	@Plans
+	-	Pneumatic Grappler: AKA punchy/grabby arm (ala KO mod)
+	-	Gentleman's Gilded Girding?: Steampunk mech suit
+		-	Moves slow, jumps low
+		-	May fly via steam power
+		-	Equipped as a full armor set and a mount; each piece is its own boiler
+		-	Defense is significant, full knockback resist
+		-	Movement requires steam pressure; more pressure = more speed
+		-	Too much boiler heat = player takes damage
+v2
+-	@Plans
+	-	Scalding Trap: Toggleable, placeable steam ball that emits constant steam
+	-	Improvised Steam Hose Flail: A wild waving whip that flails from steam pressure
+	-	Improvised Bladed Sprinkler: A yoyo that persists its action as long as steam pressure exists
+	-	Hydro Ramjet: Jetpack accessory that uses steam (wing item)
+-	Implement Steam Blower gun
+	-	@Plan
+		-	Sprays a jet of steam where aimed
+		-	Steam jet does normal ranged damage
+		-	Steam jet terminates in a cloud that lingers for a short time
+		-	Steam clouds evaporates quickly in open air, but lingers when more blocks are near
+		-	Steam does continuous 'steam' damage within area, with chance to inflict debuff
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
+v1
 -	Change steam to bubbles when underwater
 -	Increase gun damage
+-	Change boiler overflow behavior to emit steam quicker
 -	Change decay rate to percent
+
+
 -	Halt boiler charging and its noise when full
-
-
 -	Fix boiler temp not transferring to water temp
 -	Correct gun pressure decay
 -	Reduce sound volume of gun charge

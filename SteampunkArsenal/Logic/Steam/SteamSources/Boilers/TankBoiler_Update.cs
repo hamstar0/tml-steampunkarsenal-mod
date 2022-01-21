@@ -35,13 +35,16 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		private void UpdateTemperatures() {
 			var config = SteampunkArsenalConfig.Instance;
-			float waterTempDrainRate = config.Get<float>( nameof(config.WaterTempDrainRatePerSecondPerTank) );
-			float boilerTempDrainRate = config.Get<float>( nameof(config.BoilerTempDecayRatePerSecondPerTank) );
-			float boilerTempXferRate = config.Get<float>( nameof(config.BoilerWaterTempXferRatePerSecondPerTank) );
+			float waterPercTempDrainRateS = config.Get<float>( nameof(config.WaterHeatPercentDecayRatePerSecondPerTank) );
+			float boilerPercTempDrainRateS = config.Get<float>( nameof(config.BoilerHeatPercentDecayRatePerSecondPerTank) );
+			float boilerTempXferRateS = config.Get<float>( nameof(config.BoilerWaterHeatXferRatePerSecondPerTank) );
+			float waterPercTempDrainRateT = waterPercTempDrainRateS / 60f;
+			float boilerPercTempDrainRateT = boilerPercTempDrainRateS / 60f;
+			float boilerTempXferRateT = boilerTempXferRateS / 60f;
 
 			// Slow drain temperature from water
 			if( this._WaterHeat > 1f ) {
-				this._WaterHeat -= waterTempDrainRate / 60f;
+				this._WaterHeat -= this._WaterHeat * waterPercTempDrainRateT;
 //if( float.IsNaN(this._WaterHeat) ) {
 //	LogLibraries.LogOnce("NAN 1");
 //}
@@ -53,7 +56,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			// Slow drain temperature from water
 			if( this._BoilerHeat > 1f ) {
-				this._BoilerHeat -= boilerTempDrainRate / 60f;
+				this._BoilerHeat -= this._BoilerHeat * boilerPercTempDrainRateT;
 
 				if( this._BoilerHeat < 1f ) {
 					this._BoilerHeat = 1f;
@@ -62,9 +65,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			// Slow transfer boiler temperature to water
 			if( this._WaterHeat < this._BoilerHeat ) {
-				float rate = this._BoilerHeat * (boilerTempXferRate / 60f);
-
-				this._WaterHeat += rate;
+				this._WaterHeat += boilerTempXferRateT;
 
 				if( this._WaterHeat > this._BoilerHeat ) {
 					this._WaterHeat = this._BoilerHeat;

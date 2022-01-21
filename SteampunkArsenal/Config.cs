@@ -88,7 +88,7 @@ namespace SteampunkArsenal {
 		[Range( 0f, 100f )]
 		[DefaultValue( 1f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerWaterTempXferRatePerSecondPerTank { get; set; } = 1f;
+		public float BoilerWaterHeatXferRatePerSecondPerTank { get; set; } = 1f;
 
 		//[Range( 0f, 100f )]
 		//[DefaultValue( 0.9f )]
@@ -98,16 +98,16 @@ namespace SteampunkArsenal {
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.05f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float WaterTempDrainRatePerSecondPerTank { get; set; } = 0.05f;
+		public float WaterHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.05f;
 
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerTempDecayRatePerSecondPerTank { get; set; } = 0.15f;
+		public float BoilerHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.15f;
 
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float RiveterTempDecayRatePerSecondPerTank { get; set; } = 0.15f;
+		public float RiveterHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.15f;
 	}
 }

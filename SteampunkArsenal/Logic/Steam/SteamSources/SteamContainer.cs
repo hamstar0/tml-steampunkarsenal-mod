@@ -13,7 +13,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////
 
-		public float HeatDecayRatePerTick { get; private set; }
+		public float HeatPercentDecayRatePerTick { get; private set; }
 
 
 		////////////////
@@ -28,8 +28,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public SteamContainer( bool canConverge, float heatDecayRatePerTick ) : base( canConverge ) {
-			this.HeatDecayRatePerTick = heatDecayRatePerTick;
+		public SteamContainer( bool canConverge, float heatPercentDecayRatePerTick ) : base( canConverge ) {
+			this.HeatPercentDecayRatePerTick = heatPercentDecayRatePerTick;
 		}
 
 
@@ -97,7 +97,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		protected internal override void PreUpdate( Player owner, bool isChild ) {
 			if( this.WaterHeat > 1f ) {
-				this._WaterHeat -= this.HeatDecayRatePerTick;
+				this._WaterHeat -= this._WaterHeat * this.HeatPercentDecayRatePerTick;
 
 				if( this.WaterHeat < 1f ) {
 					this._WaterHeat = 1f;

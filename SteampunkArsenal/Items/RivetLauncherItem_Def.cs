@@ -49,12 +49,19 @@ namespace SteampunkArsenal.Items {
 
 		public override void SetDefaults() {
 			var config = SteampunkArsenalConfig.Instance;
-			this.SteamSupply = new SteamContainer( false, config.Get<float>( nameof(config.BoilerTempDecayRatePerSecondPerTank) ) );
+
+			float decayPercRate = config.Get<float>( nameof(config.BoilerHeatPercentDecayRatePerSecondPerTank) );
+
+			//
+			
+			this.SteamSupply = new SteamContainer( false, decayPercRate / 60f );
+
+			//
 
 			this.item.ranged = true;
 			this.item.autoReuse = false;
 
-			this.item.width = 40;
+			this.item.width = 38;
 			this.item.height = 20;
 
 			this.item.damage = 1;

@@ -56,11 +56,12 @@ namespace SteampunkArsenal {
 		private void ApplyBoilerRefill( ref bool isInterrupted ) {
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 
-			float fillAmt = this.ImplicitConvergingBoiler.AddWater( 8f / 60f, 1f, out _ );
+			float intendedFillAmt = 8f / 60f;
+			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater( intendedFillAmt, 1f, out _ );
 
 			//
 
-			if( fillAmt > 0f ) {
+			if( actualFillAmt > 0.0001f ) {	// floating point shenanigans
 				switch( waterDrawSnd.State ) {
 				case SoundState.Stopped:
 					waterDrawSnd.Play();
