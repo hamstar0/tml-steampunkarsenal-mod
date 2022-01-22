@@ -89,13 +89,8 @@ namespace SteampunkArsenal.Logic.Steam {
 
 
 		public static float CalculateWaterDrained( SteamSource source, float waterDrained, out float waterUnderflow ) {
-			float currSteam = source.Water * source.WaterHeat;
-			float drainedSteam = waterDrained * source.WaterHeat;
-			float predictSteam = currSteam - drainedSteam;
-
-			// Enforce capacity
-			if( predictSteam < 0f ) {
-				waterUnderflow = -predictSteam / source.WaterHeat;
+			if( waterDrained > source.Water ) {
+				waterUnderflow = waterDrained - source.Water;
 
 				waterDrained = source.Water;
 			} else {

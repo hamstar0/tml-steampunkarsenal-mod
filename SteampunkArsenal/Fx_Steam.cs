@@ -65,11 +65,29 @@ namespace SteampunkArsenal {
 		public static void CreateSteamEruptionFx(
 					Vector2 position,
 					float dispersalRadius,
-					float velocityNoise,
 					float steamAmount ) {
-			Fx.CreateSmallSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 5f), 1f );
-			Fx.CreateSmallSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 20f), 2f );
-			Fx.CreateLargeSteamFx( position, default, dispersalRadius, velocityNoise, (int)(steamAmount / 35f), 1f );
+			float smallAmtChance = steamAmount / 5f;
+			float midAmtChance = steamAmount / 20f;
+			float bigAmtChance = steamAmount / 35f;
+
+			int smallAmt = (int)smallAmtChance;
+			if( Main.rand.NextFloat() < (smallAmtChance - smallAmt) ) {
+				smallAmt++;
+			}
+
+			int midAmt = (int)midAmtChance;
+			if( Main.rand.NextFloat() < (midAmtChance - midAmt) ) {
+				midAmt++;
+			}
+
+			int bigAmt = (int)bigAmtChance;
+			if( Main.rand.NextFloat() < (bigAmtChance - bigAmt) ) {
+				bigAmt++;
+			}
+
+			Fx.CreateSmallSteamFx( position, default, dispersalRadius, 0f, smallAmt, 1f );
+			Fx.CreateSmallSteamFx( position, default, dispersalRadius, 0f, midAmt, 2f );
+			Fx.CreateLargeSteamFx( position, default, dispersalRadius, 0f, bigAmt, 1f );
 		}
 	}
 }

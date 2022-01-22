@@ -37,20 +37,17 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public void EmitSteam( Vector2 position, float steamAmount ) {
 			float waterDrainAmount = steamAmount / this.WaterHeat;
-
-			//
-
 			waterDrainAmount = this.DrainWater( waterDrainAmount, out _ );
 
-			steamAmount = waterDrainAmount * this.WaterHeat;
-
+			float drainedSteamAmount = waterDrainAmount * this.WaterHeat;
+			
 			//
 
+//Main.NewText("emit "+drainedSteamAmount );
 			Fx.CreateSteamEruptionFx(
 				position: position,
-				dispersalRadius: 12f,
-				velocityNoise: steamAmount / 16f,
-				steamAmount: steamAmount
+				dispersalRadius: 16f,
+				steamAmount: Math.Min( 8f, drainedSteamAmount )
 			);
 		}
 	}

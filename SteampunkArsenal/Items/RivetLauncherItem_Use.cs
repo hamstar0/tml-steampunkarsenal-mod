@@ -50,7 +50,6 @@ namespace SteampunkArsenal.Items {
 				Fx.CreateSteamEruptionFx(
 					position: position,
 					dispersalRadius: 0f,
-					velocityNoise: 2f,
 					steamAmount: 35f
 				);
 

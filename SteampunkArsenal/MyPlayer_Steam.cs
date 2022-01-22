@@ -32,7 +32,7 @@ namespace SteampunkArsenal {
 			//
 
 			if( Main.netMode != NetmodeID.Server ) {
-				Fx.CreateSteamEruptionFx( this.player.MountedCenter, 12f, 7f, steamAmount );
+				Fx.CreateSteamEruptionFx( this.player.MountedCenter, 12f, steamAmount );
 
 				Main.PlaySound(
 					type: this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamPuff"),
