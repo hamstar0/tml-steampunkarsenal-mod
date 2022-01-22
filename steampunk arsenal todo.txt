@@ -26,9 +26,9 @@ v1
 -	Final calibrations
 -	Change steam to bubbles when underwater
 -	Increase gun damage
+
+
 -	Add widget hover indicator for fuel adding
-
-
 -	Change boiler overflow behavior to emit steam quicker
 -	Change decay rate to percent
 -	Halt boiler charging and its noise when full

@@ -62,8 +62,10 @@ namespace SteampunkArsenal.HUD {
 		private void DrawGaugeBG( SpriteBatch sb, Vector2 pos ) {
 			var mymod = SteamArseMod.Instance;
 			Texture2D bg = this.AnimState == 0
-				? mymod.GetTexture( "HUD/PressureGaugeBG_A" )
-				: mymod.GetTexture( "HUD/PressureGaugeBG_B" );
+				? this.IsMouseHovering
+					? mymod.GetTexture( "HUD/PressureGaugeBG_B" )
+					: mymod.GetTexture( "HUD/PressureGaugeBG_A" )
+				: mymod.GetTexture( "HUD/PressureGaugeBG_C" );
 
 			//
 
