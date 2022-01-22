@@ -45,7 +45,7 @@ namespace SteampunkArsenal.Items.Armor {
 		////////////////
 
 		public override void UpdateEquip( Player player ) {
-			float capacityUsePercent = this.MyBoiler.SteamPressure / this.MyBoiler.SteamCapacity;
+			float capacityUsePercent = this.MyBoiler.TotalPressure / this.MyBoiler.TotalCapacity;
 
 			//
 

@@ -21,7 +21,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					prevBoiler = boiler;
 					continue;
 				}
-				if( boiler.SteamPressure <= prevBoiler.SteamPressure ) {
+				if( boiler.TotalPressure <= prevBoiler.TotalPressure ) {
 					continue;
 				}
 				if( (prevBoiler.Water - boiler.Water) < xferWaterRate ) {

@@ -1,9 +1,11 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
+using SteampunkArsenal.HUD;
 
 
 namespace SteampunkArsenal.Items {
@@ -20,7 +22,7 @@ namespace SteampunkArsenal.Items {
 
 		private void RunFx( Player wielderPlayer, bool isCharging ) {
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
-			float percent = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
+			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
 			myplayer.CurrentBodyLayerShakeAmount = percent;
 
@@ -78,6 +80,10 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		private void RunFx_Charging_State( bool isCharging ) {
+			float perc = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
+
+			//
+
 			if( isCharging ) {
 				//if( Timers.GetTimerTickDuration("SteampunkRivetChargeSound") == 0 ) {
 				//	Timers.SetTimer( "SteampunkRivetChargeSound", 5, false, () => false );
@@ -97,7 +103,6 @@ namespace SteampunkArsenal.Items {
 				float min = RivetLauncherItem.MinPressureTransferSoundVolume;
 				float max = RivetLauncherItem.MaxPressureTransferSoundVolume;
 
-				float perc = this.SteamSupply.SteamPressure / this.SteamSupply.SteamCapacity;
 				float volume = min + ((max - min) * perc);
 
 				SteamArseMod.Instance.BoilerUpInst1.Volume = volume;
@@ -118,6 +123,12 @@ namespace SteampunkArsenal.Items {
 			} else {
 				if( SteamArseMod.Instance.BoilerUpInst1.State == SoundState.Playing ) {
 					SteamArseMod.Instance.BoilerUpInst1.Stop();
+
+					if( perc >= 0.99999f ) {
+						PressureGaugeHUD.DisplayAlertPopup( "Tank full", Color.Yellow );
+					} else {
+						PressureGaugeHUD.DisplayAlertPopup( "No steam available", Color.Yellow );
+					}
 				}
 			}
 		}

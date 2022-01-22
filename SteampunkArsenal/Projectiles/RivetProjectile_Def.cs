@@ -114,7 +114,7 @@ namespace SteampunkArsenal.Projectiles {
 
 			//
 
-			if( this._DustSkipCount++ > 3 ) {
+			if( this._DustSkipCount++ > 2 ) {
 				this._DustSkipCount = 0;
 
 				Fx.CreateSmallSteamFx(
@@ -123,7 +123,7 @@ namespace SteampunkArsenal.Projectiles {
 					dispersalRadius: 0f,
 					velocityNoise: 0f,
 					puffs: 1,
-					scale: 0.35f
+					scale: 0.5f
 				);
 			}
 		}

@@ -9,7 +9,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public override float WaterHeat => this._WaterHeat;
 
-		public override float SteamCapacity => this._Capacity;
+		public override float TotalCapacity => this._Capacity;
 
 		////
 
@@ -67,13 +67,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public void TransferPressureToMeFromSourcesUntilFull( IEnumerable<SteamSource> sources ) {
 			foreach( SteamSource steamSrc in sources ) {
-				if( this.SteamPressure >= this.SteamCapacity ) {
+				if( this.TotalPressure >= this.TotalCapacity ) {
 					break;
 				}
 
 				//
 
-				if( steamSrc.SteamPressure == 0f ) {
+				if( steamSrc.TotalPressure == 0f ) {
 					continue;
 				}
 
@@ -81,7 +81,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 				this.TransferPressureToMeFromSource(
 					source: steamSrc,
-					steam: steamSrc.SteamPressure,
+					intendedSteamPressureXferAmt: steamSrc.TotalPressure,
 					waterUnderflow: out _,
 					waterOverflow: out float overflow
 				);

@@ -38,7 +38,7 @@ namespace SteampunkArsenal.Logic.Steam {
 			float computedAddedWater, computedAddedWaterHeat;
 
 			// Enforce capacity
-			if( predictedSteam > destination.SteamCapacity ) {
+			if( predictedSteam > destination.TotalCapacity ) {
 				float predictedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
 					addedWater: addedWater,
 					heatOfAddedWater: heatOfAddedWater,
@@ -49,12 +49,12 @@ namespace SteampunkArsenal.Logic.Steam {
 
 				//
 
-				float steamOverflow = predictedSteam - destination.SteamCapacity;
+				float steamOverflow = predictedSteam - destination.TotalCapacity;
 				waterOverflow = steamOverflow / predictedNewWaterHeat;
 
 				//
 
-				computedAddedWater = (destination.SteamCapacity - currSteam) / predictedNewWaterHeat;
+				computedAddedWater = (destination.TotalCapacity - currSteam) / predictedNewWaterHeat;
 				computedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
 					addedWater: computedAddedWater,
 					heatOfAddedWater: heatOfAddedWater,

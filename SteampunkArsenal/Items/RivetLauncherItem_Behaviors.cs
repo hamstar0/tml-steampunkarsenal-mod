@@ -44,10 +44,10 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.SteamSupply.SteamPressure >= this.SteamSupply.SteamCapacity ) {
+			if( this.SteamSupply.TotalPressure >= this.SteamSupply.TotalCapacity ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
-				myplayer.ApplySteamDamage_Local_Syncs( this.SteamSupply.SteamPressure );
+				myplayer.ApplySteamDamage_Local_Syncs( this.SteamSupply.TotalPressure );
 
 				//
 

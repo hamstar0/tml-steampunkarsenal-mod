@@ -23,11 +23,22 @@ v2
 		-	Steam does continuous 'steam' damage within area, with chance to inflict debuff
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
 v1
--	Final calibrations
+-	@Test MP
+-	@Test steam balls
 -	Change steam to bubbles when underwater
--	Increase gun damage
+-	Calibrations
+	-	Increase gun damage
+	-	Increase water charge rate
+	-	Reduce boiler temp decay rate
+	-	Increase boiler vibrations at lower heat
+-	Add steam effect to gauge (above water)
+-	Fix gun pressure decay
+	-	Decay gun water (in addition to heat)
+	-	Treat all gun pressure as steam pressure
 
 
+	-	Separate concept of steam pressure from water pressure
+-	Update gun tooltip to indicate current damage
 -	Add widget hover indicator for fuel adding
 -	Change boiler overflow behavior to emit steam quicker
 -	Change decay rate to percent

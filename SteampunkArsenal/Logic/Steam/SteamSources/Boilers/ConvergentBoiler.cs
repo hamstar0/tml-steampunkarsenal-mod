@@ -20,13 +20,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					.Average( b => ((Boiler)b).BoilerHeat )
 				: 0f;
 
-		public override float SteamCapacity => this.ConnectedSteamSources
-			.Sum( b => b.SteamCapacity );
+		public override float TotalCapacity => this.ConnectedSteamSources
+			.Sum( b => b.TotalCapacity );
 
 		////
 
-		public override float SteamPressure => this.ConnectedSteamSources
-			.Sum( b => b.SteamPressure );
+		public override float TotalPressure => this.ConnectedSteamSources
+			.Sum( b => b.TotalPressure );
 
 
 

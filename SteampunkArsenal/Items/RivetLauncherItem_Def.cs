@@ -1,7 +1,8 @@
-using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ModLibsCore.Libraries.Debug;
 using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
@@ -15,7 +16,7 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			float pressure = this.SteamSupply.SteamPressure;
+			float pressure = this.SteamSupply.TotalPressure;
 
 			projectile.damage = (int)pressure;
 
@@ -32,18 +33,22 @@ namespace SteampunkArsenal.Items {
 		internal SteamContainer SteamSupply { get; private set; }
 
 
+		////////////////
+
+		public override bool CloneNewInstances => false;
+
+
 
 		////////////////
-		
+
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Steam-Driven Rivet Launcher" );
 			this.Tooltip.SetDefault(
 				"Fires a high velocity, penetrating rivet"
-				+"\nGood for pinning objects together"
+				+"\nMay pinning objects to nearby surfaces"
 				+"\nRequires steam pressure to launch rivets"
-				+"\nHold right-click to pressurize the unit (requires a boiler or steam ball)"
-				+"\nStored pressure is released when rivet launches or unit re-pressurizes"
-				+"\nWarning: Over-pressurizing unit may be hazardous"
+				+"\nHold right-click to pressurize unit (requires a steam source)"
+				+"\nWarning: Over-pressurization may be hazardous!"
 			);
 		}
 
@@ -85,9 +90,34 @@ namespace SteampunkArsenal.Items {
 			this.item.rare = ItemRarityID.LightRed;
 		}
 
+		////
+
+		public override ModItem NewInstance( Item itemClone ) {
+			var myitem = (RivetLauncherItem)base.NewInstance( itemClone );
+			myitem.SteamSupply = this.SteamSupply;
+
+			return myitem;
+		}
+
 
 		////////////////
-		
+
+		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
+			int idx = tooltips.FindIndex( t => t.Name == "Damage" );
+
+			if( idx != -1 ) {
+				string[] segs = tooltips[idx].text.Split( ' ' );
+
+				segs[0] = ((int)(this.SteamSupply?.TotalPressure ?? 1f)).ToString();
+
+				tooltips[idx].text = string.Join( " ", segs )
+					+ " (requires steam)";
+			}
+		}
+
+
+		////////////////
+
 		public override void AddRecipes() {
 			var recipe = new SteamPoweredRivetLauncherRecipe( this );
 			recipe.AddRecipe();

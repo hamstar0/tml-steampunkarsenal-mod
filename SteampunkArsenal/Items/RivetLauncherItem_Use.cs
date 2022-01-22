@@ -8,7 +8,7 @@ using SteampunkArsenal.HUD;
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			float steam = this.SteamSupply?.SteamPressure ?? 0f;
+			float steam = this.SteamSupply?.TotalPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
 				flat = steam;
@@ -21,7 +21,7 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override bool CanUseItem( Player player ) {
-			if( this.SteamSupply.SteamPressure >= 10f ) {
+			if( this.SteamSupply.TotalPressure >= 10f ) {
 				return true;
 			}
 
@@ -40,7 +40,7 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float steam = this.SteamSupply.SteamPressure;
+			float steam = this.SteamSupply.TotalPressure;
 
 			if( steam > 0f ) {
 				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
