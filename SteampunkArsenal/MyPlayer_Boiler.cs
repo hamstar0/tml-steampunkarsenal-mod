@@ -57,7 +57,7 @@ namespace SteampunkArsenal {
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 
 			float intendedFillAmt = 8f / 60f;
-			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater( intendedFillAmt, 1f, out _ );
+			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater_If( intendedFillAmt, 1f, out _ );
 
 			//
 

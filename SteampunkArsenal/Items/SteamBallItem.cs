@@ -20,7 +20,7 @@ namespace SteampunkArsenal.Items {
 		}
 
 		public override void SetDefaults() {
-			this.SteamSupply = new SteamContainer( true, 0f );
+			this.SteamSupply = new SteamContainer( true, 0f, 0f );
 
 			this.item.width = 18;
 			this.item.height = 18;

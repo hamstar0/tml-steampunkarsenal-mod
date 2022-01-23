@@ -66,15 +66,18 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			float newTemp = boiler.BoilerHeat + 1f;
-			boiler.SetBoilerHeat( newTemp );
+			
+			if( boiler.SetBoilerHeat_If(newTemp) ) {
+				PressureGaugeHUD.DisplayAlertPopup( "Fuel added (-1 gel)", Color.Lime );
 
-			//
+				Main.PlaySound( SoundID.Item111, player.MountedCenter );
 
-			PressureGaugeHUD.DisplayAlertPopup( "Fuel added (-1 gel)", Color.Lime );
+				//
 
-			Main.PlaySound( SoundID.Item111, player.MountedCenter );
+				return true;
+			}
 
-			return true;
+			return false;
 		}
 	}
 }

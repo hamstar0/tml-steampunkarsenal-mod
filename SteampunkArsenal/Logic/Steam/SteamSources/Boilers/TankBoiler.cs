@@ -11,6 +11,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		public override float BoilerHeat => this._BoilerHeat;
 
+		public override float WaterLeakPerTick => this._WaterLeakPerTick;
+
 		public override float TotalCapacity => this._Capacity;
 
 
@@ -21,6 +23,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		private float _WaterHeat = 1f;
 
 		private float _BoilerHeat = 1f;
+
+		private float _WaterLeakPerTick = 0f;
 
 		private float _Capacity = 100f;
 
@@ -34,7 +38,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
+		protected override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
 			(float computedAddedWater, float computedAddedWaterHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,
 				addedWater: addedWater,
@@ -52,7 +56,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			return computedAddedWater;
 		}
 
-		public override float DrainWater( float waterDrained, out float waterUnderflow ) {
+		protected override float DrainWater( float waterDrained, out float waterUnderflow ) {
 			float drainedWater = SteamSource.CalculateWaterDrained(
 				source: this,
 				waterDrained: waterDrained,
@@ -67,7 +71,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////
 
-		public override void SetBoilerHeat( float heat ) {
+		protected override void SetBoilerHeat( float heat ) {
 			this._BoilerHeat = heat;
 		}
 	}

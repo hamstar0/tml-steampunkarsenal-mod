@@ -32,12 +32,11 @@ v1
 	-	Reduce boiler temp decay rate
 	-	Increase boiler vibrations at lower heat
 -	Add steam effect to gauge (above water)
--	Fix gun pressure decay
-	-	Decay gun water (in addition to heat)
-	-	Treat all gun pressure as steam pressure
 
 
-	-	Separate concept of steam pressure from water pressure
+-	Decay gun water (in addition to heat)
+-	Fix gun charge fail alerts
+-	Separate concept of steam pressure from water pressure
 -	Update gun tooltip to indicate current damage
 -	Add widget hover indicator for fuel adding
 -	Change boiler overflow behavior to emit steam quicker

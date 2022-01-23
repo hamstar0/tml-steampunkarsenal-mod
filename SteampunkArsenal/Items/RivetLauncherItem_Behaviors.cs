@@ -15,11 +15,12 @@ namespace SteampunkArsenal.Items {
 
 			var myitem = launcherItem.modItem as RivetLauncherItem;
 			bool isCharging = false;
+			float availableSteam = 0f;
 
 			//
 
 			if( Main.mouseRight ) {
-				isCharging = RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem );
+				isCharging = RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem, out availableSteam );
 			}
 
 			//
@@ -28,7 +29,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			myitem.RunFx( wielderPlayer, isCharging );
+			myitem.RunFx( wielderPlayer, isCharging, availableSteam );
 		}
 
 
@@ -51,9 +52,9 @@ namespace SteampunkArsenal.Items {
 
 				//
 
-				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
+				float drainedAmt = this.SteamSupply.DrainWater_If( this.SteamSupply.Water, out _ );
 
-				pressureChanged = true;
+				pressureChanged = drainedAmt > 0f;
 			}
 
 			return pressureChanged;

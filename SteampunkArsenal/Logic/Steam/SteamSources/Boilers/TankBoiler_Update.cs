@@ -17,6 +17,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			//
 
 			this.UpdateTemperatures();
+
+			//
+
+			this._Water -= this._WaterLeakPerTick;
+			if( this._Water < 0f ) {
+				this._Water = 0f;
+			}
 		}
 
 

@@ -40,28 +40,27 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float steam = this.SteamSupply.TotalPressure;
-
-			if( steam > 0f ) {
-				this.SteamSupply.DrainWater( this.SteamSupply.Water, out _ );
-
-				//
-
-				Fx.CreateSteamEruptionFx(
-					position: position,
-					dispersalRadius: 0f,
-					steamAmount: 35f
-				);
-
-				//
-				
-				Main.PlaySound(
-					this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamHiss")
-						.WithVolume(0.5f)
-				);
+			float drainedWater = this.SteamSupply.DrainWater_If( this.SteamSupply.Water, out _ );
+			if( drainedWater <= 0f ) {
+				return false;
 			}
 
 			//
+
+			Fx.CreateSteamEruptionFx(
+				position: position,
+				dispersalRadius: 0f,
+				steamAmount: 35f
+			);
+
+			Main.PlaySound(
+				this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamHiss")
+					.WithVolume(0.5f)
+			);
+
+			//
+
+			float steam = this.SteamSupply.TotalPressure;
 
 			damage = (int)steam;
 

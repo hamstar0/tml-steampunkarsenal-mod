@@ -6,13 +6,19 @@ using Terraria;
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class ConvergentBoiler : Boiler {
+		private void NormalizeSteamPressureIncrementally_If() {
+			if( this.IsActive ) {
+				this.NormalizeSteamPressureIncrementally();
+			}
+		}
+
 		private void NormalizeSteamPressureIncrementally() {
 			float xferWaterRate = 1f / 60f;
 
 			//
 
 			IEnumerable<Boiler> boilers = this.ConnectedSteamSources
-				.Where( ss => ss is Boiler )
+				.Where( ss => ss is Boiler && ss.IsActive )
 				.Select( ss => ss as Boiler );
 			Boiler prevBoiler = null;
 
@@ -30,12 +36,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 				//
 
-				float xferredWater = prevBoiler.DrainWater( xferWaterRate, out _ );
+				float xferredWater = prevBoiler.DrainWater_If( xferWaterRate, out _ );
 
-				boiler.AddWater( xferredWater, prevBoiler.WaterHeat, out float xferBackwash );
+				if( xferredWater > 0f ) {
+					boiler.AddWater_If( xferredWater, prevBoiler.WaterHeat, out float xferBackwash );
 
-				if( xferBackwash > 0f ) {
-					prevBoiler.AddWater( xferBackwash, prevBoiler.WaterHeat, out _ );
+					if( xferBackwash > 0f ) {
+						prevBoiler.AddWater_If( xferBackwash, prevBoiler.WaterHeat, out _ );
+					}
 				}
 			}
 		}

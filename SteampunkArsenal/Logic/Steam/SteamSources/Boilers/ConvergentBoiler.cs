@@ -24,15 +24,21 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			.Sum( b => b.TotalCapacity );
 
 		////
-
+		
 		public override float TotalPressure => this.ConnectedSteamSources
 			.Sum( b => b.TotalPressure );
+
+		////
+
+		public override float WaterLeakPerTick => this._WaterLeakPerTick;
 
 
 
 		////////////////
 
 		protected ISet<SteamSource> ConnectedSteamSources = new HashSet<SteamSource>();
+
+		private float _WaterLeakPerTick = 0f;
 
 
 
@@ -47,7 +53,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
+		protected override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
 			float overflow = waterAmount;
 			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
 
@@ -59,7 +65,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				overflow = 0f;
 				
 				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
-					steamSrc.AddWater( divWaterAmt, heatAmount, out float latestOverflow );
+					steamSrc.AddWater_If( divWaterAmt, heatAmount, out float latestOverflow );
 
 					//
 
@@ -78,7 +84,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		}
 
 
-		public override float DrainWater( float waterAmount, out float waterUnderflow ) {
+		protected override float DrainWater( float waterAmount, out float waterUnderflow ) {
 			float underflow = waterAmount;
 			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
 
@@ -90,7 +96,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				underflow = 0f;
 
 				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
-					steamSrc.DrainWater( divWaterAmt, out float latestUnderflow );
+					steamSrc.DrainWater_If( divWaterAmt, out float latestUnderflow );
 
 					//
 
@@ -111,9 +117,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public override void SetBoilerHeat( float heatAmount ) {
+		protected override void SetBoilerHeat( float heatAmount ) {
 			List<Boiler> boilers = this.ConnectedSteamSources
-				.Where( ss => ss is Boiler )
+				.Where( ss => ss is Boiler && ss.IsActive )
 				.Select( ss => ss as Boiler )
 				.ToList();
 			
@@ -121,7 +127,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			float addAmt = heatAmount - mean;
 
 			boilers.ForEach(
-				ss => ss.SetBoilerHeat( ss.BoilerHeat + addAmt )
+				ss => ss.SetBoilerHeat_If( ss.BoilerHeat + addAmt )
 			);
 		}
 	}

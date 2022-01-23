@@ -55,11 +55,11 @@ namespace SteampunkArsenal.Items {
 		public override void SetDefaults() {
 			var config = SteampunkArsenalConfig.Instance;
 
-			float decayPercRate = config.Get<float>( nameof(config.BoilerHeatPercentDecayRatePerSecondPerTank) );
+			float decayRate = config.Get<float>( nameof(config.RiveterPressureDecayRatePerSecond) );
 
 			//
 			
-			this.SteamSupply = new SteamContainer( false, decayPercRate / 60f );
+			this.SteamSupply = new SteamContainer( false, 0f, decayRate / 60f );
 
 			//
 

@@ -108,6 +108,6 @@ namespace SteampunkArsenal {
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float RiveterHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.15f;
+		public float RiveterPressureDecayRatePerSecond { get; set; } = 0.15f;
 	}
 }

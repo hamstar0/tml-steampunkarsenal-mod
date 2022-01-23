@@ -9,6 +9,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public override float WaterHeat => this._WaterHeat;
 
+		public override float WaterLeakPerTick => this._WaterLeakPerTick;
+
 		public override float TotalCapacity => this._Capacity;
 
 		////
@@ -22,21 +24,28 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		private float _WaterHeat = 1f;
 
+		private float _WaterLeakPerTick = 0f;
+
 		private float _Capacity = 100f;
 
 
 
 		////////////////
 
-		public SteamContainer( bool canConverge, float heatPercentDecayRatePerTick ) : base( canConverge ) {
+		public SteamContainer(
+						bool canConverge,
+						float heatPercentDecayRatePerTick,
+						float waterLeakPerTick )
+					: base( canConverge ) {
 			this.HeatPercentDecayRatePerTick = heatPercentDecayRatePerTick;
+			this._WaterLeakPerTick = waterLeakPerTick;
 		}
 
 
 
 		////////////////
 
-		public override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
+		protected override float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow ) {
 			(float computedAddedWater, float addedHeat) = SteamSource.CalculateWaterAdded(
 				destination: this,
 				addedWater: addedWater,
@@ -50,7 +59,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 			return computedAddedWater;
 		}
 
-		public override float DrainWater( float waterDrained, out float waterUnderflow ) {
+		protected override float DrainWater( float waterDrained, out float waterUnderflow ) {
 			float computedWaterDrained = SteamSource.CalculateWaterDrained(
 				source: this,
 				waterDrained: waterDrained,
@@ -65,7 +74,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public void TransferPressureToMeFromSourcesUntilFull( IEnumerable<SteamSource> sources ) {
+		public void TransferPressureToMeFromSourcesUntilFull_If( IEnumerable<SteamSource> sources ) {
+			if( this.IsActive ) {
+				this.TransferPressureToMeFromSourcesUntilFull( sources );
+			}
+		}
+
+		private void TransferPressureToMeFromSourcesUntilFull( IEnumerable<SteamSource> sources ) {
 			foreach( SteamSource steamSrc in sources ) {
 				if( this.TotalPressure >= this.TotalCapacity ) {
 					break;
@@ -79,15 +94,15 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 				//
 
-				this.TransferPressureToMeFromSource(
+				this.TransferContentsToMeFromSource_If(
 					source: steamSrc,
-					intendedSteamPressureXferAmt: steamSrc.TotalPressure,
+					intendedContentsXferAmt: steamSrc.TotalPressure,
 					waterUnderflow: out _,
 					waterOverflow: out float overflow
 				);
 
 				if( overflow > 0f ) {
-					steamSrc.AddWater( overflow, steamSrc.WaterHeat, out _ );
+					steamSrc.AddWater_If( overflow, steamSrc.WaterHeat, out _ );
 				}
 			}
 		}
@@ -102,6 +117,11 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 				if( this.WaterHeat < 1f ) {
 					this._WaterHeat = 1f;
 				}
+			}
+
+			this._Water -= this._WaterLeakPerTick;
+			if( this._Water < 0f ) {
+				this._Water = 0f;
 			}
 		}
 

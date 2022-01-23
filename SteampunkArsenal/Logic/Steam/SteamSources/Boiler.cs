@@ -30,12 +30,26 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public abstract void SetBoilerHeat( float heatAmount );
+		public bool SetBoilerHeat_If( float heatAmount ) {
+			if( this.IsActive ) {
+				this.SetBoilerHeat( heatAmount );
+			}
+
+			return this.IsActive;
+		}
+
+		protected abstract void SetBoilerHeat( float heatAmount );
 
 
 		////////////////
 
-		public void EmitSteam( Vector2 position, float steamAmount ) {
+		public void EmitSteam_If( Vector2 position, float steamAmount ) {
+			if( this.IsActive ) {
+				this.EmitSteam( position, steamAmount );
+			}
+		}
+
+		protected void EmitSteam( Vector2 position, float steamAmount ) {
 			float waterDrainAmount = steamAmount / this.WaterHeat;
 			waterDrainAmount = this.DrainWater( waterDrainAmount, out _ );
 

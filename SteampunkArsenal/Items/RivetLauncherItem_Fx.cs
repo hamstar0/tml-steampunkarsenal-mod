@@ -20,7 +20,7 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		private void RunFx( Player wielderPlayer, bool isCharging ) {
+		private void RunFx( Player wielderPlayer, bool isCharging, float availableSteam ) {
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
@@ -34,7 +34,7 @@ namespace SteampunkArsenal.Items {
 			
 			//
 
-			this.RunFx_Charging_State( isCharging );
+			this.RunFx_Charging_State( isCharging, availableSteam );
 		}
 
 		////
@@ -79,7 +79,7 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		private void RunFx_Charging_State( bool isCharging ) {
+		private void RunFx_Charging_State( bool isCharging, float availableSteam ) {
 			float perc = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
 			//
@@ -124,9 +124,9 @@ namespace SteampunkArsenal.Items {
 				if( SteamArseMod.Instance.BoilerUpInst1.State == SoundState.Playing ) {
 					SteamArseMod.Instance.BoilerUpInst1.Stop();
 
-					if( perc >= 0.99999f ) {
+					if( perc >= 0.9999f ) {
 						PressureGaugeHUD.DisplayAlertPopup( "Tank full", Color.Yellow );
-					} else {
+					} else if( availableSteam <= 0.0001f ) {
 						PressureGaugeHUD.DisplayAlertPopup( "No steam available", Color.Yellow );
 					}
 				}
