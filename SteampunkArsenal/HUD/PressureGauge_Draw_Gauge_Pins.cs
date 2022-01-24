@@ -6,7 +6,7 @@ using Terraria.ID;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using HUDElementsLib;
-using SteampunkArsenal.Logic.Steam.SteamSources;
+using SteampunkArsenal.Logic.Steam;
 
 
 namespace SteampunkArsenal.HUD {
@@ -21,7 +21,7 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			SteamContainer container = myplayer.GetHeldRivetLauncherSteam();
+			SteamSource container = myplayer.GetHeldRivetLauncherSteam();
 			float gunGaugePercent = container != null
 				? container.TotalPressure / container.TotalCapacity
 				: 0f;

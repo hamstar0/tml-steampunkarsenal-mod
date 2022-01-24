@@ -6,14 +6,14 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Logic.Steam;
-using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Logic.Steam.SteamSources.Boilers;
 
 
 namespace SteampunkArsenal.Items.Armor {
 	[AutoloadEquip( EquipType.Body )]
-	public class BoilerOBurdenItem : ModItem {
-		public Boiler MyBoiler { get; } = new TankBoiler( PlumbingType.Worn );
+	public class BoilerOBurdenItem : ModItem, ISteamContainerItem {
+		//public Boiler MyBoiler { get; } = new TankBoiler( PlumbingType.Worn );
+		public SteamSource SteamSupply { get; } = new TankBoiler( PlumbingType.Worn );
 
 
 
@@ -46,7 +46,7 @@ namespace SteampunkArsenal.Items.Armor {
 		////////////////
 
 		public override void UpdateEquip( Player player ) {
-			float capacityUsePercent = this.MyBoiler.TotalPressure / this.MyBoiler.TotalCapacity;
+			float capacityUsePercent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
 			//
 

@@ -26,11 +26,11 @@ namespace SteampunkArsenal.Logic.Steam {
 			}
 
 			if( item.modItem is BoilerOBurdenItem ) {
-				return ( (BoilerOBurdenItem)item.modItem ).MyBoiler;
+				return ( (BoilerOBurdenItem)item.modItem ).SteamSupply;
 			}
 
 			if( item.modItem is PortABoilerItem ) {
-				return ( (PortABoilerItem)item.modItem ).MyBoiler;
+				return ( (PortABoilerItem)item.modItem ).SteamSupply;
 			}
 
 			if( item.modItem is SteamBallItem ) {

@@ -8,7 +8,7 @@ using SteampunkArsenal.Recipes;
 
 
 namespace SteampunkArsenal.Items {
-	public class SteamBallItem : ModItem {
+	public class SteamBallItem : ModItem, ISteamContainerItem {
 		public SteamSource SteamSupply { get; private set; }
 
 

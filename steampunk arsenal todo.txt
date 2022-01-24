@@ -26,9 +26,11 @@ v1
 -	@Test MP
 -	@Test steam balls
 -	Change steam to bubbles when underwater
+-	Increase gun leak rate
+-	Add water limit to boilers to allow steam capacity
+
+
 -	Add percent indicator on item sprite for steam balls
-
-
 -	Do not eject boiler steam if pressure limit reached; simply cease to charge more
 -	Fix 'No more steam' message when halting steam recharge
 -	Calibrations

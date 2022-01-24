@@ -2,12 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SteampunkArsenal.Items;
-using SteampunkArsenal.Logic.Steam.SteamSources;
+using SteampunkArsenal.Logic.Steam;
 
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
-		public SteamContainer GetHeldRivetLauncherSteam() {
+		public SteamSource GetHeldRivetLauncherSteam() {
 			Item item = this.player.HeldItem;
 
 			if( item?.active == true ) {

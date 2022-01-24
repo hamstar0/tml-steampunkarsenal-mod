@@ -3,14 +3,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
 using SteampunkArsenal.Net;
 using SteampunkArsenal.Logic.Steam;
+using SteampunkArsenal.Logic.Steam.SteamSources;
+
 
 namespace SteampunkArsenal.Items {
-	public partial class RivetLauncherItem : ModItem {
+	public partial class RivetLauncherItem : ModItem, ISteamContainerItem {
 		internal void UpdateLaunchedRivetProjectileStats_NonServer_Syncs( int projectileIdx, Projectile projectile ) {
 			if( Main.netMode == NetmodeID.Server ) {
 				return;
@@ -30,7 +31,7 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		internal SteamContainer SteamSupply { get; private set; }
+		public SteamSource SteamSupply { get; private set; }
 
 
 		////////////////
