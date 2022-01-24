@@ -34,12 +34,12 @@ namespace SteampunkArsenal {
 		[Range( -4096f, 4096f )]
 		[DefaultValue( -96f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float PressureGaugeHUDPositionX { get; set; } = -96f;
+		public float PressureGaugeInitialHUDPositionX { get; set; } = -96f;
 
 		[Range( -2048, 2048 )]
 		[DefaultValue( -128 )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float PressureGaugeHUDPositionY { get; set; } = -128;
+		public float PressureGaugeInitialHUDPositionY { get; set; } = -128;
 
 
 		////
@@ -58,10 +58,15 @@ namespace SteampunkArsenal {
 
 		////
 		
-		[Range( 0f, 100f )]
-		[DefaultValue( 8f / 60f )]
+		[Range( 0f, 1000f )]
+		[DefaultValue( 18f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float BaseRiveterPressurizationRatePerTick { get; set; } = 8f / 60f;
+		public float RiveterChargeUpRatePerSecond { get; set; } = 18f;
+		
+		[Range( 0f, 100f )]
+		[DefaultValue( 2f )]
+		[CustomModConfigItem( typeof(MyFloatInputElement) )]
+		public float RiveterDamagerPerPressureUnit { get; set; } = 2f;
 
 		////
 		
@@ -88,7 +93,7 @@ namespace SteampunkArsenal {
 		[Range( 0f, 100f )]
 		[DefaultValue( 1f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerWaterHeatXferRatePerSecondPerTank { get; set; } = 1f;
+		public float BoilerWaterHeatXferRatePerSecond { get; set; } = 1f;
 
 		//[Range( 0f, 100f )]
 		//[DefaultValue( 0.9f )]
@@ -98,12 +103,12 @@ namespace SteampunkArsenal {
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.05f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float WaterHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.05f;
+		public float WaterHeatPercentDecayRatePerSecond { get; set; } = 0.05f;
 
 		[Range( 0f, 100f )]
-		[DefaultValue( 0.15f )]
+		[DefaultValue( 0.05f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerHeatPercentDecayRatePerSecondPerTank { get; set; } = 0.15f;
+		public float BoilerHeatPercentDecayRatePerSecond { get; set; } = 0.05f;
 
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.15f )]

@@ -8,12 +8,12 @@ namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
 		private static bool ChargeSteamFromPlayerSteam(
 					Player wielderPlayer,
-					RivetLauncherItem launcherModItem,
-					out float availableSteam ) {
+					RivetLauncherItem launcherModItem ) {
 			var config = SteampunkArsenalConfig.Instance;
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
-			float steamAmtPerTick = config.Get<float>( nameof(config.BaseRiveterPressurizationRatePerTick) );
+			float steamAmtPerSec = config.Get<float>( nameof(config.RiveterChargeUpRatePerSecond) );
+			float steamAmtPerTick = steamAmtPerSec / 60f;
 
 			float transferredSteam = launcherModItem.SteamSupply.TransferSteamToMeFromSource_If(
 				source: myplayer.ImplicitConvergingBoiler,
@@ -30,7 +30,6 @@ namespace SteampunkArsenal.Items {
 				);
 			}
 
-			availableSteam = myplayer.ImplicitConvergingBoiler.SteamPressure;
 			return transferredSteam > 0f;
 		}
 	}

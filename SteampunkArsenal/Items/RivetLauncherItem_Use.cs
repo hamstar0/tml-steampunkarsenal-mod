@@ -11,7 +11,10 @@ namespace SteampunkArsenal.Items {
 			float steam = this.SteamSupply?.TotalPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
-				flat = steam;
+				var config = SteampunkArsenalConfig.Instance;
+				float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
+
+				flat = steam * dmgScale;
 			} else {
 				flat = 0f;
 			}
@@ -40,8 +43,11 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
+			float totalPressure = this.SteamSupply.TotalPressure;
+
 			float drainedWater = this.SteamSupply.DrainWater_If( this.SteamSupply.Water, out _ );
 			if( drainedWater <= 0f ) {
+				Main.NewText( "Could not acquire steam.", Color.Yellow );
 				return false;
 			}
 
@@ -60,11 +66,12 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			float steam = this.SteamSupply.TotalPressure;
+			damage = (int)totalPressure;
 
-			damage = (int)steam;
-
-			return steam > 0f;
+			if( totalPressure <= 0 ) {
+				Main.NewText( "No steam available.", Color.Yellow );
+			}
+			return totalPressure > 0f;
 		}
 	}
 }

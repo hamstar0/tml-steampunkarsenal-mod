@@ -15,12 +15,11 @@ namespace SteampunkArsenal.Items {
 
 			var myitem = launcherItem.modItem as RivetLauncherItem;
 			bool isCharging = false;
-			float availableSteam = 0f;
 
 			//
 
 			if( Main.mouseRight ) {
-				isCharging = RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem, out availableSteam );
+				isCharging = RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem );
 			}
 
 			//
@@ -29,7 +28,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			myitem.RunFx( wielderPlayer, isCharging, availableSteam );
+			myitem.RunFx( wielderPlayer, isCharging );
 		}
 
 

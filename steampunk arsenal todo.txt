@@ -26,14 +26,17 @@ v1
 -	@Test MP
 -	@Test steam balls
 -	Change steam to bubbles when underwater
+-	Add percent indicator on item sprite for steam balls
+
+
+-	Do not eject boiler steam if pressure limit reached; simply cease to charge more
+-	Fix 'No more steam' message when halting steam recharge
 -	Calibrations
 	-	Increase gun damage
 	-	Increase water charge rate
-	-	Reduce boiler temp decay rate
-	-	Increase boiler vibrations at lower heat
+	-	Reduce boiler heat decay rate
+-	Fix disappearing riveter projectile
 -	Add steam effect to gauge (above water)
-
-
 -	Decay gun water (in addition to heat)
 -	Fix gun charge fail alerts
 -	Separate concept of steam pressure from water pressure

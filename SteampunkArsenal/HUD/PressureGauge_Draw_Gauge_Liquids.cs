@@ -18,13 +18,16 @@ namespace SteampunkArsenal.HUD {
 			//
 
 			float waterPerc = myboiler.Water / myboiler.TotalCapacity;
-			float steamPerc = myboiler.SteamPressure;
-
-			//
 
 			if( waterPerc > 0f ) {
 				this.DrawGaugeWater( sb, pos, waterPerc );
 			}
+
+			//
+
+			float waterPressure = myboiler.TotalPressure - myboiler.SteamPressure;
+			float steamPerc = myboiler.SteamPressure / (myboiler.TotalCapacity - waterPressure);
+
 			if( steamPerc > 0f ) {
 				this.DrawGaugeSteam( sb, pos, waterPerc, steamPerc );
 			}
@@ -83,11 +86,14 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
+			float height = (float)tex.Height * waterPercent;
+			height = 1f - height;
+
 			Rectangle rect = new Rectangle(
 				x: 0,
 				y: 0,
 				width: tex.Width,
-				height: (int)((float)tex.Height * waterPercent)
+				height: (int)height
 			);
 
 			//

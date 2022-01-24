@@ -42,9 +42,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		private void UpdateTemperatures() {
 			var config = SteampunkArsenalConfig.Instance;
-			float waterPercTempDrainRateS = config.Get<float>( nameof(config.WaterHeatPercentDecayRatePerSecondPerTank) );
-			float boilerPercTempDrainRateS = config.Get<float>( nameof(config.BoilerHeatPercentDecayRatePerSecondPerTank) );
-			float boilerTempXferRateS = config.Get<float>( nameof(config.BoilerWaterHeatXferRatePerSecondPerTank) );
+			float waterPercTempDrainRateS = config.Get<float>( nameof(config.WaterHeatPercentDecayRatePerSecond) );
+			float boilerPercTempDrainRateS = config.Get<float>( nameof(config.BoilerHeatPercentDecayRatePerSecond) );
+			float boilerTempXferRateS = config.Get<float>( nameof(config.BoilerWaterHeatXferRatePerSecond) );
 			float waterPercTempDrainRateT = waterPercTempDrainRateS / 60f;
 			float boilerPercTempDrainRateT = boilerPercTempDrainRateS / 60f;
 			float boilerTempXferRateT = boilerTempXferRateS / 60f;
@@ -76,6 +76,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 				if( this._WaterHeat > this._BoilerHeat ) {
 					this._WaterHeat = this._BoilerHeat;
+				}
+
+				if( this.TotalPressure > this.TotalCapacity ) {
+					float excessPressure = this.TotalPressure - this.TotalCapacity;
+
+					this._WaterHeat -= excessPressure / this._Water;
 				}
 //if( float.IsNaN(this._WaterHeat) ) {
 //	LogLibraries.LogOnce("NAN 2");

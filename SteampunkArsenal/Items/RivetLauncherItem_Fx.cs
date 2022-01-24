@@ -20,7 +20,7 @@ namespace SteampunkArsenal.Items {
 
 		////////////////
 
-		private void RunFx( Player wielderPlayer, bool isCharging, float availableSteam ) {
+		private void RunFx( Player wielderPlayer, bool isCharging ) {
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
@@ -31,10 +31,10 @@ namespace SteampunkArsenal.Items {
 			if( !isCharging ) {
 				this.RunFx_Idle( wielderPlayer, percent );
 			}
-			
+
 			//
 
-			this.RunFx_Charging_State( isCharging, availableSteam );
+			this.RunFx_Charging_State( isCharging, myplayer.ImplicitConvergingBoiler.SteamPressure );
 		}
 
 		////

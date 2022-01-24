@@ -18,8 +18,8 @@ namespace SteampunkArsenal.HUD {
 
 		private static PressureGaugeHUD InitializePressureGaugeHUD() {
 			var config = SteampunkArsenalConfig.Instance;
-			var posX = config.Get<float>( nameof( config.PressureGaugeHUDPositionX ) );
-			var posY = config.Get<float>( nameof( config.PressureGaugeHUDPositionY ) );
+			var posX = config.Get<float>( nameof( config.PressureGaugeInitialHUDPositionX ) );
+			var posY = config.Get<float>( nameof( config.PressureGaugeInitialHUDPositionY ) );
 
 			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG_A" );
 			var hudElem = new PressureGaugeHUD( new Vector2( posX, posY ), new Vector2( tex.Width, tex.Height ) );
