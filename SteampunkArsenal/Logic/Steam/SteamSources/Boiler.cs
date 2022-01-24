@@ -18,7 +18,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 		
-		public Boiler( bool canConverge ) : base( canConverge ) { }
+		public Boiler( PlumbingType plumbingType ) : base( plumbingType ) { }
 
 
 

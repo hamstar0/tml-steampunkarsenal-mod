@@ -16,7 +16,8 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		internal ConvergentBoiler ImplicitConvergingBoiler { get; private set; } = new ConvergentBoiler( false );
+		internal ConvergentBoiler ImplicitConvergingBoiler { get; private set; }
+			= new ConvergentBoiler( PlumbingType.Manual );
 
 
 

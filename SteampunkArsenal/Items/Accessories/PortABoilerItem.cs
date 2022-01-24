@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SteampunkArsenal.Logic.Steam;
 using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Logic.Steam.SteamSources.Boilers;
 using SteampunkArsenal.Recipes;
@@ -10,7 +11,7 @@ using SteampunkArsenal.Recipes;
 namespace SteampunkArsenal.Items.Accessories {
 	[AutoloadEquip( EquipType.Waist )]
 	public class PortABoilerItem : ModItem {
-		public Boiler MyBoiler { get; } = new TankBoiler();
+		public Boiler MyBoiler { get; } = new TankBoiler( PlumbingType.Worn );
 
 
 

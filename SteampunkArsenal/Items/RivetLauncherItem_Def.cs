@@ -7,7 +7,7 @@ using SteampunkArsenal.Logic.Steam.SteamSources;
 using SteampunkArsenal.Recipes;
 using SteampunkArsenal.Projectiles;
 using SteampunkArsenal.Net;
-
+using SteampunkArsenal.Logic.Steam;
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
@@ -59,7 +59,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 			
-			this.SteamSupply = new SteamContainer( false, 0f, decayRate / 60f );
+			this.SteamSupply = new SteamContainer( PlumbingType.Manual, 0f, decayRate / 60f );
 
 			//
 

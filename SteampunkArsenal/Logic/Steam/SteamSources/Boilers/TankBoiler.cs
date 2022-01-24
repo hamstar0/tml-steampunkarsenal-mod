@@ -32,7 +32,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public TankBoiler() : base( true ) { }
+		public TankBoiler( PlumbingType plumbingType ) : base( plumbingType ) { }
 
 
 

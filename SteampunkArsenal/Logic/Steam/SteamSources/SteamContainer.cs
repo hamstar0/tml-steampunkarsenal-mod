@@ -33,10 +33,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		////////////////
 
 		public SteamContainer(
-						bool canConverge,
+						PlumbingType plumbingType,
 						float heatPercentDecayRatePerTick,
 						float waterLeakPerTick )
-					: base( canConverge ) {
+					: base( plumbingType ) {
 			this.HeatPercentDecayRatePerTick = heatPercentDecayRatePerTick;
 			this._WaterLeakPerTick = waterLeakPerTick;
 		}
