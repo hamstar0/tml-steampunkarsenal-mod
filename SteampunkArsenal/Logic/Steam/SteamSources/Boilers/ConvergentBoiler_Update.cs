@@ -16,8 +16,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			var nonBoilers = new List<SteamContainer>();
 
 			foreach( SteamSource steamSrc in this.ConnectedSteamSources ) {
+				if( !steamSrc.IsActive ) {
+					continue;
+				}
+
 				if( steamSrc is Boiler ) {
-					boilers.Add( (Boiler)steamSrc );
+					boilers.Add( steamSrc as Boiler );
 				} else if( steamSrc is SteamContainer ) {
 					nonBoilers.Add( steamSrc as SteamContainer );
 				}
@@ -31,13 +35,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 			
-			foreach( SteamContainer nonBoiler in nonBoilers ) {
-				nonBoiler.TransferPressureToMeFromSourcesUntilFull_If( boilers );
-			}
-
-			//
-
-			this.NormalizeSteamPressureIncrementally_If();
+			this.NormalizePressureDistributionIncrementally_If( boilers, nonBoilers );
 		}
 
 

@@ -6,43 +6,69 @@ using Terraria;
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class ConvergentBoiler : Boiler {
-		private void NormalizeSteamPressureIncrementally_If() {
-			if( this.IsActive ) {
-				this.NormalizeSteamPressureIncrementally();
+		private void NormalizePressureDistributionIncrementally_If(
+					IList<Boiler> boilers,
+					IList<SteamContainer> containers ) {
+			if( !this.IsActive ) {
+				return;
 			}
-		}
-
-		private void NormalizeSteamPressureIncrementally() {
-			float xferWaterRate = 1f / 60f;
 
 			//
 
-			IEnumerable<Boiler> boilers = this.ConnectedSteamSources
-				.Where( ss => ss is Boiler && ss.IsActive )
-				.Select( ss => ss as Boiler );
+			this.NormalizeBoilerWaterDistributionIncrementally( boilers, 1f / 60f );
+
+			this.NormalizeSteamContainerDistributionIncrementally( boilers, containers, 1f / 60f );
+		}
+
+
+		////////////////
+
+		private void NormalizeBoilerWaterDistributionIncrementally( IList<Boiler> boilers, float rate ) {
 			Boiler prevBoiler = null;
 
 			foreach( Boiler boiler in boilers ) {
 				if( prevBoiler == null ) {
 					prevBoiler = boiler;
-					continue;
-				}
-				if( boiler.TotalPressure <= prevBoiler.TotalPressure ) {
-					continue;
-				}
-				if( (prevBoiler.Water - boiler.Water) < xferWaterRate ) {
+
 					continue;
 				}
 
 				//
 
-				float xferredWater = prevBoiler.DrainWater_If( xferWaterRate, out _ );
+				if( Math.Abs(prevBoiler.TotalPressure - boiler.TotalPressure) >= rate ) {
+					if( boiler.TotalPressure < prevBoiler.TotalPressure ) {
+						boiler.TransferWaterToMeFromSource_If( prevBoiler, rate, out _, out _ );
+					} else {
+						prevBoiler.TransferWaterToMeFromSource_If( boiler, rate, out _, out _ );
+					}
+				}
 
-				if( xferredWater > 0f ) {
-					boiler.AddWater_If( xferredWater, prevBoiler.WaterHeat, out float xferBackwash );
+				prevBoiler = boiler;
+			}
+		}
 
-					if( xferBackwash > 0f ) {
-						prevBoiler.AddWater_If( xferBackwash, prevBoiler.WaterHeat, out _ );
+		////
+
+		private void NormalizeSteamContainerDistributionIncrementally(
+					IList<Boiler> boilers,
+					IList<SteamContainer> containers,
+					float rate ) {
+			foreach( Boiler boiler in boilers ) {
+				if( boiler.SteamPressure < rate ) {
+					continue;
+				}
+
+				foreach( SteamContainer container in containers.ToArray() ) {
+					if( container.TotalPressure > (container.TotalCapacity - rate) ) {
+						containers.Remove( container );
+
+						continue;
+					}
+
+					container.TransferSteamToMeFromSource_If( boiler, rate, out _, out float waterOverflow );
+
+					if( waterOverflow > 0f ) {
+						boiler.AddWater_If( waterOverflow, boiler.WaterHeat, out _ );
 					}
 				}
 			}

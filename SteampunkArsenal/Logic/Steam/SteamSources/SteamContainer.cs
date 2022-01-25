@@ -74,42 +74,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		////////////////
 
-		public void TransferPressureToMeFromSourcesUntilFull_If( IEnumerable<SteamSource> sources ) {
-			if( this.IsActive ) {
-				this.TransferPressureToMeFromSourcesUntilFull( sources );
-			}
-		}
-
-		private void TransferPressureToMeFromSourcesUntilFull( IEnumerable<SteamSource> sources ) {
-			foreach( SteamSource steamSrc in sources ) {
-				if( this.TotalPressure >= this.TotalCapacity ) {
-					break;
-				}
-
-				//
-
-				if( steamSrc.TotalPressure == 0f ) {
-					continue;
-				}
-
-				//
-
-				this.TransferContentsToMeFromSource_If(
-					source: steamSrc,
-					intendedContentsXferAmt: steamSrc.TotalPressure,
-					waterUnderflow: out _,
-					waterOverflow: out float overflow
-				);
-
-				if( overflow > 0f ) {
-					steamSrc.AddWater_If( overflow, steamSrc.WaterHeat, out _ );
-				}
-			}
-		}
-
-
-		////////////////
-
 		protected internal override void PreUpdate( Player owner, bool isChild ) {
 			if( this.WaterHeat > 1f ) {
 				this._WaterHeat -= this._WaterHeat * this.HeatPercentDecayRatePerTick;

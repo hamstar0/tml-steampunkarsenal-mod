@@ -53,6 +53,20 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			this._Water += computedAddedWater;
 			this._WaterHeat += computedAddedWaterHeat;
 
+			//
+
+			float capacity = this._Capacity - (this._Capacity * 0.1f);
+			if( this._Water >= capacity ) {
+				float overflow = this._Water - capacity;
+
+				computedAddedWater -= overflow;
+				waterOverflow += overflow;
+
+				this._Water = capacity;
+			}
+
+			//
+
 			return computedAddedWater;
 		}
 

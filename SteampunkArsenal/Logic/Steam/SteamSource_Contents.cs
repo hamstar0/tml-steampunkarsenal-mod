@@ -29,44 +29,28 @@ namespace SteampunkArsenal.Logic.Steam {
 		protected abstract float DrainWater( float waterDrained, out float waterUnderflow );
 
 
-		////
+		////////////////
 
-		public float TransferContentsToMeFromSource_If(
+		public float TransferWaterToMeFromSource_If(
 					SteamSource source,
-					float intendedContentsXferAmt,
+					float intendedWaterXferAmt,
 					out float waterUnderflow,
 					out float waterOverflow ) {
 			if( !this.IsActive ) {
-				waterUnderflow = intendedContentsXferAmt / source.WaterHeat;
+				waterUnderflow = intendedWaterXferAmt;
 				waterOverflow = 0f;
 				return 0f;
 			}
 
-			return this.TransferContentsToMeFromSource(
-				source,
-				intendedContentsXferAmt,
-				out waterUnderflow,
-				out waterOverflow
-			);
-		}
-
-		private float TransferContentsToMeFromSource(
-					SteamSource source,
-					float intendedContentsXferAmt,
-					out float waterUnderflow,
-					out float waterOverflow ) {
 			if( source.TotalPressure <= 0f ) {
-				waterUnderflow = intendedContentsXferAmt;
+				waterUnderflow = intendedWaterXferAmt;
 				waterOverflow = 0f;
 				return 0f;
 			}
 
 			//
 
-			float srcHeat = source.WaterHeat;
-			float srcWaterDrawAmt = intendedContentsXferAmt / srcHeat;
-
-			float drawnWater = source.DrainWater_If( srcWaterDrawAmt, out waterUnderflow );
+			float drawnWater = source.DrainWater_If( intendedWaterXferAmt, out waterUnderflow );
 			if( drawnWater <= 0f ) {
 				waterOverflow = 0f;
 				return 0f;
@@ -74,16 +58,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 			//
 
-//float prevHeat = this.WaterHeat;
-			float finalAddedWater = this.AddWater( drawnWater, srcHeat, out waterOverflow );
-//Main.NewText( "Xferred "+((float)srcWaterDrawAmt).ToString()
-//	+" ("+((float)drawnWater).ToString()+")"
-//	+" -> "+((float)finalAddedWater).ToString()
-//	+", temp1 "+((float)prevHeat).ToString()
-//	+" -> temp2 "+((float)this.WaterHeat).ToString()+")"
-//);
-
-			return finalAddedWater * srcHeat;
+			return this.AddWater( drawnWater, source.WaterHeat, out waterOverflow );
 		}
 
 
@@ -100,19 +75,6 @@ namespace SteampunkArsenal.Logic.Steam {
 				return 0f;
 			}
 
-			return this.TransferSteamToMeFromSource(
-				source,
-				intendedSteamXferAmt,
-				out waterUnderflow,
-				out waterOverflow
-			);
-		}
-
-		private float TransferSteamToMeFromSource(
-					SteamSource source,
-					float intendedSteamXferAmt,
-					out float waterUnderflow,
-					out float waterOverflow ) {
 			if( source.SteamPressure <= 0f ) {
 				waterUnderflow = intendedSteamXferAmt;
 				waterOverflow = 0f;
@@ -122,8 +84,9 @@ namespace SteampunkArsenal.Logic.Steam {
 			//
 
 			float srcHeat = source.WaterHeat;
+			float srcWaterDrawAmt = intendedSteamXferAmt / srcHeat;
 
-			float drawnWater = source.DrainWater_If( intendedSteamXferAmt / srcHeat, out waterUnderflow );
+			float drawnWater = source.DrainWater_If( srcWaterDrawAmt, out waterUnderflow );
 			if( drawnWater <= 0f ) {
 				waterOverflow = 0f;
 				return 0f;
