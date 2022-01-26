@@ -56,7 +56,7 @@ namespace SteampunkArsenal.Items {
 		public override void SetDefaults() {
 			var config = SteampunkArsenalConfig.Instance;
 
-			float decayRate = config.Get<float>( nameof(config.RiveterPressureDecayRatePerSecond) );
+			float decayRate = config.Get<float>( nameof(config.RiveterPressurePercentDecayRatePerSecond) );
 
 			//
 			

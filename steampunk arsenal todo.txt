@@ -28,7 +28,7 @@ v1
 -	Change steam to bubbles when underwater
 -	Reduce boiler decay rate
 -	Increase gun leak rate
--	Change water leak -> pressure leak
+-	Change water leak -> pressure percent leak
 
 
 -	Ensure steam containers are auto-xferring steam pressure only (no unnecessary water)

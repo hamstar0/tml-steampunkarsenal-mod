@@ -56,7 +56,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////
 		
-		public abstract float WaterLeakPerTick { get; }
+		public abstract float PressurePercentLeakPerTick { get; }
 
 		////
 

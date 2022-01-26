@@ -9,7 +9,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public override float WaterHeat => this._WaterHeat;
 
-		public override float WaterLeakPerTick => this._WaterLeakPerTick;
+		public override float PressurePercentLeakPerTick => this._PressurePercentLeakPerTick;
 
 		public override float TotalCapacity => this._Capacity;
 
@@ -24,7 +24,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		private float _WaterHeat = 1f;
 
-		private float _WaterLeakPerTick = 0f;
+		private float _PressurePercentLeakPerTick = 0f;
 
 		private float _Capacity = 100f;
 
@@ -35,10 +35,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		public SteamContainer(
 						PlumbingType plumbingType,
 						float heatPercentDecayRatePerTick,
-						float waterLeakPerTick )
+						float pressurePercentLeakPerTick )
 					: base( plumbingType ) {
 			this.HeatPercentDecayRatePerTick = heatPercentDecayRatePerTick;
-			this._WaterLeakPerTick = waterLeakPerTick;
+			this._PressurePercentLeakPerTick = pressurePercentLeakPerTick;
 		}
 
 
@@ -83,10 +83,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 				}
 			}
 
-			this._Water -= this._WaterLeakPerTick;
-			if( this._Water < 0f ) {
-				this._Water = 0f;
-			}
+			this._Water -= (this._Water * this._PressurePercentLeakPerTick) / this._WaterHeat;
 		}
 
 		protected internal override void PostUpdate( Player owner, bool isChild ) { }
