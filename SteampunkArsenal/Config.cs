@@ -56,17 +56,25 @@ namespace SteampunkArsenal {
 		[DefaultValue( true )]
 		public bool SteamBallRecipeEnabled { get; set; } = true;
 
+
 		////
 		
+		[Range( 0f, 100f )]
+		[DefaultValue( 24f )]
+		[CustomModConfigItem( typeof(MyFloatInputElement) )]
+		public float BoilerWaterFillRatePerSecond { get; set; } = 24f;
+
+		////
+
 		[Range( 0f, 1000f )]
 		[DefaultValue( 18f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float RiveterChargeUpRatePerSecond { get; set; } = 18f;
 		
 		[Range( 0f, 100f )]
-		[DefaultValue( 2f )]
+		[DefaultValue( 3f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float RiveterDamagerPerPressureUnit { get; set; } = 2f;
+		public float RiveterDamagerPerPressureUnit { get; set; } = 3f;
 
 		////
 		
@@ -106,9 +114,9 @@ namespace SteampunkArsenal {
 		public float WaterHeatPercentDecayRatePerSecond { get; set; } = 0.05f;
 
 		[Range( 0f, 100f )]
-		[DefaultValue( 0.05f )]
+		[DefaultValue( 0.03f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerHeatPercentDecayRatePerSecond { get; set; } = 0.05f;
+		public float BoilerHeatPercentDecayRatePerSecond { get; set; } = 0.03f;
 
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.05f )]

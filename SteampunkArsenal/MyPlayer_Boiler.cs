@@ -54,10 +54,12 @@ namespace SteampunkArsenal {
 		////////////////
 
 		private void ApplyBoilerRefill( ref bool isInterrupted ) {
+			var config = SteampunkArsenalConfig.Instance;
 			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
 
-			float intendedFillAmt = 8f / 60f;
-			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater_If( intendedFillAmt, 1f, out _ );
+			float intendedFillAmtPerSec = config.Get<float>( nameof(config.BoilerWaterFillRatePerSecond) );
+			float intendedFillAmtPerTick = intendedFillAmtPerSec / 60f;
+			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater_If( intendedFillAmtPerTick, 1f, out _ );
 
 			//
 

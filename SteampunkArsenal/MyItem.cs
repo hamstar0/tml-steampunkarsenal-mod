@@ -22,15 +22,16 @@ namespace SteampunkArsenal {
 				return;
 			}
 
+			float pressurePerc = steamSrc.TotalPressure / steamSrc.TotalCapacity;
+			if( pressurePerc <= 0f ) {
+				return;
+			}
+
 			//
 
 			float offsetX = (float)frame.Width * scale * 0.5f;
 			float offsetY = ((float)frame.Height - 8f) * scale;
 			var offset = new Vector2( offsetX, offsetY );
-
-			//
-
-			float pressurePerc = steamSrc.TotalPressure / steamSrc.TotalCapacity;
 
 			//
 
