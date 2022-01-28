@@ -108,17 +108,17 @@ namespace SteampunkArsenal {
 		//[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		//public float BoilerTempXferRateReducedPerSteamPercentPerSecondPerTank { get; set; } = 0.9f;
 
-		[Range( 0f, 100f )]
+		[Range( 0f, 1f )]
 		[DefaultValue( 0.05f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float WaterHeatPercentDecayRatePerSecond { get; set; } = 0.05f;
 
-		[Range( 0f, 100f )]
-		[DefaultValue( 0.03f )]
+		[Range( 0f, 1f )]
+		[DefaultValue( 0.02f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float BoilerHeatPercentDecayRatePerSecond { get; set; } = 0.03f;
+		public float BoilerHeatPercentDecayRatePerSecond { get; set; } = 0.02f;
 
-		[Range( 0f, 100f )]
+		[Range( 0f, 1f )]
 		[DefaultValue( 0.05f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float RiveterPressurePercentDecayRatePerSecond { get; set; } = 0.05f;

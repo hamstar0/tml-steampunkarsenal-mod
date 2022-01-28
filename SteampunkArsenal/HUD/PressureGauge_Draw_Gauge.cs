@@ -14,6 +14,7 @@ namespace SteampunkArsenal.HUD {
 			this.DrawGaugeBG( sb, pos );
 			this.DrawGaugeLiquids( sb, pos );
 			this.DrawGaugePins( sb, pos );
+			this.DrawGaugeCurrentGelGauge( sb, pos );
 		}
 
 

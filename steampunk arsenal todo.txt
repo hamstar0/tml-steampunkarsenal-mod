@@ -26,10 +26,27 @@ v1
 -	Change steam to bubbles when underwater
 -	@Test MP
 -	@Test steam balls
--	Add better indicator of temperature
 -	Improve indicator of HUD lever interactivity
+-	Add vibration to HUD gadget when gun filled
+-	Implement steam saving
+-	Fix projectile damage
+-	Fix projectile skipping enemies
 
 
+-	Debug HUD steam display
+-	Fix widget anim frame pixels
+-	Add better indicator of temperature
+	-	Implement gauge
+	-	Create gel gauge sprite
+	-	@B&D
+		-	Thermometer off to the side
+		-	Bubbles in water
+		-	Glowing metal
+		-	Smoke vent
+		-	Gel cylinder
+		-	Digital count of gels
+		-	Arrow orbiting gauge
+		-	Lever angle
 -	Increase water refill rate significantly
 -	Reduce boiler decay rate
 -	Change water leak -> pressure percent leak
