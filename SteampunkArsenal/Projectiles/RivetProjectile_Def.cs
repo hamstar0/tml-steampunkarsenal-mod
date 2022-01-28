@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.ProjectileOwner;
 using SteampunkArsenal.Items;
-using SteampunkArsenal.Dusts;
 
 
 namespace SteampunkArsenal.Projectiles {
@@ -66,7 +65,7 @@ namespace SteampunkArsenal.Projectiles {
 
 		public override void SetDefaults() {
 			this.projectile.width = 4;
-			this.projectile.height = 4;
+			this.projectile.height = 8;
 
 			this.projectile.friendly = true;
 			this.projectile.hostile = false;

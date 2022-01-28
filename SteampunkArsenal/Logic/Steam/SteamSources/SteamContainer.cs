@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources {
@@ -69,6 +69,25 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 			this._Water -= computedWaterDrained;
 
 			return computedWaterDrained;
+		}
+
+
+		////////////////
+
+		internal protected override bool CanSave() {
+			return true;
+		}
+
+		internal protected override void Load( TagCompound tag ) {
+			this._Water = tag.GetFloat( "water" );
+			this._WaterHeat = tag.GetFloat( "water_heat" );
+		}
+
+		internal protected override TagCompound Save() {
+			return new TagCompound {
+				{ "water", this.Water },
+				{ "water_heat", this.WaterHeat },
+			};
 		}
 
 

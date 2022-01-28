@@ -3,11 +3,34 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using SteampunkArsenal.Logic.Steam;
 
 
 namespace SteampunkArsenal {
 	partial class SteamArseItem : GlobalItem {
+		public override bool NeedsSaving( Item item ) {
+			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( item );
+			return steamSrc?.CanSave() ?? false;
+		}
+
+		public override void Load( Item item, TagCompound tag ) {
+			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( item );
+
+			if( steamSrc != null ) {
+				steamSrc.Load( tag );
+			}
+		}
+
+		public override TagCompound Save( Item item ) {
+			SteamSource steamSrc = SteamSource.GetSteamSourceForItem( item );
+
+			return steamSrc?.Save() ?? new TagCompound();
+		}
+
+
+		////////////////
+
 		public override void PostDrawInInventory(
 					Item item,
 					SpriteBatch spriteBatch,

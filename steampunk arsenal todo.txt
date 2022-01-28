@@ -28,11 +28,10 @@ v1
 -	@Test steam balls
 -	Improve indicator of HUD lever interactivity
 -	Add vibration to HUD gadget when gun filled
--	Implement steam saving
+
+
+-	Implement steam container contents saving
 -	Fix projectile damage
--	Fix projectile skipping enemies
-
-
 -	Debug HUD steam display
 -	Fix widget anim frame pixels
 -	Add better indicator of temperature

@@ -1,5 +1,6 @@
 using System;
 using Terraria;
+using Terraria.ModLoader.IO;
 using SteampunkArsenal.Items;
 using SteampunkArsenal.Items.Armor;
 using SteampunkArsenal.Items.Accessories;
@@ -83,5 +84,14 @@ namespace SteampunkArsenal.Logic.Steam {
 		internal protected abstract void PreUpdate( Player owner, bool isChild );
 
 		internal protected abstract void PostUpdate( Player owner, bool isChild );
+
+
+		////////////////
+
+		internal protected abstract bool CanSave();
+
+		internal protected abstract void Load( TagCompound tag );
+
+		internal protected abstract TagCompound Save();
 	}
 }

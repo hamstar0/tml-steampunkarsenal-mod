@@ -1,5 +1,6 @@
 using System;
 using Terraria;
+using Terraria.ModLoader.IO;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -87,6 +88,27 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		protected override void SetBoilerHeat( float heat ) {
 			this._BoilerHeat = heat;
+		}
+
+
+		////////////////
+
+		internal protected override bool CanSave() {
+			return true;
+		}
+
+		internal protected override void Load( TagCompound tag ) {
+			this._Water = tag.GetFloat( "water" );
+			this._WaterHeat = tag.GetFloat( "water_heat" );
+			this._BoilerHeat = tag.GetFloat( "boiler_heat" );
+		}
+
+		internal protected override TagCompound Save() {
+			return new TagCompound {
+				{ "water", this.Water },
+				{ "water_heat", this.WaterHeat },
+				{ "boiler_heat", this.BoilerHeat },
+			};
 		}
 	}
 }

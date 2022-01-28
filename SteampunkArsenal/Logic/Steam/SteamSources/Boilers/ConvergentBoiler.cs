@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
@@ -129,6 +130,21 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			boilers.ForEach(
 				ss => ss.SetBoilerHeat_If( ss.BoilerHeat + addAmt )
 			);
+		}
+
+
+		////////////////
+
+		internal protected override bool CanSave() {
+			return false;
+		}
+
+		internal protected override void Load( TagCompound tag ) {
+			throw new NotImplementedException( "Cannot load ConvernentBoiler" );
+		}
+
+		internal protected override TagCompound Save() {
+			throw new NotImplementedException( "Cannot save ConvernentBoiler" );
 		}
 	}
 }

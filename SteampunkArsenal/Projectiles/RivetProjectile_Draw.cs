@@ -16,8 +16,8 @@ namespace SteampunkArsenal.Projectiles {
 			for( int k = 0; k < projectile.oldPos.Length; k++ ) {
 				Vector2 drawPos = projectile.oldPos[k]
 					- Main.screenPosition
-					+ drawOrigin
-					+ new Vector2( 0f, projectile.gfxOffY );
+					+ drawOrigin;
+				drawPos.Y += projectile.gfxOffY;
 
 				float opacity = (oldPosLen - (float)k) / oldPosLen;
 				Color color = projectile.GetAlpha( lightColor ) * opacity;

@@ -17,14 +17,16 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
+			var config = SteampunkArsenalConfig.Instance;
 			float pressure = this.SteamSupply.TotalPressure;
+			float damage = pressure * config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
 
-			projectile.damage = (int)pressure;
+			projectile.damage = (int)damage;
 
 			//
 
 			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)pressure );
+				ProjectileDamageSyncProtocol.BroadcastFromClientToAll( projectileIdx, (int)damage );
 			}
 		}
 
