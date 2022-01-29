@@ -52,6 +52,17 @@ namespace SteampunkArsenal.Items {
 			}
 
 			//
+			
+			/*var config = SteampunkArsenalConfig.Instance;
+			float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
+
+			damage = (int)(totalPressure * dmgScale);*/
+
+			if( totalPressure <= 0 ) {
+				Main.NewText( "No steam available.", Color.Yellow );
+			}
+
+			//
 
 			Fx.CreateSteamEruptionFx(
 				position: position,
@@ -66,11 +77,6 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			damage = (int)totalPressure;
-
-			if( totalPressure <= 0 ) {
-				Main.NewText( "No steam available.", Color.Yellow );
-			}
 			return totalPressure > 0f;
 		}
 	}

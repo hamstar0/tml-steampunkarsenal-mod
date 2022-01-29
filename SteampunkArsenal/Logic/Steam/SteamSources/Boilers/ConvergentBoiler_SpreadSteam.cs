@@ -15,9 +15,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 
-			this.NormalizeBoilerWaterDistributionIncrementally( boilers, 1f / 60f );
+			this.NormalizeBoilerWaterDistributionIncrementally( boilers, 10f / 60f );
 
-			this.NormalizeSteamContainerDistributionIncrementally( boilers, containers, 1f / 60f );
+			this.NormalizeSteamContainerDistributionIncrementally( boilers, containers, 10f / 60f );
 		}
 
 

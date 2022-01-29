@@ -31,7 +31,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////
 
-		public override float PressurePercentLeakPerTick => this._WaterLeakPerTick;
+		public override float PressurePercentLeakPerTick => this._PressurePercentLeakPerTick;
 
 
 
@@ -39,7 +39,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		protected ISet<SteamSource> ConnectedSteamSources = new HashSet<SteamSource>();
 
-		private float _WaterLeakPerTick = 0f;
+		private float _PressurePercentLeakPerTick = 0f;
 
 
 

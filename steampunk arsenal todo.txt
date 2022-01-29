@@ -24,12 +24,20 @@ v2
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
 v1
 -	Change steam to bubbles when underwater
+-	Add vibration to HUD gadget when gun filled
 -	@Test MP
 -	@Test steam balls
+-	Set "no steam" gun charge fail to give alert
+-	Lower volume of post-shot steam hiss sound
+-	Brighten gel gauge
+-	Randomize gauge steam frame (dont cycle)
+
+
+-	Fix rivet damage scale (again?)
+-	Fix boiler refill fx not stopping when full (while fuel exists)
+-	Abort boiler refill while dead
+-	Increase boiler normalization rate
 -	Improve indicator of HUD lever interactivity
--	Add vibration to HUD gadget when gun filled
-
-
 -	Implement steam container contents saving
 -	Fix projectile damage
 -	Debug HUD steam display

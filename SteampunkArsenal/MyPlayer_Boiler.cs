@@ -15,9 +15,7 @@ namespace SteampunkArsenal {
 		////////////////
 
 		private void UpdateBoiler() {
-			if( !this.player.dead ) {
-				this.UpdateBoilerRefillState();
-			}
+			this.UpdateBoilerRefillState();
 
 			//
 
@@ -63,7 +61,7 @@ namespace SteampunkArsenal {
 
 			//
 
-			if( actualFillAmt > 0.0001f ) {	// floating point shenanigans
+			if( actualFillAmt >= (intendedFillAmtPerTick - 0.0001f) ) {	// floating point shenanigans
 				switch( waterDrawSnd.State ) {
 				case SoundState.Stopped:
 					waterDrawSnd.Play();

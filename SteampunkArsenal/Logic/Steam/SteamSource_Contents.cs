@@ -15,6 +15,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		protected abstract float AddWater( float addedWater, float heatOfAddedWater, out float waterOverflow );
 
+
 		////
 
 		public float DrainWater_If( float waterDrained, out float waterUnderflow ) {
