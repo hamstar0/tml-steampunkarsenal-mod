@@ -27,9 +27,12 @@ v1
 -	Add vibration to HUD gadget when gun filled
 -	@Test MP
 -	@Test steam balls
+-	Set Steam Balls condense steam for storage
+
+
+-	Set damage to increase exponentially
+-	Set boilers to only transfer steam to Steam Balls
 -	Add alert when attempting gun charge when "no steam"
-
-
 -	Lower volume of post-shot steam hiss sound
 -	Brighten gel gauge
 -	Randomize gauge steam frame (dont cycle)

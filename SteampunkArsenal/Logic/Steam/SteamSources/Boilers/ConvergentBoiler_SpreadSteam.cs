@@ -54,18 +54,27 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					IList<SteamContainer> containers,
 					float rate ) {
 			foreach( Boiler boiler in boilers ) {
-				if( boiler.SteamPressure < rate ) {
-					continue;
-				}
-
 				foreach( SteamContainer container in containers.ToArray() ) {
+					if( boiler.SteamPressure <= rate ) {
+						break;
+					}
+
+					//
+
 					if( container.TotalPressure > (container.TotalCapacity - rate) ) {
 						containers.Remove( container );
 
 						continue;
 					}
 
-					container.TransferSteamToMeFromSource_If( boiler, rate, out _, out float waterOverflow );
+					//
+
+					container.TransferSteamToMeFromSource_If(
+						source: boiler,
+						intendedSteamXferAmt: rate,
+						waterUnderflow: out _,
+						waterOverflow: out float waterOverflow
+					);
 
 					if( waterOverflow > 0f ) {
 						boiler.AddWater_If( waterOverflow, boiler.WaterHeat, out _ );

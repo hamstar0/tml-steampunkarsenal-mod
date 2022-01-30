@@ -7,14 +7,27 @@ using SteampunkArsenal.HUD;
 
 namespace SteampunkArsenal.Items {
 	public partial class RivetLauncherItem : ModItem {
+		public static float GetRiveterDamage( float maxCapacity, float capacityPercent ) {
+			var config = SteampunkArsenalConfig.Instance;
+			float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
+
+			return maxCapacity * capacityPercent * capacityPercent * dmgScale;
+		}
+
+
+
+		////////////////
+
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
 			float steam = this.SteamSupply?.TotalPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
-				var config = SteampunkArsenalConfig.Instance;
-				float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
+				float steamMax = this.SteamSupply.TotalCapacity;
 
-				flat = steam * dmgScale;
+				flat = RivetLauncherItem.GetRiveterDamage(
+					maxCapacity: steamMax,
+					capacityPercent: steam / steamMax
+				);
 			} else {
 				flat = 0f;
 			}
@@ -43,7 +56,7 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float totalPressure = this.SteamSupply.TotalPressure;
+			float pressure = this.SteamSupply.TotalPressure;
 
 			float drainedWater = this.SteamSupply.DrainWater_If( this.SteamSupply.Water, out _ );
 			if( drainedWater <= 0f ) {
@@ -52,13 +65,14 @@ namespace SteampunkArsenal.Items {
 			}
 
 			//
-			
-			/*var config = SteampunkArsenalConfig.Instance;
-			float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
 
-			damage = (int)(totalPressure * dmgScale);*/
+			/*//var config = SteampunkArsenalConfig.Instance;
+			//float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
 
-			if( totalPressure <= 0 ) {
+			//damage = (int)(totalPressure * dmgScale);
+			damage = RivetLauncherItem.GetRiveterDamage( maxPressure, pressure / maxPressure );*/
+
+			if( pressure <= 0 ) {
 				Main.NewText( "No steam available.", Color.Yellow );
 			}
 
@@ -77,7 +91,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			return totalPressure > 0f;
+			return pressure > 0f;
 		}
 	}
 }

@@ -17,9 +17,9 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			var config = SteampunkArsenalConfig.Instance;
 			float pressure = this.SteamSupply.TotalPressure;
-			float damage = pressure * config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
+			float maxPressure = this.SteamSupply.TotalCapacity;
+			float damage = RivetLauncherItem.GetRiveterDamage( maxPressure, pressure / maxPressure );
 
 			projectile.damage = (int)damage;
 

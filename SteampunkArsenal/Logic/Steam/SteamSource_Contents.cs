@@ -84,6 +84,10 @@ namespace SteampunkArsenal.Logic.Steam {
 
 			//
 
+			if( intendedSteamXferAmt > source.SteamPressure ) {
+				intendedSteamXferAmt = source.SteamPressure;
+			}
+
 			float srcHeat = source.WaterHeat;
 			float srcWaterDrawAmt = intendedSteamXferAmt / srcHeat;
 
