@@ -19,14 +19,14 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override void ModifyWeaponDamage( Player player, ref float add, ref float mult, ref float flat ) {
-			float steam = this.SteamSupply?.TotalPressure ?? 0f;
+			float steam = this.SteamSupply?.SteamPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
-				float steamMax = this.SteamSupply.TotalCapacity;
+				float capacity = this.SteamSupply.TotalCapacity;
 
 				flat = RivetLauncherItem.GetRiveterDamage(
-					maxCapacity: steamMax,
-					capacityPercent: steam / steamMax
+					maxCapacity: capacity,
+					capacityPercent: steam / capacity
 				);
 			} else {
 				flat = 0f;
@@ -37,7 +37,9 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		public override bool CanUseItem( Player player ) {
-			if( this.SteamSupply.TotalPressure >= 10f ) {
+			float minSteam = 10f;
+
+			if( this.SteamSupply.SteamPressure >= minSteam ) {
 				return true;
 			}
 
@@ -56,7 +58,7 @@ namespace SteampunkArsenal.Items {
 					ref int type,
 					ref int damage,
 					ref float knockBack ) {
-			float pressure = this.SteamSupply.TotalPressure;
+			float steam = this.SteamSupply.SteamPressure;
 
 			float drainedWater = this.SteamSupply.DrainWater_If( this.SteamSupply.Water, out _ );
 			if( drainedWater <= 0f ) {
@@ -72,7 +74,7 @@ namespace SteampunkArsenal.Items {
 			//damage = (int)(totalPressure * dmgScale);
 			damage = RivetLauncherItem.GetRiveterDamage( maxPressure, pressure / maxPressure );*/
 
-			if( pressure <= 0 ) {
+			if( steam <= 0 ) {
 				Main.NewText( "No steam available.", Color.Yellow );
 			}
 
@@ -91,7 +93,7 @@ namespace SteampunkArsenal.Items {
 
 			//
 
-			return pressure > 0f;
+			return steam > 0f;
 		}
 	}
 }

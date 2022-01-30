@@ -13,6 +13,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public override float TotalCapacity => this._Capacity;
 
+		public override float SteamPressure => this.TotalPressure;
+
 		////
 
 		public float HeatPercentDecayRatePerTick { get; private set; }

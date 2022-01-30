@@ -24,7 +24,7 @@ namespace SteampunkArsenal.HUD {
 		////////////////
 
 		public static bool DrawPopupText_If( SpriteBatch sb, Vector2 pos, string text, Color color, int ticksElapsed ) {
-			float percent = (float)ticksElapsed / 45f;
+			float percent = (float)ticksElapsed / 60f;
 			if( percent >= 1f ) {
 				return false;
 			}

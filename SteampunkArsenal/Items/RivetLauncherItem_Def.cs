@@ -17,9 +17,9 @@ namespace SteampunkArsenal.Items {
 				return;
 			}
 
-			float pressure = this.SteamSupply.TotalPressure;
-			float maxPressure = this.SteamSupply.TotalCapacity;
-			float damage = RivetLauncherItem.GetRiveterDamage( maxPressure, pressure / maxPressure );
+			float steam = this.SteamSupply.SteamPressure;
+			float capacity = this.SteamSupply.TotalCapacity;
+			float damage = RivetLauncherItem.GetRiveterDamage( capacity, steam / capacity );
 
 			projectile.damage = (int)damage;
 
@@ -111,7 +111,7 @@ namespace SteampunkArsenal.Items {
 			if( idx != -1 ) {
 				string[] segs = tooltips[idx].text.Split( ' ' );
 
-				segs[0] = ((int)(this.SteamSupply?.TotalPressure ?? 1f)).ToString();
+				segs[0] = ((int)(this.SteamSupply?.SteamPressure ?? 1f)).ToString();
 
 				tooltips[idx].text = string.Join( " ", segs )
 					+ " (requires steam)";

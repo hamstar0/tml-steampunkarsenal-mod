@@ -26,10 +26,10 @@ v1
 -	Change steam to bubbles when underwater
 -	Add vibration to HUD gadget when gun filled
 -	@Test MP
+
+
 -	@Test steam balls
--	Set Steam Balls condense steam for storage
-
-
+-	Set Steam Balls to condense steam for storage
 -	Set damage to increase exponentially
 -	Set boilers to only transfer steam to Steam Balls
 -	Add alert when attempting gun charge when "no steam"
