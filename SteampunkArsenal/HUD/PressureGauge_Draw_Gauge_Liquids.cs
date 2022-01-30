@@ -72,17 +72,18 @@ namespace SteampunkArsenal.HUD {
 
 		////////////////
 
-		 private int _SteamAnimationFrame = 1;
-
+		 private int _PrevFrame = 1;
 		private void DrawGaugeSteam( SpriteBatch sb, Vector2 pos, float waterPercent, float steamPercent ) {
-			var mymod = SteamArseMod.Instance;
-			Texture2D tex = mymod.GetTexture( "HUD/PressureGaugeSteam"+this._SteamAnimationFrame );
+			int frame;
+			do {
+				frame = Main.rand.Next(6) + 1;
+			} while( frame == this._PrevFrame );
+			this._PrevFrame = frame;
 
 			//
 
-			if( ++this._SteamAnimationFrame > 6 ) {
-				this._SteamAnimationFrame = 1;
-			}
+			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeSteam"+frame );
+			var origin = new Vector2( tex.Width / 2, tex.Height / 2 );
 
 			//
 
@@ -97,11 +98,11 @@ namespace SteampunkArsenal.HUD {
 
 			sb.Draw(
 				texture: tex,
-				position: pos + new Vector2(30f, 24f),
+				position: pos + new Vector2(30f, 22f) + origin,
 				sourceRectangle: rect,
 				color: Color.White * steamPercent,
-				rotation: 0f,
-				origin: default,
+				rotation: 0f,	//Main.rand.NextBool() ? 0f : MathHelper.Pi,
+				origin: origin,
 				scale: 1f,
 				effects: SpriteEffects.None,
 				layerDepth: 0f

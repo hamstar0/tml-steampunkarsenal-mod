@@ -27,12 +27,13 @@ v1
 -	Add vibration to HUD gadget when gun filled
 -	@Test MP
 -	@Test steam balls
--	Set "no steam" gun charge fail to give alert
+-	Add alert when attempting gun charge when "no steam"
+
+
 -	Lower volume of post-shot steam hiss sound
 -	Brighten gel gauge
 -	Randomize gauge steam frame (dont cycle)
-
-
+-	Reduce rate of boiler heat decay
 -	Fix rivet damage scale (again?)
 -	Fix boiler refill fx not stopping when full (while fuel exists)
 -	Abort boiler refill while dead

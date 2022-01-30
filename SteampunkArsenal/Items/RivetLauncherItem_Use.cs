@@ -72,7 +72,7 @@ namespace SteampunkArsenal.Items {
 
 			Main.PlaySound(
 				this.mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/SteamHiss")
-					.WithVolume(0.5f)
+					.WithVolume(0.25f)
 			);
 
 			//

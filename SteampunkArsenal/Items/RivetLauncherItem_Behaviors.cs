@@ -1,7 +1,10 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Services.Timers;
+using SteampunkArsenal.HUD;
 
 
 namespace SteampunkArsenal.Items {
@@ -20,6 +23,14 @@ namespace SteampunkArsenal.Items {
 
 			if( Main.mouseRight ) {
 				isCharging = RivetLauncherItem.ChargeSteamFromPlayerSteam( wielderPlayer, myitem );
+
+				if( !isCharging ) {
+					if( Timers.GetTimerTickDuration("SteamRiveterChargeFail") <= 0 ) {
+						PressureGaugeHUD.DisplayAlertPopup( "Steam fill failed.", Color.Yellow );
+					}
+
+					Timers.SetTimer( "SteamRiveterChargeFail", 2, false, () => false );
+				}
 			}
 
 			//

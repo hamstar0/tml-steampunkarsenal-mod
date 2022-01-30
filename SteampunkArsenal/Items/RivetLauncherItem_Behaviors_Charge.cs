@@ -30,7 +30,7 @@ namespace SteampunkArsenal.Items {
 				);
 			}
 
-			return transferredSteam > 0f;
+			return transferredSteam > 0.0001f;	// floating point shenanigans?
 		}
 	}
 }
