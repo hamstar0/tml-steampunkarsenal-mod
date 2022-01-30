@@ -15,7 +15,18 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			this.DrawGauge( sb, pos );
+			float shake = Main.LocalPlayer
+				.GetModPlayer<SteamArsePlayer>()
+				.CurrentBodyLayerShakePercent;
+
+			var shakeOffset = new Vector2(
+				(Main.rand.NextFloat() * shake * 2f) - 1f,
+				(Main.rand.NextFloat() * shake * 2f) - 1f
+			);
+
+			//
+
+			this.DrawGauge( sb, pos + shakeOffset );
 
 			//
 			

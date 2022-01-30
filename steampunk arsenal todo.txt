@@ -23,11 +23,12 @@ v2
 		-	Steam does continuous 'steam' damage within area, with chance to inflict debuff
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
 v1
+-	@Test local MP
+
+
 -	Change steam to bubbles when underwater
+-	Prevent widget interactions while dead
 -	Add vibration to HUD gadget when gun filled
--	@Test MP
-
-
 -	@Test steam balls
 -	Set Steam Balls to condense steam for storage
 -	Set damage to increase exponentially

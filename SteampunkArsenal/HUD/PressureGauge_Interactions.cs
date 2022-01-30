@@ -20,6 +20,10 @@ namespace SteampunkArsenal.HUD {
 		////////////////
 
 		public static bool CanAddFuel( Player player, Boiler boiler, out string result ) {
+			if( player.dead ) {
+				result = "Interaction disabled.";
+				return false;
+			}
 			if( !boiler.IsActive ) {
 				result = "No boiler.";
 				return false;
@@ -51,6 +55,10 @@ namespace SteampunkArsenal.HUD {
 			}
 
 			Player player = Main.LocalPlayer;
+			if( player.dead ) {
+				return false;
+			}
+
 			Boiler boiler = player.GetModPlayer<SteamArsePlayer>().ImplicitConvergingBoiler;
 			
 			if( !PressureGaugeHUD.CanAddFuel(player, boiler, out string result) ) {

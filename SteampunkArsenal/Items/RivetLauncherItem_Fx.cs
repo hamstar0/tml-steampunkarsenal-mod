@@ -24,7 +24,7 @@ namespace SteampunkArsenal.Items {
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
 
-			myplayer.CurrentBodyLayerShakeAmount = percent;
+			myplayer.CurrentBodyLayerShakePercent = percent;
 
 			//
 

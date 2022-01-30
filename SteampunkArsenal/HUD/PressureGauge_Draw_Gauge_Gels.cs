@@ -27,7 +27,7 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			int height = gels * 2;
+			int height = Math.Min( gels * 2, gelTex.Height );
 			float offsetY = gelTex.Height - height;
 
 			//

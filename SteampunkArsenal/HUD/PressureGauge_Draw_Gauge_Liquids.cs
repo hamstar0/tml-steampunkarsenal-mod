@@ -42,16 +42,15 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			float waterTexSpanHeight = 50f;
+			float waterTexSpanHeight = waterTex.Height;
 
 			int texHeight = (int)( waterPercent * waterTexSpanHeight );
 
-			float texOffsetY = 24f;
-			texOffsetY += ( 1f - waterPercent ) * waterTexSpanHeight;
+			float texOffsetY = (1f - waterPercent) * waterTexSpanHeight;
 
 			//
 
-			var offset = new Vector2( 0f, texOffsetY );
+			var offset = new Vector2( 30f, 22f + texOffsetY );
 			var rect = new Rectangle( 0, (int)texOffsetY, waterTex.Width, texHeight );
 
 			//

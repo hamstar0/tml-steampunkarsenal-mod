@@ -14,18 +14,36 @@ namespace SteampunkArsenal {
 					float velocityNoise,
 					int puffs,
 					float scale ) {
+			int tileX = (int)position.X / 16;
+			int tileY = (int)position.Y / 16;
+			bool isSubmerged = Main.tile[tileX, tileY].liquid > 0;
+
+			//
+
 			position.X -= 4f;
 
 			for( int i = 0; i < puffs; i++ ) {
-				SmallSteamDust.Create(
-					centerPosition: position,
-					velocity: velocity,
-					dispersalRadius: dispersalRadius,
-					velocityNoise: velocityNoise,
-					scale: scale
-				);
-				//int goreIdx = Gore.NewGore( pos, vel, 11, scale );
-				//Main.gore[goreIdx].alpha = alpha;
+				if( isSubmerged ) {
+					Dust.NewDust(
+						Position: position,
+						Width: 0,
+						Height: 0,
+						Type: 34,
+						SpeedX: velocity.X,
+						SpeedY: velocity.Y,
+						Scale: scale * 2.5f
+					);
+				} else {
+					SmallSteamDust.Create(
+						centerPosition: position,
+						velocity: velocity,
+						dispersalRadius: dispersalRadius,
+						velocityNoise: velocityNoise,
+						scale: scale
+					);
+				}
+				////int goreIdx = Gore.NewGore( pos, vel, 11, scale );
+				////Main.gore[goreIdx].alpha = alpha;
 			}
 		}
 

@@ -11,7 +11,7 @@ using SteampunkArsenal.Items;
 
 namespace SteampunkArsenal {
 	partial class SteamArsePlayer : ModPlayer {
-		public float CurrentBodyLayerShakeAmount { get; internal set; } = 0f;
+		public float CurrentBodyLayerShakePercent { get; internal set; } = 0f;
 
 
 		////////////////
@@ -73,7 +73,7 @@ namespace SteampunkArsenal {
 			if( bodyLayerIdx != -1 ) {
 				(var wrap1, var wrap2) = OffsetWrapperPlayerLayer.CreateLayers(
 					baseLayer: PlayerLayer.Body,
-					shakeAmountGetter: () => this.CurrentBodyLayerShakeAmount
+					shakeAmountGetter: () => this.CurrentBodyLayerShakePercent
 				);
 
 				layers.Insert( bodyLayerIdx+1, wrap2 );
