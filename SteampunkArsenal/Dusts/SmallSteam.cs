@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -31,7 +32,9 @@ namespace SteampunkArsenal.Dusts {
 		////////////////
 
 		public override bool Autoload( ref string name, ref string texture ) {
-			Main.instance.LoadGore( 11 );
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				Main.instance.LoadGore( 11 );
+			}
 
 			texture = "Terraria/Gore_11";
 			return mod.Properties.Autoload;

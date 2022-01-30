@@ -22,21 +22,23 @@ namespace SteampunkArsenal {
 
 		////////////////
 
-		public SoundEffectInstance WaterDraw;
+		public SoundEffectInstance WaterDraw = null;
 
-		public SoundEffectInstance BoilerUpInst1;
-		public SoundEffectInstance BoilerUpInst2;
+		public SoundEffectInstance BoilerUpInst1 = null;
+		public SoundEffectInstance BoilerUpInst2 = null;
 
 
 
 		////////////////
 
 		public override void PostSetupContent() {
-			SoundEffect boilerUpSFX = this.GetSound( "Sounds/Custom/BoilerUp" );
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				SoundEffect boilerUpSFX = this.GetSound( "Sounds/Custom/BoilerUp" );
 
-			this.WaterDraw = Main.soundLiquid[1].CreateInstance();
-			this.BoilerUpInst1 = boilerUpSFX.CreateInstance();
-			this.BoilerUpInst2 = boilerUpSFX.CreateInstance();
+				this.WaterDraw = Main.soundLiquid[1].CreateInstance();
+				this.BoilerUpInst1 = boilerUpSFX.CreateInstance();
+				this.BoilerUpInst2 = boilerUpSFX.CreateInstance();
+			}
 
 			//
 

@@ -33,12 +33,12 @@ namespace SteampunkArsenal {
 
 			if( !this.player.dead && isWet ) {
 				this.ApplyBoilerRefill( ref isInterrupted );
-			} else if( waterDrawSnd.State == SoundState.Playing ) {
+			} else if( waterDrawSnd?.State == SoundState.Playing ) {
 				isInterrupted = true;
 			}
 			
 			if( isInterrupted ) {
-				waterDrawSnd.Stop();
+				waterDrawSnd?.Stop();
 
 				if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
 					SteamArsePlayer.HasDisplayedRefillingAlert = true;
@@ -61,25 +61,27 @@ namespace SteampunkArsenal {
 
 			//
 
-			if( actualFillAmt >= (intendedFillAmtPerTick - 0.0001f) ) {	// floating point shenanigans
-				switch( waterDrawSnd.State ) {
-				case SoundState.Stopped:
-					waterDrawSnd.Play();
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				if( actualFillAmt >= (intendedFillAmtPerTick - 0.0001f) ) {	// floating point shenanigans
+					switch( waterDrawSnd.State ) {
+					case SoundState.Stopped:
+						waterDrawSnd.Play();
 
-					if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
-						Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
-					}
-					break;
-				case SoundState.Paused:
-					waterDrawSnd.Resume();
+						if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
+							Main.NewText( "Refilling boiler...", Color.CornflowerBlue );
+						}
+						break;
+					case SoundState.Paused:
+						waterDrawSnd.Resume();
 
-					if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
-						Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
+						if( !SteamArsePlayer.HasDisplayedRefillingAlert ) {
+							Main.NewText( "Refilling boiler...", Color.DarkSeaGreen );
+						}
+						break;
 					}
-					break;
+				} else {
+					isInterrupted = waterDrawSnd.State == SoundState.Playing;
 				}
-			} else {
-				isInterrupted = waterDrawSnd.State == SoundState.Playing;
 			}
 		}
 	}
