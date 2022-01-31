@@ -22,10 +22,14 @@ namespace SteampunkArsenal {
 		}
 
 		internal void ApplySteamDamage( float steamAmount ) {
+			var config = SteampunkArsenalConfig.Instance;
+			float dmgScale = config.Get<float>( nameof(config.RiveterBackfireDamagePerSteamUnit) );
+			int damage = (int)(steamAmount * dmgScale);
+
 			this.player.Hurt(
 				damageSource: PlayerDeathReason.ByCustomReason(
 					this.player.name+" cleared "+(this.player.Male?"his":"her")+" pores" ),
-				Damage: (int)steamAmount,
+				Damage: damage,
 				hitDirection: 0
 			);
 

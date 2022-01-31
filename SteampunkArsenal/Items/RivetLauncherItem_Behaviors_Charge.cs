@@ -11,13 +11,14 @@ namespace SteampunkArsenal.Items {
 					RivetLauncherItem launcherModItem ) {
 			var config = SteampunkArsenalConfig.Instance;
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
+			float steam = myplayer.ImplicitConvergingBoiler.SteamPressure;
 
-			float steamAmtPerSec = config.Get<float>( nameof(config.RiveterChargeUpRatePerSecond) );
+			float steamAmtPerSec = config.Get<float>( nameof(config.RiveterSteamPercentChargeUpRatePerSecond) );
 			float steamAmtPerTick = steamAmtPerSec / 60f;
 
 			float transferredSteam = launcherModItem.SteamSupply.TransferSteamToMeFromSource_If(
 				source: myplayer.ImplicitConvergingBoiler,
-				intendedSteamXferAmt: steamAmtPerTick,
+				intendedSteamXferAmt: steamAmtPerTick * steam,
 				waterUnderflow: out _,
 				waterOverflow: out float waterOverflow
 			);

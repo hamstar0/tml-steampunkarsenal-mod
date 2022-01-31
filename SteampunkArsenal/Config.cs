@@ -66,34 +66,41 @@ namespace SteampunkArsenal {
 
 		////
 
-		[Range( 0f, 1000f )]
-		[DefaultValue( 18f )]
+		[Range( 0f, 1f )]
+		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float RiveterChargeUpRatePerSecond { get; set; } = 18f;
+		public float RiveterSteamPercentChargeUpRatePerSecond { get; set; } = 0.15f;
 		
 		[Range( 0f, 100f )]
-		[DefaultValue( 3f )]
+		[DefaultValue( 3.5f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float RiveterDamagerPerPressureUnit { get; set; } = 3f;
+		public float RiveterDamagerPerPressureUnit { get; set; } = 3.5f;
+
+		////
+
+		[Range( 0f, 10f )]
+		[DefaultValue( 0.65f )]
+		[CustomModConfigItem( typeof(MyFloatInputElement) )]
+		public float RiveterBackfireDamagePerSteamUnit { get; set; } = 0.65f;
 
 		////
 		
 		[Range( 0f, 100f )]
 		[DefaultValue( 100f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float SquirmUnpinnableNpcDamagePerSecondBase { get; set; } = 100f;
+		public float UnpinnableNpcDamagePerSecondBase { get; set; } = 100f;
 
 		////
 
 		[Range( 0f, 100f )]
 		[DefaultValue( 0.5f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float SquirmRivetDamageScale { get; set; } = 0.5f;
+		public float RivetSquirmDamageScale { get; set; } = 0.5f;
 
 		[Range( 0f, 10000f )]
 		[DefaultValue( 0f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float SquirmRivetDamagePerSecondBase { get; set; } = 0f;
+		public float RivetSquirmDamagePerSecondBase { get; set; } = 0f;
 
 
 		////

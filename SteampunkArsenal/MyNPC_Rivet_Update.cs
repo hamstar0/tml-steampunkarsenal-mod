@@ -64,7 +64,7 @@ namespace SteampunkArsenal {
 		private void ApplySquirmingNpcDamage( NPC npc ) {
 			var config = SteampunkArsenalConfig.Instance;
 			
-			float squirmPerSecond = config.Get<float>( nameof(config.SquirmUnpinnableNpcDamagePerSecondBase) );
+			float squirmPerSecond = config.Get<float>( nameof(config.UnpinnableNpcDamagePerSecondBase) );
 			float squirmPerPerSecond = squirmPerSecond * (float)this.RivetedTo.Count;
 
 			this._BufferedSquirmDamageToNpc += squirmPerPerSecond / 60f;
@@ -83,9 +83,9 @@ namespace SteampunkArsenal {
 		private void ApplySquirmingRivetDamage( NPC npc ) {
 			var config = SteampunkArsenalConfig.Instance;
 
-			float squirmDamageScale = config.Get<float>( nameof(config.SquirmRivetDamageScale) );
+			float squirmDamageScale = config.Get<float>( nameof(config.RivetSquirmDamageScale) );
 			float squirmPerSecond = (float)npc.lifeMax * squirmDamageScale;
-			squirmPerSecond += config.Get<float>( nameof(config.SquirmRivetDamagePerSecondBase) );
+			squirmPerSecond += config.Get<float>( nameof(config.RivetSquirmDamagePerSecondBase) );
 			float squirmPerPerSecond = squirmPerSecond / (float)this.RivetedTo.Count;
 
 			foreach( Projectile rivet in this.RivetedTo.Keys ) {

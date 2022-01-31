@@ -11,7 +11,11 @@ namespace SteampunkArsenal.Items {
 			var config = SteampunkArsenalConfig.Instance;
 			float dmgScale = config.Get<float>( nameof(config.RiveterDamagerPerPressureUnit) );
 
-			return maxCapacity * capacityPercent * capacityPercent * dmgScale;
+			float steamAmt = maxCapacity * capacityPercent;
+			float exponentDmgBase = steamAmt * capacityPercent;
+			exponentDmgBase *= (capacityPercent + 1f) * 0.5f;
+
+			return (exponentDmgBase * dmgScale) + 10f;
 		}
 
 

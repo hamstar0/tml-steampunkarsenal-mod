@@ -1,7 +1,7 @@
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using SteampunkArsenal.Dusts;
 
 
@@ -31,7 +31,7 @@ namespace SteampunkArsenal {
 						Type: 34,
 						SpeedX: velocity.X,
 						SpeedY: velocity.Y,
-						Scale: scale * 2.5f
+						Scale: Math.Min(scale * 2.5f, 3.5f)
 					);
 				} else {
 					SmallSteamDust.Create(

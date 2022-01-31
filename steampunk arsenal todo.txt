@@ -24,11 +24,10 @@ v2
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
 v1
 -	@Test local MP
--	Increase riveter charge based on steam available
--	Set steam fx to show when steam amount a percent up to capacity
 -	Tweak gauge range + make bottom part reddish
-
-
+-	Increase riveter damage max
+-	Reduce riveter damage from steam overflow
+-	Increase riveter charge rate based on steam available (percent rate)
 -	Change steam to bubbles when underwater
 -	Prevent widget interactions while dead
 -	Add vibration to HUD gadget when gun filled
