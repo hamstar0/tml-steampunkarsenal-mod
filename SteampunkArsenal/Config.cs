@@ -67,9 +67,9 @@ namespace SteampunkArsenal {
 		////
 
 		[Range( 0f, 1f )]
-		[DefaultValue( 0.15f )]
+		[DefaultValue( 0.25f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float RiveterSteamPercentChargeUpRatePerSecond { get; set; } = 0.15f;
+		public float RiveterSteamPercentChargeUpRatePerSecond { get; set; } = 0.25f;
 		
 		[Range( 0f, 100f )]
 		[DefaultValue( 3.5f )]

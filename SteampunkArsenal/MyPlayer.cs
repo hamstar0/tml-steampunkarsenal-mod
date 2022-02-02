@@ -44,7 +44,8 @@ namespace SteampunkArsenal {
 					"Water: " + this.ImplicitConvergingBoiler.Water.ToString( "N2" )
 						+ ", BTemp: " + this.ImplicitConvergingBoiler.BoilerHeat.ToString( "N2" )
 						+ ", WTemp: " + this.ImplicitConvergingBoiler.WaterHeat.ToString( "N2" )
-						+ ", Steam: " + this.ImplicitConvergingBoiler.TotalPressure.ToString( "N2" )
+						+ ", Steam: " + this.ImplicitConvergingBoiler.SteamPressure.ToString( "N2" )
+						+ ", Press: " + this.ImplicitConvergingBoiler.TotalPressure.ToString( "N2" )
 						+ ", Gun: " + SteamSource.GetSteamSourceForItem( this.player.HeldItem )?.TotalPressure.ToString( "N2" )
 				);
 			}

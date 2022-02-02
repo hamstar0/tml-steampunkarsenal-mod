@@ -1,4 +1,4 @@
-v3
+v2
 -	@Plans
 	-	Pneumatic Grappler: AKA punchy/grabby arm (ala KO mod)
 	-	Gentleman's Gilded Girding?: Steampunk mech suit
@@ -8,7 +8,7 @@ v3
 		-	Defense is significant, full knockback resist
 		-	Movement requires steam pressure; more pressure = more speed
 		-	Too much boiler heat = player takes damage
-v2
+v1
 -	@Plans
 	-	Scalding Trap: Toggleable, placeable steam ball that emits constant steam
 	-	Improvised Steam Hose Flail: A wild waving whip that flails from steam pressure
@@ -22,7 +22,21 @@ v2
 		-	Steam clouds evaporates quickly in open air, but lingers when more blocks are near
 		-	Steam does continuous 'steam' damage within area, with chance to inflict debuff
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
-v1
+
+
+vBeta
+-	Add explosion sound to steam overflow eruption
+-	Fix issue with riveter not overflowing
+-	Steam Balls adjustments
+	-	Shrink item sprite
+	-	Set to store the highest temperature water available, ejecting existing water if needed
+	-	Set to store half a boiler's capacity
+-	Convergent Boiler adjustments
+	-	Add indication when Steam Containers are being filled (light steam hiss noise)
+
+
+	-	Set to only transfer pressure to Steam Containers if boiler full
+	-	Transfer to containers more from higher pressure boilers
 -	@Test local MP
 -	Tweak gauge range + make bottom part reddish
 -	Increase riveter damage max
