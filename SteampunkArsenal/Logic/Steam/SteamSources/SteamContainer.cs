@@ -37,10 +37,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 		public SteamContainer(
 						PlumbingType plumbingType,
 						float heatPercentDecayRatePerTick,
-						float pressurePercentLeakPerTick )
+						float pressurePercentLeakPerTick,
+						float maxCapacity = 100f )
 					: base( plumbingType ) {
 			this.HeatPercentDecayRatePerTick = heatPercentDecayRatePerTick;
 			this._PressurePercentLeakPerTick = pressurePercentLeakPerTick;
+			this._Capacity = maxCapacity;
 		}
 
 

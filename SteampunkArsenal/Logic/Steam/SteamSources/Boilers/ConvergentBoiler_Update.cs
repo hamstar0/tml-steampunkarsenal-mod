@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using ModLibsCore.Libraries.Debug;
 using ModLibsGeneral.Libraries.Players;
@@ -35,7 +36,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 			
-			this.NormalizePressureDistributionIncrementally_If( boilers, nonBoilers );
+			if( this.NormalizePressureDistributionIncrementally_If(boilers, nonBoilers) ) {
+				if( SteamArseMod.Instance.SteamHissLoop.State != SoundState.Playing ) {
+					SteamArseMod.Instance.SteamHissLoop.Volume = 0.35f;
+					SteamArseMod.Instance.SteamHissLoop.Play();
+				} else {
+					SteamArseMod.Instance.SteamHissLoop.Stop();
+				}
+			}
 		}
 
 

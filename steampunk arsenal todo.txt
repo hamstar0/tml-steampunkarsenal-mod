@@ -30,11 +30,11 @@ vBeta
 -	Steam Balls adjustments
 	-	Shrink item sprite
 	-	Set to store the highest temperature water available, ejecting existing water if needed
+
+
 	-	Set to store half a boiler's capacity
 -	Convergent Boiler adjustments
 	-	Add indication when Steam Containers are being filled (light steam hiss noise)
-
-
 	-	Set to only transfer pressure to Steam Containers if boiler full
 	-	Transfer to containers more from higher pressure boilers
 -	@Test local MP

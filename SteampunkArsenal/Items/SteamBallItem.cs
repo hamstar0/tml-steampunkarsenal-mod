@@ -20,7 +20,12 @@ namespace SteampunkArsenal.Items {
 		}
 
 		public override void SetDefaults() {
-			this.SteamSupply = new SteamContainer( PlumbingType.Inventory, 0f, 0f );
+			this.SteamSupply = new SteamContainer(
+				plumbingType: PlumbingType.Inventory,
+				heatPercentDecayRatePerTick: 0f,
+				pressurePercentLeakPerTick: 0f,
+				maxCapacity: 50f
+			);
 
 			this.item.width = 18;
 			this.item.height = 18;

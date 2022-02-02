@@ -62,7 +62,11 @@ namespace SteampunkArsenal.Items {
 
 			//
 			
-			this.SteamSupply = new SteamContainer( PlumbingType.Manual, 0f, decayRate / 60f );
+			this.SteamSupply = new SteamContainer(
+				plumbingType: PlumbingType.Manual,
+				heatPercentDecayRatePerTick: 0f,
+				pressurePercentLeakPerTick: decayRate / 60f
+			);
 
 			//
 

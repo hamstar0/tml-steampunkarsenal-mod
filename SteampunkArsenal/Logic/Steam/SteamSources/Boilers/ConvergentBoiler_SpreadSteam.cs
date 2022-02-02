@@ -6,11 +6,11 @@ using Terraria;
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 	public partial class ConvergentBoiler : Boiler {
-		private void NormalizePressureDistributionIncrementally_If(
+		private bool NormalizePressureDistributionIncrementally_If(
 					IList<Boiler> boilers,
 					IList<SteamContainer> containers ) {
 			if( !this.IsActive ) {
-				return;
+				return false;
 			}
 
 			//
@@ -20,7 +20,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				ratePerBoiler: 10f / 60f
 			);
 
-			this.NormalizeSteamContainerDistributionIncrementally(
+			return this.NormalizeSteamContainerDistributionIncrementally(
 				boilers: boilers,
 				containers: containers,
 				maxRatePerBoiler: 10f / 60f,
@@ -57,11 +57,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////
 
-		private void NormalizeSteamContainerDistributionIncrementally(
+		private bool NormalizeSteamContainerDistributionIncrementally(
 					IList<Boiler> boilers,
 					IList<SteamContainer> containers,
 					float maxRatePerBoiler,
 					Func<Boiler, float> minBoilerPressure ) {
+			bool isXferring = false;
+
 			foreach( SteamContainer container in containers.ToArray() ) {
 				if( container.TotalPressure > (container.TotalCapacity - maxRatePerBoiler) ) {
 					containers.Remove( container );
@@ -91,7 +93,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 					//
 
-					container.TransferSteamToMeFromSource_If(
+					float xferred = container.TransferSteamToMeFromSource_If(
 						source: boiler,
 						intendedSteamXferAmt: xferAmt,
 						waterUnderflow: out _,
@@ -104,11 +106,17 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 					//
 
+					isXferring |= xferred > 0f;
+
+					//
+
 					if( container.TotalPressure > (container.TotalCapacity - xferAmt) ) {
 						break;
 					}
 				}
 			}
+
+			return isXferring;
 		}
 	}
 }

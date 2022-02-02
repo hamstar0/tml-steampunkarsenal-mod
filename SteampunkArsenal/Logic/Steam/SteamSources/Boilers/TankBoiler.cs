@@ -33,7 +33,9 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public TankBoiler( PlumbingType plumbingType ) : base( plumbingType ) { }
+		public TankBoiler( PlumbingType plumbingType, float maxCapacity = 100f ) : base( plumbingType ) {
+			this._Capacity = maxCapacity;
+		}
 
 
 
