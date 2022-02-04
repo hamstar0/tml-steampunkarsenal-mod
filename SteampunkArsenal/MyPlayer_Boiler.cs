@@ -57,7 +57,12 @@ namespace SteampunkArsenal {
 
 			float intendedFillAmtPerSec = config.Get<float>( nameof(config.BoilerWaterFillRatePerSecond) );
 			float intendedFillAmtPerTick = intendedFillAmtPerSec / 60f;
-			float actualFillAmt = this.ImplicitConvergingBoiler.AddWater_If( intendedFillAmtPerTick, 1f, out _ );
+
+			float actualFillAmt = this.ImplicitConvergingBoiler.AddWaterBoilersOnly_If(
+				intendedFillAmtPerTick,
+				1f,
+				out _
+			);
 
 			//
 

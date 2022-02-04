@@ -65,18 +65,18 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			bool isXferring = false;
 
 			foreach( SteamContainer container in containers.ToArray() ) {
-				if( container.TotalPressure > (container.TotalCapacity - maxRatePerBoiler) ) {
-					containers.Remove( container );
-
-					continue;
-				}
+				//if( (container.TotalCapacity - maxRatePerBoiler) <= 0f ) {
+				//	containers.Remove( container );
+				//
+				//	continue;
+				//}
 
 				//
 
 				IEnumerable<Boiler> hotBoilers = boilers
-					//.Where( b => b.SteamPressure >= maxRatePerBoiler )
-					.Where( b => b.TotalPressure >= minBoilerPressure(b) )
+					.Where( b => b.SteamPressure > 0f && b.TotalPressure >= minBoilerPressure( b ) )
 					.OrderByDescending( b => b.SteamPressure );
+
 				if( !hotBoilers.Any() ) {
 					break;
 				}
@@ -92,7 +92,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					float xferAmt = xferPerc * maxRatePerBoiler;
 
 					//
-
+					
 					float xferred = container.TransferSteamToMeFromSource_If(
 						source: boiler,
 						intendedSteamXferAmt: xferAmt,
@@ -101,18 +101,19 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					);
 
 					if( waterOverflow > 0f ) {
-						boiler.AddWater_If( waterOverflow, boiler.WaterHeat, out _ );
+						if( container.WaterHeat < boiler.WaterHeat ) {
+							container.DrainWater_If( waterOverflow, out _ );
+							container.AddWater_If( waterOverflow, boiler.WaterHeat, out waterOverflow );
+						}
+						
+						if( waterOverflow > 0f ) {
+							boiler.AddWater_If( waterOverflow, boiler.WaterHeat, out _ );
+						}
 					}
 
 					//
 
 					isXferring |= xferred > 0f;
-
-					//
-
-					if( container.TotalPressure > (container.TotalCapacity - xferAmt) ) {
-						break;
-					}
 				}
 			}
 

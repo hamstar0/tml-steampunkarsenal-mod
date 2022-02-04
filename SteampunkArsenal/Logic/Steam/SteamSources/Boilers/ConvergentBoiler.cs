@@ -47,25 +47,50 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		public ConvergentBoiler( PlumbingType plumbingType ) : base( plumbingType ) { }
 
-		public ConvergentBoiler( PlumbingType plumbingType, IList<SteamSource> boilers ) : base( plumbingType ) {
+		public ConvergentBoiler(
+					PlumbingType plumbingType,
+					IList<SteamSource> boilers ) : base( plumbingType ) {
 			this.ConnectedSteamSources = new HashSet<SteamSource>( boilers );
 		}
 
 
 		////////////////
 
-		protected override float AddWater( float waterAmount, float heatAmount, out float waterOverflow ) {
-			float overflow = waterAmount;
+		public float AddWaterBoilersOnly_If(
+					float waterAmount,
+					float heatAmount,
+					out float waterOverflow ) {
+			var availableSteamSources = new HashSet<SteamSource>(
+				this.ConnectedSteamSources.Where( ss => ss is Boiler )
+			);
+
+			return this.AddWater( availableSteamSources, waterAmount, heatAmount, out waterOverflow );
+		}
+
+		protected override float AddWater(
+					float waterAmount,
+					float heatAmount,
+					out float waterOverflow ) {
 			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
 
+			return this.AddWater( availableSteamSources, waterAmount, heatAmount, out waterOverflow );
+		}
+
+		private float AddWater(
+					ISet<SteamSource> steamSources,
+					float waterAmount,
+					float heatAmount,
+					out float waterOverflow ) {
+			float overflow = waterAmount;
+
 			do {
-				float divWaterAmt = overflow / (float)availableSteamSources.Count;
+				float divWaterAmt = overflow / (float)steamSources.Count;
 
 				//
 
 				overflow = 0f;
 				
-				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
+				foreach( SteamSource steamSrc in steamSources.ToArray() ) {
 					steamSrc.AddWater_If( divWaterAmt, heatAmount, out float latestOverflow );
 
 					//
@@ -73,10 +98,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					if( latestOverflow > 0f ) {
 						overflow += latestOverflow;
 
-						availableSteamSources.Remove( steamSrc );
+						steamSources.Remove( steamSrc );
 					}
 				}
-			} while( overflow > 0f && availableSteamSources.Count > 0 );
+			} while( overflow > 0f && steamSources.Count > 0 );
 
 			//
 
@@ -85,18 +110,33 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		}
 
 
+		////
+
+		public float DrainBoilersOnlyWater_If( float waterAmount, out float waterUnderflow ) {
+			var availableSteamSources = new HashSet<SteamSource>(
+				this.ConnectedSteamSources.Where( ss => ss is Boiler )
+			);
+
+			return this.DrainWater( availableSteamSources, waterAmount, out waterUnderflow );
+		}
+
 		protected override float DrainWater( float waterAmount, out float waterUnderflow ) {
-			float underflow = waterAmount;
 			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
 
+			return this.DrainWater( availableSteamSources, waterAmount, out waterUnderflow );
+		}
+
+		private float DrainWater( ISet<SteamSource> steamSources, float waterAmount, out float waterUnderflow ) {
+			float underflow = waterAmount;
+
 			do {
-				float divWaterAmt = underflow / (float)availableSteamSources.Count;
+				float divWaterAmt = underflow / (float)steamSources.Count;
 
 				//
 
 				underflow = 0f;
 
-				foreach( SteamSource steamSrc in availableSteamSources.ToArray() ) {
+				foreach( SteamSource steamSrc in steamSources.ToArray() ) {
 					steamSrc.DrainWater_If( divWaterAmt, out float latestUnderflow );
 
 					//
@@ -104,10 +144,10 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					if( latestUnderflow > 0f ) {
 						underflow += latestUnderflow;
 
-						availableSteamSources.Remove( steamSrc );
+						steamSources.Remove( steamSrc );
 					}
 				}
-			} while( underflow > 0f && availableSteamSources.Count > 0 );
+			} while( underflow > 0f && steamSources.Count > 0 );
 
 			//
 

@@ -24,14 +24,19 @@ v1
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
 
 
+
+
+
 vBeta
 -	Add explosion sound to steam overflow eruption
+
+
 -	Fix issue with riveter not overflowing
+-	Fix boilers transfering to Steam Balls when not full
+-	Fix gun not charging from Steam Balls
 -	Steam Balls adjustments
 	-	Shrink item sprite
 	-	Set to store the highest temperature water available, ejecting existing water if needed
-
-
 	-	Set to store half a boiler's capacity
 -	Convergent Boiler adjustments
 	-	Add indication when Steam Containers are being filled (light steam hiss noise)

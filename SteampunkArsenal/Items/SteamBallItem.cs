@@ -27,6 +27,7 @@ namespace SteampunkArsenal.Items {
 				maxCapacity: 50f
 			);
 
+			this.item.scale = 0.25f;
 			this.item.width = 18;
 			this.item.height = 18;
 			this.item.rare = ItemRarityID.LightPurple;
