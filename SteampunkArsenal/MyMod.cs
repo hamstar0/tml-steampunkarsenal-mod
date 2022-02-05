@@ -42,6 +42,13 @@ namespace SteampunkArsenal {
 				this.BoilerUpInst2 = boilerUpSFX.CreateInstance();
 
 				this.SteamHissLoop = steamHissSFX.CreateInstance();
+
+				//
+
+				this.WaterDraw.IsLooped = true;
+				this.BoilerUpInst1.IsLooped = true;
+				this.BoilerUpInst2.IsLooped = true;
+				this.SteamHissLoop.IsLooped = true;
 			}
 
 			//

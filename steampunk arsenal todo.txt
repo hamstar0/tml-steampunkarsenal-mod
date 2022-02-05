@@ -26,11 +26,12 @@ v1
 
 
 
+vBeta (0.16.7.1)
+-	@Test
 
-vBeta
+
+-	Implement `SoundEffectInstance.IsLooped = true`
 -	Add explosion sound to steam overflow eruption
-
-
 -	Fix issue with riveter not overflowing
 -	Fix boilers transfering to Steam Balls when not full
 -	Fix gun not charging from Steam Balls

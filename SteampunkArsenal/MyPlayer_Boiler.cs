@@ -27,15 +27,21 @@ namespace SteampunkArsenal {
 		////////////////
 
 		private void UpdateBoilerRefillState() {
-			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
-			bool isWet = this.player.wet && !this.player.honeyWet && !this.player.lavaWet;
 			bool isInterrupted = false;
+
+			SoundEffectInstance waterDrawSnd = SteamArseMod.Instance.WaterDraw;
+
+			bool isWet = this.player.wet && !this.player.honeyWet && !this.player.lavaWet;
+
+			//
 
 			if( !this.player.dead && isWet ) {
 				this.ApplyBoilerRefill( ref isInterrupted );
 			} else if( waterDrawSnd?.State == SoundState.Playing ) {
 				isInterrupted = true;
 			}
+
+			//
 			
 			if( isInterrupted ) {
 				waterDrawSnd?.Stop();
@@ -59,9 +65,9 @@ namespace SteampunkArsenal {
 			float intendedFillAmtPerTick = intendedFillAmtPerSec / 60f;
 
 			float actualFillAmt = this.ImplicitConvergingBoiler.AddWaterBoilersOnly_If(
-				intendedFillAmtPerTick,
-				1f,
-				out _
+				waterAmount: intendedFillAmtPerTick,
+				heatAmount: 1f,
+				waterOverflow: out _
 			);
 
 			//
