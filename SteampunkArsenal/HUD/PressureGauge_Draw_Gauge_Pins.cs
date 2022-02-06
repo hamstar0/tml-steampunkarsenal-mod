@@ -15,7 +15,7 @@ namespace SteampunkArsenal.HUD {
 			var myplayer = Main.LocalPlayer.GetModPlayer<SteamArsePlayer>();
 			var boilers = myplayer.ImplicitConvergingBoiler;
 
-			float boilersGaugePercent = boilers.SteamPressure / (boilers.TotalCapacity - boilers.Water);
+			float boilersGaugePercent = boilers.SteamPressure / (boilers.WaterCapacity - boilers.Water);
 
 			this.DrawGaugePin( sb, pos, 1, boilersGaugePercent );
 
@@ -23,7 +23,7 @@ namespace SteampunkArsenal.HUD {
 
 			SteamSource container = myplayer.GetHeldRivetLauncherSteam();
 			float gunGaugePercent = container != null
-				? container.TotalPressure / container.TotalCapacity
+				? container.TotalPressure / container.WaterCapacity
 				: 0f;
 
 			this.DrawGaugePin( sb, pos, 2, gunGaugePercent );

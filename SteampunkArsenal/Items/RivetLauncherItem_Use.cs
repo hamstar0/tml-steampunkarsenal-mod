@@ -26,7 +26,7 @@ namespace SteampunkArsenal.Items {
 			float steam = this.SteamSupply?.SteamPressure ?? 0f;
 
 			if( !float.IsNaN(steam) && !float.IsInfinity(steam) ) {
-				float capacity = this.SteamSupply.TotalCapacity;
+				float capacity = this.SteamSupply.WaterCapacity;
 
 				flat = RivetLauncherItem.GetRiveterDamage(
 					maxCapacity: capacity,

@@ -31,38 +31,25 @@ namespace SteampunkArsenal.Logic.Steam {
 					float addedWater,
 					float heatOfAddedWater,
 					out float waterOverflow ) {
-			float currSteam = destination.Water * destination.WaterHeat;
-			float addedSteam = addedWater * heatOfAddedWater;
-			float predictedSteam = currSteam + addedSteam;
+			float predictedWater = destination.Water + addedWater;
 
 			float computedAddedWater, computedAddedWaterHeat;
 
 			// Enforce capacity
-			if( predictedSteam > destination.TotalCapacity ) {
-				float predictedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
-					addedWater: addedWater,
-					heatOfAddedWater: heatOfAddedWater,
-					currentWater: destination.Water,
-					currentWaterHeat: destination.WaterHeat
-				);
-				float predictedNewWaterHeat = predictedAddedWaterHeat + destination.WaterHeat;
+			if( predictedWater > destination.WaterCapacity ) {
+				waterOverflow = predictedWater - destination.WaterCapacity;
 
 				//
 
-				float steamOverflow = predictedSteam - destination.TotalCapacity;
-				waterOverflow = steamOverflow / predictedNewWaterHeat;
-
-				//
-
-				computedAddedWater = (destination.TotalCapacity - currSteam) / predictedNewWaterHeat;
+				computedAddedWater = addedWater - waterOverflow;
 				computedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
 					addedWater: computedAddedWater,
 					heatOfAddedWater: heatOfAddedWater,
 					currentWater: destination.Water,
 					currentWaterHeat: destination.WaterHeat
 				);
-			} else if( predictedSteam < 0f ) {
-				waterOverflow = predictedSteam / destination.WaterHeat;  // negative value
+			} else if( predictedWater < 0f ) {
+				waterOverflow = predictedWater;  // negative value
 
 				//
 
@@ -75,7 +62,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 				computedAddedWater = addedWater;
 				computedAddedWaterHeat = (float)SteamSource.CalculateWaterHeatAdded(
-					addedWater: addedWater,
+					addedWater: computedAddedWater,
 					heatOfAddedWater: heatOfAddedWater,
 					currentWater: destination.Water,
 					currentWaterHeat: destination.WaterHeat

@@ -45,7 +45,7 @@ namespace SteampunkArsenal {
 				return;
 			}
 
-			float pressurePerc = steamSrc.TotalPressure / steamSrc.TotalCapacity;
+			float pressurePerc = steamSrc.TotalPressure / steamSrc.WaterCapacity;
 			if( pressurePerc <= 0f ) {
 				return;
 			}

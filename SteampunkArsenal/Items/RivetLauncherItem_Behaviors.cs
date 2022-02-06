@@ -55,7 +55,7 @@ namespace SteampunkArsenal.Items {
 
 			bool pressureChanged = false;
 
-			if( this.SteamSupply.TotalPressure >= this.SteamSupply.TotalCapacity ) {
+			if( this.SteamSupply.TotalPressure >= this.SteamSupply.WaterCapacity ) {
 				var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
 
 				myplayer.ApplySteamDamage_Local_Syncs( this.SteamSupply.SteamPressure );

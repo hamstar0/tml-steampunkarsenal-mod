@@ -22,7 +22,7 @@ namespace SteampunkArsenal.Items {
 
 		private void RunFx( Player wielderPlayer, bool isCharging ) {
 			var myplayer = wielderPlayer.GetModPlayer<SteamArsePlayer>();
-			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
+			float percent = this.SteamSupply.TotalPressure / this.SteamSupply.WaterCapacity;
 
 			myplayer.CurrentBodyLayerShakePercent = percent;
 
@@ -80,7 +80,7 @@ namespace SteampunkArsenal.Items {
 		////////////////
 
 		private void RunFx_Charging_State( bool isCharging, float availableSteam ) {
-			float perc = this.SteamSupply.TotalPressure / this.SteamSupply.TotalCapacity;
+			float perc = this.SteamSupply.TotalPressure / this.SteamSupply.WaterCapacity;
 
 			//
 

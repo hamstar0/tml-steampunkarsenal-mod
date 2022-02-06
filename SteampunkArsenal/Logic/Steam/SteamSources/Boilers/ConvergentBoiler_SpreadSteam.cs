@@ -24,7 +24,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				boilers: boilers,
 				containers: containers,
 				maxRatePerBoiler: 10f / 60f,
-				minBoilerPressure: b => b.TotalCapacity * 0.9f
+				minBoilerPressure: b => b.WaterCapacity * 0.9f
 			);
 		}
 
@@ -42,7 +42,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				}
 
 				//
-
+				
 				if( Math.Abs(prevBoiler.TotalPressure - boiler.TotalPressure) >= ratePerBoiler ) {
 					if( boiler.TotalPressure < prevBoiler.TotalPressure ) {
 						boiler.TransferWaterToMeFromSource_If( prevBoiler, ratePerBoiler, out _, out _ );

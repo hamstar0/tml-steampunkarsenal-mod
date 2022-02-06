@@ -17,7 +17,7 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			float waterPerc = myboiler.Water / myboiler.TotalCapacity;
+			float waterPerc = myboiler.Water / myboiler.WaterCapacity;
 
 			if( waterPerc > 0f ) {
 				this.DrawGaugeWater( sb, pos, waterPerc );
@@ -25,7 +25,7 @@ namespace SteampunkArsenal.HUD {
 
 			//
 
-			float nonSteamUsage = myboiler.TotalCapacity - myboiler.Water;
+			float nonSteamUsage = myboiler.WaterCapacity - myboiler.Water;
 			float steamPerc = myboiler.SteamPressure / nonSteamUsage;
 
 			if( steamPerc > 0f ) {

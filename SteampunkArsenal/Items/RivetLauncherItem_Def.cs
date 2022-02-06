@@ -18,7 +18,7 @@ namespace SteampunkArsenal.Items {
 			}
 
 			float steam = this.SteamSupply.SteamPressure;
-			float capacity = this.SteamSupply.TotalCapacity;
+			float capacity = this.SteamSupply.WaterCapacity;
 			float damage = RivetLauncherItem.GetRiveterDamage( capacity, steam / capacity );
 
 			projectile.damage = (int)damage;

@@ -22,16 +22,21 @@ v1
 		-	Steam clouds evaporates quickly in open air, but lingers when more blocks are near
 		-	Steam does continuous 'steam' damage within area, with chance to inflict debuff
 -	Implement 'Steamed' debuff (weak ichor, steam damage sources do extra damage)
-
-
-
-
-vBeta (0.16.7.1)
 -	@Test
+
+
+
+
+v0.18
+-	Remove premature water limit to boiler fill
+-	Set boiler water refill rate as capacity percent-based
+
+
+-	Factor out water temperature from steam containers (steam balls) in convergent boiler averaging
+-	Set capacity to apply to water only
+v0.17
 -	Slightly increase riveter damage
 -	Double all steam source capacities, double boiler water refill rate
-
-
 -	Fix Steam Ball charge hissing sound not halting when full
 -	Implement `SoundEffectInstance.IsLooped = true`
 -	Add explosion sound to steam overflow eruption

@@ -11,7 +11,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources {
 
 		public override float PressurePercentLeakPerTick => this._PressurePercentLeakPerTick;
 
-		public override float TotalCapacity => this._Capacity;
+		public override float WaterCapacity => this._Capacity;
 
 		public override float SteamPressure => this.TotalPressure;
 

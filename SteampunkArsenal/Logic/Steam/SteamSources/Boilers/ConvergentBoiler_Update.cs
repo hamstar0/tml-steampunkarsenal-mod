@@ -54,8 +54,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		internal protected override void PostUpdate( Player owner, bool isChild ) {
 			if( !isChild ) {
-				if( this.TotalPressure > this.TotalCapacity ) {
-					this.EmitSteam( owner.MountedCenter, this.TotalPressure - this.TotalCapacity );
+				if( this.TotalPressure > this.WaterCapacity ) {
+					this.EmitSteam( owner.MountedCenter, this.TotalPressure - this.WaterCapacity );
 				}
 			}
 

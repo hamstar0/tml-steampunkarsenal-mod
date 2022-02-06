@@ -45,7 +45,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public bool IsActive => this.TotalCapacity > 0f;
+		public bool IsActive => this.WaterCapacity > 0f;
 
 		////
 
@@ -53,7 +53,7 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		public abstract float WaterHeat { get; }
 
-		public abstract float TotalCapacity { get; }
+		public abstract float WaterCapacity { get; }
 
 		////
 		
@@ -66,9 +66,9 @@ namespace SteampunkArsenal.Logic.Steam {
 
 		////////////////
 
-		public virtual float SteamPressure => this.TotalPressure - this.Water;
-
 		public virtual float TotalPressure => this.Water * this.WaterHeat;
+
+		public virtual float SteamPressure => this.TotalPressure - this.Water;
 
 
 

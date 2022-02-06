@@ -11,7 +11,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			.Sum( b => b.Water );
 
 		public override float WaterHeat  => this.ConnectedSteamSources.Count > 0
-			? this.ConnectedSteamSources.Average( b => b.WaterHeat )
+			? this.ConnectedSteamSources
+				.Average( b => b.WaterHeat )
 			: 1f;
 
 		public override float BoilerHeat => this.ConnectedSteamSources
@@ -21,8 +22,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					.Average( b => ((Boiler)b).BoilerHeat )
 				: 0f;
 
-		public override float TotalCapacity => this.ConnectedSteamSources
-			.Sum( b => b.TotalCapacity );
+		public override float WaterCapacity => this.ConnectedSteamSources
+			.Sum( b => b.WaterCapacity );
 
 		////
 		
@@ -60,20 +61,20 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					float waterAmount,
 					float heatAmount,
 					out float waterOverflow ) {
-			var availableSteamSources = new HashSet<SteamSource>(
+			var steamSources = new HashSet<SteamSource>(
 				this.ConnectedSteamSources.Where( ss => ss is Boiler )
 			);
 
-			return this.AddWater( availableSteamSources, waterAmount, heatAmount, out waterOverflow );
+			return this.AddWater( steamSources, waterAmount, heatAmount, out waterOverflow );
 		}
 
 		protected override float AddWater(
 					float waterAmount,
 					float heatAmount,
 					out float waterOverflow ) {
-			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
+			var steamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
 
-			return this.AddWater( availableSteamSources, waterAmount, heatAmount, out waterOverflow );
+			return this.AddWater( steamSources, waterAmount, heatAmount, out waterOverflow );
 		}
 
 		private float AddWater(
@@ -113,21 +114,37 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 		////
 
 		public float DrainBoilersOnlyWater_If( float waterAmount, out float waterUnderflow ) {
-			var availableSteamSources = new HashSet<SteamSource>(
+			var steamSources = new HashSet<SteamSource>(
 				this.ConnectedSteamSources.Where( ss => ss is Boiler )
 			);
 
-			return this.DrainWater( availableSteamSources, waterAmount, out waterUnderflow );
+			return this.DrainWater( steamSources, waterAmount, out waterUnderflow );
 		}
 
 		protected override float DrainWater( float waterAmount, out float waterUnderflow ) {
-			var availableSteamSources = new HashSet<SteamSource>( this.ConnectedSteamSources );
+			var nonBoilerSteamSources = this.ConnectedSteamSources
+				.Where( ss => !(ss is Boiler) );
+			var steamSources = new HashSet<SteamSource>( nonBoilerSteamSources );
 
-			return this.DrainWater( availableSteamSources, waterAmount, out waterUnderflow );
+			float drawnWater = this.DrainWater( steamSources, waterAmount, out waterUnderflow );
+
+			if( drawnWater == waterAmount || waterUnderflow > 0f ) {
+				return drawnWater;
+			}
+
+			//
+
+			var boilerSteamSources = steamSources
+				.Where( ss => ss is Boiler );
+			steamSources = new HashSet<SteamSource>( boilerSteamSources );
+
+			return this.DrainWater( steamSources, waterAmount, out waterUnderflow );
 		}
 
 		private float DrainWater( ISet<SteamSource> steamSources, float waterAmount, out float waterUnderflow ) {
 			float underflow = waterAmount;
+
+			//
 
 			do {
 				float divWaterAmt = underflow / (float)steamSources.Count;

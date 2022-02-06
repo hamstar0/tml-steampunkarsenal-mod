@@ -31,8 +31,8 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		internal protected override void PostUpdate( Player owner, bool isChild ) {
 			if( !isChild ) {
-				if( this.TotalPressure > this.TotalCapacity ) {
-					this.EmitSteam( owner.MountedCenter, this.TotalPressure - this.TotalCapacity );
+				if( this.TotalPressure > this.WaterCapacity ) {
+					this.EmitSteam( owner.MountedCenter, this.TotalPressure - this.WaterCapacity );
 				}
 			}
 		}
@@ -77,15 +77,6 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 				if( this._WaterHeat > this._BoilerHeat ) {
 					this._WaterHeat = this._BoilerHeat;
 				}
-
-				if( this.TotalPressure > this.TotalCapacity ) {
-					float excessPressure = this.TotalPressure - this.TotalCapacity;
-
-					this._WaterHeat -= excessPressure / this._Water;
-				}
-//if( float.IsNaN(this._WaterHeat) ) {
-//	LogLibraries.LogOnce("NAN 2");
-//}
 			}
 		}
 	}
