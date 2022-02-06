@@ -35,13 +35,18 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			}
 
 			//
-			
+
+			SoundEffectInstance hissSnd = SteamArseMod.Instance.SteamHissLoop;
+
 			if( this.NormalizePressureDistributionIncrementally_If(boilers, nonBoilers) ) {
-				if( SteamArseMod.Instance.SteamHissLoop.State != SoundState.Playing ) {
-					SteamArseMod.Instance.SteamHissLoop.Volume = 0.35f;
-					SteamArseMod.Instance.SteamHissLoop.Play();
-				} else {
-					SteamArseMod.Instance.SteamHissLoop.Stop();
+				if( hissSnd.State == SoundState.Stopped ) {
+					hissSnd.Play();
+				} else if( hissSnd.State == SoundState.Paused ) {
+					hissSnd.Resume();
+				}
+			} else {
+				if( hissSnd.State == SoundState.Playing ) {
+					hissSnd.Pause();
 				}
 			}
 		}

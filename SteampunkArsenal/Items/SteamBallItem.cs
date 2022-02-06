@@ -23,8 +23,7 @@ namespace SteampunkArsenal.Items {
 			this.SteamSupply = new SteamContainer(
 				plumbingType: PlumbingType.Inventory,
 				heatPercentDecayRatePerTick: 0f,
-				pressurePercentLeakPerTick: 0f,
-				maxCapacity: 50f
+				pressurePercentLeakPerTick: 0f
 			);
 
 			//this.item.scale = 0.25f;

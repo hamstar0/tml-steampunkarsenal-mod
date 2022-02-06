@@ -28,8 +28,11 @@ v1
 
 vBeta (0.16.7.1)
 -	@Test
+-	Slightly increase riveter damage
+-	Double all steam source capacities, double boiler water refill rate
 
 
+-	Fix Steam Ball charge hissing sound not halting when full
 -	Implement `SoundEffectInstance.IsLooped = true`
 -	Add explosion sound to steam overflow eruption
 -	Fix issue with riveter not overflowing

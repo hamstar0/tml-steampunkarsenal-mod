@@ -27,13 +27,13 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		private float _WaterLeakPerTick = 0f;
 
-		private float _Capacity = 100f;
+		private float _Capacity = 200f;
 
 
 
 		////////////////
 
-		public TankBoiler( PlumbingType plumbingType, float maxCapacity = 100f ) : base( plumbingType ) {
+		public TankBoiler( PlumbingType plumbingType, float maxCapacity = 200f ) : base( plumbingType ) {
 			this._Capacity = maxCapacity;
 		}
 

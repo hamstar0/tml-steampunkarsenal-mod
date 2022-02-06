@@ -49,6 +49,7 @@ namespace SteampunkArsenal {
 				this.BoilerUpInst1.IsLooped = true;
 				this.BoilerUpInst2.IsLooped = true;
 				this.SteamHissLoop.IsLooped = true;
+				this.SteamHissLoop.Volume = 0.35f;
 			}
 
 			//

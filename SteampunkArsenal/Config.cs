@@ -60,9 +60,9 @@ namespace SteampunkArsenal {
 		////
 		
 		[Range( 0f, 100f )]
-		[DefaultValue( 24f )]
+		[DefaultValue( 40f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float BoilerWaterFillRatePerSecond { get; set; } = 24f;
+		public float BoilerWaterFillRatePerSecond { get; set; } = 40f;
 
 		////
 
@@ -70,11 +70,13 @@ namespace SteampunkArsenal {
 		[DefaultValue( 0.25f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float RiveterSteamPercentChargeUpRatePerSecond { get; set; } = 0.25f;
-		
+
+		////
+
 		[Range( 0f, 100f )]
-		[DefaultValue( 3.5f )]
+		[DefaultValue( 3.65f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float RiveterDamagerPerPressureUnit { get; set; } = 3.5f;
+		public float RiveterDamagerPerPressureUnit { get; set; } = 3.65f;
 
 		////
 
