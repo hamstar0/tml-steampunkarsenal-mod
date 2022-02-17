@@ -8,9 +8,9 @@ using SteampunkArsenal.Items.Armor;
 namespace SteampunkArsenal.Recipes {
 	public class SteamBallRecipe : ModRecipe {
 		public SteamBallRecipe( SteamBallItem resultItem ) : base( SteamArseMod.Instance ) {
-			var riMod = ModLoader.GetMod( "RuinedItems" );
-			if( riMod != null ) {
-				this.AddIngredient( riMod.GetItem("MagitechScrapItem"), 1 );
+			var ucMod = ModLoader.GetMod( "ModLibsUtilityContent" );
+			if( ucMod != null ) {
+				this.AddIngredient( SteamPoweredRivetLauncherRecipe.GetMagitech_WeakRef(), 1 );
 			} else {
 				this.AddRecipeGroup( "SteampunkArsenal:AdvWatches", 1 );
 			}

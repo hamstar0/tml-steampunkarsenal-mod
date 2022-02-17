@@ -23,5 +23,8 @@
     <Reference Include="ModLibsGeneral">
       <HintPath>..\..\..\Mod Libs\Mod Libs General\Project\ModLibsGeneral\bin\Release\net452\ModLibsGeneral.dll</HintPath>
     </Reference>
+    <Reference Include="ModLibsUtilityContent">
+      <HintPath>..\..\..\Mod Libs\Mod Libs Utility Content\Project\ModLibsUtilityContent\bin\Release\net452\ModLibsUtilityContent.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

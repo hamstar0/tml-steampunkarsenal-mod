@@ -6,10 +6,18 @@ using SteampunkArsenal.Items;
 
 namespace SteampunkArsenal.Recipes {
 	public class SteamPoweredRivetLauncherRecipe : ModRecipe {
+		public static int GetMagitech_WeakRef() {
+			return ModContent.ItemType<ModLibsUtilityContent.Items.MagitechScrapItem>();
+		}
+
+
+		////////////////
+
 		public SteamPoweredRivetLauncherRecipe( RivetLauncherItem resultItem ) : base( SteamArseMod.Instance ) {
 			var ucMod = ModLoader.GetMod( "ModLibsUtilityContent" );
 			if( ucMod != null ) {
-				this.AddIngredient( ucMod.GetItem("MagitechScrapItem"), 1 );
+				//this.AddIngredient( ucMod.GetItem("MagitechScrapItem"), 1 );
+				this.AddIngredient( SteamPoweredRivetLauncherRecipe.GetMagitech_WeakRef(), 1 );
 			} else {
 				this.AddRecipeGroup( "SteampunkArsenal:AdvWatches", 1 );
 			}
@@ -25,6 +33,8 @@ namespace SteampunkArsenal.Recipes {
 			this.SetResult( resultItem );
 		}
 
+
+		////
 
 		public override bool RecipeAvailable() {
 			var config = SteampunkArsenalConfig.Instance;
