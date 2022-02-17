@@ -29,7 +29,6 @@ v1
 
 v0.18
 -	Remove premature water limit to boiler fill
--	Set boiler water refill rate as capacity percent-based
 
 
 -	Factor out water temperature from steam containers (steam balls) in convergent boiler averaging

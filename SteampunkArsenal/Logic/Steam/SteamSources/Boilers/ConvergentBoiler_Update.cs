@@ -82,7 +82,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			for( int i=0; i<maxAcc; i++ ) {
 				SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.armor[i] );
 
-				if( steamSrc != null && steamSrc.PlumbingType == PlumbingType.Worn ) {
+				if( steamSrc != null && steamSrc.PlumbingType == PlumbingType.Worn && steamSrc.IsActive ) {
 					this.ConnectedSteamSources.Add( steamSrc );
 				}
 			}
@@ -90,7 +90,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			for( int i=0; i<player.inventory.Length; i++ ) {
 				SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.inventory[i] );
 
-				if( steamSrc != null && steamSrc.PlumbingType == PlumbingType.Inventory ) {
+				if( steamSrc != null && steamSrc.PlumbingType == PlumbingType.Inventory && steamSrc.IsActive ) {
 					this.ConnectedSteamSources.Add( steamSrc );
 				}
 			}

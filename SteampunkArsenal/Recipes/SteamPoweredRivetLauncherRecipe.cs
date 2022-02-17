@@ -7,9 +7,9 @@ using SteampunkArsenal.Items;
 namespace SteampunkArsenal.Recipes {
 	public class SteamPoweredRivetLauncherRecipe : ModRecipe {
 		public SteamPoweredRivetLauncherRecipe( RivetLauncherItem resultItem ) : base( SteamArseMod.Instance ) {
-			var riMod = ModLoader.GetMod( "RuinedItems" );
-			if( riMod != null ) {
-				this.AddIngredient( riMod.GetItem("MagitechScrapItem"), 1 );
+			var ucMod = ModLoader.GetMod( "ModLibsUtilityContent" );
+			if( ucMod != null ) {
+				this.AddIngredient( ucMod.GetItem("MagitechScrapItem"), 1 );
 			} else {
 				this.AddRecipeGroup( "SteampunkArsenal:AdvWatches", 1 );
 			}
