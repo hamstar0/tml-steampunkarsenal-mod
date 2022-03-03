@@ -80,6 +80,12 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 			int maxAcc = minAcc + PlayerItemLibraries.GetCurrentVanillaMaxAccessories( player );
 
 			for( int i=0; i<maxAcc; i++ ) {
+				if( PlayerItemLibraries.IsVanitySlot(player, i) ) {
+					continue;
+				}
+
+				//
+
 				SteamSource steamSrc = SteamSource.GetSteamSourceForItem( player.armor[i] );
 
 				if( steamSrc != null && steamSrc.PlumbingType == PlumbingType.Worn && steamSrc.IsActive ) {

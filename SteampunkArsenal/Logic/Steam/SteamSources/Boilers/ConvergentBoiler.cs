@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.IO;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
@@ -57,7 +58,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 		////////////////
 
-		public float AddWaterBoilersOnly_If(
+		public float AddWaterBoilersOnly(
 					float waterAmount,
 					float heatAmount,
 					out float waterOverflow ) {
@@ -84,7 +85,7 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 					out float waterOverflow ) {
 			float overflow = waterAmount;
 
-			do {
+			while( overflow > 0f && steamSources.Count > 0 ) {
 				float divWaterAmt = overflow / (float)steamSources.Count;
 
 				//
@@ -102,11 +103,14 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 						steamSources.Remove( steamSrc );
 					}
 				}
-			} while( overflow > 0f && steamSources.Count > 0 );
+			}
 
 			//
-
+			
 			waterOverflow = overflow;
+//DebugLibraries.Print( "addwater", "sources: "+steamSources.Count
+//	+", waterAmount: "+waterAmount
+//	+", waterOverflow: "+waterOverflow );
 			return waterAmount - waterOverflow;
 		}
 
