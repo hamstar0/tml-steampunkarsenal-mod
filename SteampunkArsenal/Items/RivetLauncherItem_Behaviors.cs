@@ -34,12 +34,14 @@ namespace SteampunkArsenal.Items {
 			}
 
 			//
-			
+
 			myitem.CheckPressure_Local( wielderPlayer );
 
 			//
 
-			myitem.RunFx( wielderPlayer, isCharging );
+			if( Main.netMode != NetmodeID.Server ) {
+				myitem.RunFx( wielderPlayer, isCharging );
+			}
 		}
 
 

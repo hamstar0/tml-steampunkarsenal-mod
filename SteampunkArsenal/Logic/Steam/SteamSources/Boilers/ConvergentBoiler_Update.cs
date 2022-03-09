@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 using Terraria;
+using Terraria.ID;
 using ModLibsCore.Libraries.Debug;
 using ModLibsGeneral.Libraries.Players;
 
@@ -36,17 +37,19 @@ namespace SteampunkArsenal.Logic.Steam.SteamSources.Boilers {
 
 			//
 
-			SoundEffectInstance hissSnd = SteamArseMod.Instance.SteamHissLoop;
+			if( Main.netMode != NetmodeID.Server ) {
+				SoundEffectInstance hissSnd = SteamArseMod.Instance.SteamHissLoop;
 
-			if( this.NormalizePressureDistributionIncrementally_If(boilers, nonBoilers) ) {
-				if( hissSnd.State == SoundState.Stopped ) {
-					hissSnd.Play();
-				} else if( hissSnd.State == SoundState.Paused ) {
-					hissSnd.Resume();
-				}
-			} else {
-				if( hissSnd.State == SoundState.Playing ) {
-					hissSnd.Pause();
+				if( this.NormalizePressureDistributionIncrementally_If(boilers, nonBoilers) ) {
+					if( hissSnd.State == SoundState.Stopped ) {
+						hissSnd.Play();
+					} else if( hissSnd.State == SoundState.Paused ) {
+						hissSnd.Resume();
+					}
+				} else {
+					if( hissSnd.State == SoundState.Playing ) {
+						hissSnd.Pause();
+					}
 				}
 			}
 		}
