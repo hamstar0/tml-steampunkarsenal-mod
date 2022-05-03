@@ -1,7 +1,7 @@
 displayName = Steam-Driven Rivet Launcher
 author = hamstar
-version = 0.18.0.2
-modReferences = HUDElementsLib@4.0.0, ModLibsCore@1.4.0, ModLibsGeneral@1.3.0
+version = 0.18.0.3
+modReferences = HUDElementsLib@4.3.1, ModLibsCore@1.4.0, ModLibsGeneral@1.3.0
 weakReferences = ModLibsUtilityContent@1.1.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://github.com/hamstar0/tml-steampunkarsenal-mod

@@ -55,12 +55,13 @@ namespace SteampunkArsenal.HUD {
 
 		////////////////
 
-		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default ) { }
+		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default, () => true ) { }
 
 		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(
 					name: "PressureGauge",
 					position: position,
-					dimensions: dimensions ) {
+					dimensions: dimensions,
+					enabler: () => true ) {
 		}
 
 
