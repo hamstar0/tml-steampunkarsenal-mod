@@ -18,11 +18,19 @@ namespace SteampunkArsenal.HUD {
 
 		private static PressureGaugeHUD InitializePressureGaugeHUD() {
 			var config = SteampunkArsenalConfig.Instance;
-			var posX = config.Get<float>( nameof( config.PressureGaugeInitialHUDPositionX ) );
-			var posY = config.Get<float>( nameof( config.PressureGaugeInitialHUDPositionY ) );
+
+
+			var posOffset = new Vector2(
+				config.Get<float>( nameof(config.PressureGaugeInitialHUDPositionX) ),
+				config.Get<float>( nameof(config.PressureGaugeInitialHUDPositionY) )
+			);
+			var posPerc = new Vector2(
+				posOffset.X < 0f ? 1f : 0f,
+				posOffset.Y < 0f ? 1f : 0f
+			);
 
 			Texture2D tex = SteamArseMod.Instance.GetTexture( "HUD/PressureGaugeBG_A" );
-			var hudElem = new PressureGaugeHUD( new Vector2( posX, posY ), new Vector2( tex.Width, tex.Height ) );
+			var hudElem = new PressureGaugeHUD( posOffset, posPerc, new Vector2( tex.Width, tex.Height ) );
 
 			hudElem.OnClick += ( evt, listeningElement ) => {
 				if( hudElem.AttemptButtonPress() ) {
@@ -55,11 +63,12 @@ namespace SteampunkArsenal.HUD {
 
 		////////////////
 
-		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default, () => true ) { }
+		private PressureGaugeHUD() : base( "PressureGaugeSingleton", default, default, default, () => true ) { }
 
-		public PressureGaugeHUD( Vector2 position, Vector2 dimensions ) : base(
+		public PressureGaugeHUD( Vector2 positionOffset, Vector2 positionPercent, Vector2 dimensions ) : base(
 					name: "PressureGauge",
-					position: position,
+					positionOffset: positionOffset,
+					positionPercent: positionPercent,
 					dimensions: dimensions,
 					enabler: () => true ) {
 		}
